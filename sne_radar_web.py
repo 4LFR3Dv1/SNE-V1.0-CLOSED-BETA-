@@ -300,6 +300,432 @@ def buscar_dados_coingecko(symbol, interval, limit):
         print(f"❌ Erro ao buscar dados CoinGecko: {e}")
         return criar_dados_mock(symbol, interval)
 
+def buscar_dados_bybit(symbol, interval, limit):
+    """Busca dados da Bybit API (alternativa confiável)"""
+    try:
+        # Verificar rate limit
+        if not check_rate_limit("bybit", max_calls=10, window_seconds=10):
+            print(f"⏳ Rate limit Bybit atingido para {symbol}")
+            return buscar_dados_kucoin(symbol, interval, limit)
+        
+        # Mapear símbolos para Bybit
+        symbol_mapping = {
+            "BTCUSDT": "BTCUSDT",
+            "ETHUSDT": "ETHUSDT", 
+            "SOLUSDT": "SOLUSDT"
+        }
+        
+        bybit_symbol = symbol_mapping.get(symbol, "BTCUSDT")
+        
+        # Mapear intervalos para Bybit
+        interval_mapping = {
+            "1m": "1",
+            "5m": "5",
+            "15m": "15",
+            "1h": "60",
+            "4h": "240",
+            "1d": "D"
+        }
+        
+        bybit_interval = interval_mapping.get(interval, "1")
+        
+        # API Bybit Kline
+        url = "https://api.bybit.com/v5/market/kline"
+        params = {
+            "category": "spot",
+            "symbol": bybit_symbol,
+            "interval": bybit_interval,
+            "limit": limit
+        }
+        
+        print(f"🔍 Buscando dados Bybit: {symbol} ({bybit_symbol})...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.1)
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API Bybit: {response.status_code}")
+            return buscar_dados_kucoin(symbol, interval, limit)
+            
+        data = response.json()
+        
+        if not data or data.get("retCode") != 0 or not data.get("result", {}).get("list"):
+            print(f"❌ Dados vazios da Bybit para {symbol}")
+            return buscar_dados_kucoin(symbol, interval, limit)
+        
+        # Extrair dados OHLC
+        kline_data = data["result"]["list"]
+        
+        # Criar DataFrame
+        df_data = []
+        for candle in kline_data:
+            timestamp, open_price, high_price, low_price, close_price, volume, turnover = candle
+            
+            df_data.append([
+                int(timestamp),  # open_time
+                float(open_price),
+                float(high_price),
+                float(low_price),
+                float(close_price),
+                float(volume),
+                int(timestamp) + 60000,  # close_time
+                float(volume) * 0.5,  # qav
+                int(float(volume) / 100),  # trades
+                float(volume) * 0.3,  # tbb
+                float(volume) * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados Bybit carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados Bybit: {e}")
+        return buscar_dados_kucoin(symbol, interval, limit)
+
+def buscar_dados_kucoin(symbol, interval, limit):
+    """Busca dados da KuCoin API (alternativa confiável)"""
+    try:
+        # Verificar rate limit
+        if not check_rate_limit("kucoin", max_calls=10, window_seconds=10):
+            print(f"⏳ Rate limit KuCoin atingido para {symbol}")
+            return buscar_dados_mexc(symbol, interval, limit)
+        
+        # Mapear símbolos para KuCoin
+        symbol_mapping = {
+            "BTCUSDT": "BTC-USDT",
+            "ETHUSDT": "ETH-USDT", 
+            "SOLUSDT": "SOL-USDT"
+        }
+        
+        kucoin_symbol = symbol_mapping.get(symbol, "BTC-USDT")
+        
+        # Mapear intervalos para KuCoin
+        interval_mapping = {
+            "1m": "1min",
+            "5m": "5min",
+            "15m": "15min",
+            "1h": "1hour",
+            "4h": "4hour",
+            "1d": "1day"
+        }
+        
+        kucoin_interval = interval_mapping.get(interval, "1min")
+        
+        # API KuCoin Kline
+        url = "https://api.kucoin.com/api/v1/market/candles"
+        params = {
+            "symbol": kucoin_symbol,
+            "type": kucoin_interval,
+            "startAt": int((time.time() - 86400) * 1000),  # Últimas 24h
+            "endAt": int(time.time() * 1000)
+        }
+        
+        print(f"🔍 Buscando dados KuCoin: {symbol} ({kucoin_symbol})...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.1)
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API KuCoin: {response.status_code}")
+            return buscar_dados_mexc(symbol, interval, limit)
+            
+        data = response.json()
+        
+        if not data or data.get("code") != "200000" or not data.get("data"):
+            print(f"❌ Dados vazios da KuCoin para {symbol}")
+            return buscar_dados_mexc(symbol, interval, limit)
+        
+        # Extrair dados OHLC
+        kline_data = data["data"]
+        
+        # Criar DataFrame
+        df_data = []
+        for candle in kline_data:
+            timestamp, open_price, close_price, high_price, low_price, volume, turnover = candle
+            
+            df_data.append([
+                int(timestamp),  # open_time
+                float(open_price),
+                float(high_price),
+                float(low_price),
+                float(close_price),
+                float(volume),
+                int(timestamp) + 60000,  # close_time
+                float(volume) * 0.5,  # qav
+                int(float(volume) / 100),  # trades
+                float(volume) * 0.3,  # tbb
+                float(volume) * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados KuCoin carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados KuCoin: {e}")
+        return buscar_dados_mexc(symbol, interval, limit)
+
+def buscar_dados_mexc(symbol, interval, limit):
+    """Busca dados da MEXC API (alternativa confiável)"""
+    try:
+        # Verificar rate limit
+        if not check_rate_limit("mexc", max_calls=10, window_seconds=10):
+            print(f"⏳ Rate limit MEXC atingido para {symbol}")
+            return buscar_dados_bing(symbol, interval, limit)
+        
+        # Mapear símbolos para MEXC
+        symbol_mapping = {
+            "BTCUSDT": "BTC_USDT",
+            "ETHUSDT": "ETH_USDT", 
+            "SOLUSDT": "SOL_USDT"
+        }
+        
+        mexc_symbol = symbol_mapping.get(symbol, "BTC_USDT")
+        
+        # Mapear intervalos para MEXC
+        interval_mapping = {
+            "1m": "1m",
+            "5m": "5m",
+            "15m": "15m",
+            "1h": "1h",
+            "4h": "4h",
+            "1d": "1d"
+        }
+        
+        mexc_interval = interval_mapping.get(interval, "1m")
+        
+        # API MEXC Kline
+        url = "https://www.mexc.com/open/api/v2/market/kline"
+        params = {
+            "symbol": mexc_symbol,
+            "interval": mexc_interval,
+            "limit": limit
+        }
+        
+        print(f"🔍 Buscando dados MEXC: {symbol} ({mexc_symbol})...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.1)
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API MEXC: {response.status_code}")
+            return buscar_dados_bing(symbol, interval, limit)
+            
+        data = response.json()
+        
+        if not data or data.get("code") != 200 or not data.get("data"):
+            print(f"❌ Dados vazios da MEXC para {symbol}")
+            return buscar_dados_bing(symbol, interval, limit)
+        
+        # Extrair dados OHLC
+        kline_data = data["data"]
+        
+        # Criar DataFrame
+        df_data = []
+        for candle in kline_data:
+            timestamp, open_price, close_price, high_price, low_price, volume = candle
+            
+            df_data.append([
+                int(timestamp),  # open_time
+                float(open_price),
+                float(high_price),
+                float(low_price),
+                float(close_price),
+                float(volume),
+                int(timestamp) + 60000,  # close_time
+                float(volume) * 0.5,  # qav
+                int(float(volume) / 100),  # trades
+                float(volume) * 0.3,  # tbb
+                float(volume) * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados MEXC carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados MEXC: {e}")
+        return buscar_dados_bing(symbol, interval, limit)
+
+def buscar_dados_bing(symbol, interval, limit):
+    """Busca dados da BingX API (última alternativa)"""
+    try:
+        # Verificar rate limit
+        if not check_rate_limit("bing", max_calls=10, window_seconds=10):
+            print(f"⏳ Rate limit BingX atingido para {symbol}")
+            return criar_dados_mock(symbol, interval)
+        
+        # Mapear símbolos para BingX
+        symbol_mapping = {
+            "BTCUSDT": "BTC-USDT",
+            "ETHUSDT": "ETH-USDT", 
+            "SOLUSDT": "SOL-USDT"
+        }
+        
+        bing_symbol = symbol_mapping.get(symbol, "BTC-USDT")
+        
+        # Mapear intervalos para BingX
+        interval_mapping = {
+            "1m": "1",
+            "5m": "5",
+            "15m": "15",
+            "1h": "60",
+            "4h": "240",
+            "1d": "1D"
+        }
+        
+        bing_interval = interval_mapping.get(interval, "1")
+        
+        # API BingX Kline
+        url = "https://open-api.bingx.com/openApi/spot/v1/market/kline"
+        params = {
+            "symbol": bing_symbol,
+            "interval": bing_interval,
+            "limit": limit
+        }
+        
+        print(f"🔍 Buscando dados BingX: {symbol} ({bing_symbol})...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.1)
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API BingX: {response.status_code}")
+            return criar_dados_mock(symbol, interval)
+            
+        data = response.json()
+        
+        if not data or data.get("code") != 0 or not data.get("data"):
+            print(f"❌ Dados vazios da BingX para {symbol}")
+            return criar_dados_mock(symbol, interval)
+        
+        # Extrair dados OHLC
+        kline_data = data["data"]
+        
+        # Criar DataFrame
+        df_data = []
+        for candle in kline_data:
+            timestamp, open_price, high_price, low_price, close_price, volume = candle
+            
+            df_data.append([
+                int(timestamp),  # open_time
+                float(open_price),
+                float(high_price),
+                float(low_price),
+                float(close_price),
+                float(volume),
+                int(timestamp) + 60000,  # close_time
+                float(volume) * 0.5,  # qav
+                int(float(volume) / 100),  # trades
+                float(volume) * 0.3,  # tbb
+                float(volume) * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados BingX carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados BingX: {e}")
+        return criar_dados_mock(symbol, interval)
+
 def buscar_dados_kraken(symbol, interval, limit):
     """Busca dados da Kraken API (alternativa confiável)"""
     try:
