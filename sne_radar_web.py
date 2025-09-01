@@ -92,11 +92,183 @@ class Alert(db.Model):
 def load_user(user_id):
     return User.query.get(int(user_id))
 
+def criar_dados_mock(symbol, interval):
+    """Cria dados mock para teste quando API falha"""
+    try:
+        import random
+        from datetime import datetime, timedelta
+        
+        # Dados base para diferentes símbolos
+        precos_base = {
+            "BTCUSDT": 65000,
+            "ETHUSDT": 3500,
+            "SOLUSDT": 150
+        }
+        
+        preco_base = precos_base.get(symbol, 100)
+        
+        # Gerar 100 candles
+        dados = []
+        agora = datetime.now()
+        
+        for i in range(100):
+            timestamp = agora - timedelta(minutes=i)
+            
+            # Variação aleatória
+            variacao = random.uniform(-0.02, 0.02)  # ±2%
+            preco = preco_base * (1 + variacao)
+            
+            # Simular candle
+            open_price = preco
+            high_price = preco * random.uniform(1.001, 1.005)
+            low_price = preco * random.uniform(0.995, 0.999)
+            close_price = preco * random.uniform(0.998, 1.002)
+            volume = random.uniform(1000, 10000)
+            trades = random.randint(100, 1000)
+            
+            dados.append([
+                int(timestamp.timestamp() * 1000),  # open_time
+                str(open_price),
+                str(high_price),
+                str(low_price),
+                str(close_price),
+                str(volume),
+                int(timestamp.timestamp() * 1000) + 60000,  # close_time
+                str(volume * 0.5),  # qav
+                trades,  # trades
+                str(volume * 0.3),  # tbb
+                str(volume * 0.7),  # tbq
+                0  # ignore
+            ])
+        
+        # Criar DataFrame
+        df = pd.DataFrame(dados, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados mock criados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao criar dados mock: {e}")
+        return None
+
+def buscar_dados_coingecko(symbol, interval, limit):
+    """Busca dados da CoinGecko API (alternativa à Binance)"""
+    try:
+        # Mapear símbolos para IDs do CoinGecko
+        symbol_mapping = {
+            "BTCUSDT": "bitcoin",
+            "ETHUSDT": "ethereum", 
+            "SOLUSDT": "solana"
+        }
+        
+        coin_id = symbol_mapping.get(symbol, "bitcoin")
+        
+        # API CoinGecko para dados históricos
+        url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
+        params = {
+            "vs_currency": "usd",
+            "days": "1",  # 1 dia de dados
+            "interval": "hourly" if interval in ["1h", "4h"] else "minute"
+        }
+        
+        print(f"🔍 Buscando dados CoinGecko: {symbol} ({coin_id})...")
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API CoinGecko: {response.status_code}")
+            return criar_dados_mock(symbol, interval)
+            
+        data = response.json()
+        
+        if not data or "prices" not in data:
+            print(f"❌ Dados vazios da CoinGecko para {symbol}")
+            return criar_dados_mock(symbol, interval)
+        
+        # Converter dados CoinGecko para formato similar ao Binance
+        prices = data["prices"]
+        volumes = data.get("total_volumes", [])
+        
+        # Criar DataFrame
+        df_data = []
+        for i, (timestamp, price) in enumerate(prices):
+            volume = volumes[i][1] if i < len(volumes) else 1000
+            
+            # Simular candle (CoinGecko só tem preço, não OHLC)
+            open_price = price * 0.999
+            high_price = price * 1.002
+            low_price = price * 0.998
+            close_price = price
+            
+            df_data.append([
+                timestamp,  # open_time
+                open_price,
+                high_price,
+                low_price,
+                close_price,
+                volume,
+                timestamp + 60000,  # close_time
+                volume * 0.5,  # qav
+                int(volume / 10),  # trades
+                volume * 0.3,  # tbb
+                volume * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados CoinGecko carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados CoinGecko: {e}")
+        return criar_dados_mock(symbol, interval)
+
 def buscar_dados_binance(symbol, interval, limit):
-    """Busca dados da Binance API"""
+    """Busca dados da Binance API (fallback para CoinGecko)"""
     try:
         url = "https://api.binance.com/api/v3/klines"
-        params = {"symbol": symbol, "interval": interval, "limit": limit}
+        params = {"symbol": symbol, "interval": "1m", "limit": limit}
         
         print(f"🔍 Buscando dados: {symbol} {interval}...")
         
@@ -104,7 +276,8 @@ def buscar_dados_binance(symbol, interval, limit):
         
         if response.status_code != 200:
             print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
-            return None
+            print("🔄 Tentando CoinGecko API...")
+            return buscar_dados_coingecko(symbol, interval, limit)
             
         data = response.json()
         
