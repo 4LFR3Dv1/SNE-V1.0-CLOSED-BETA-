@@ -1,174 +1,310 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>SNE Radar - Planos e Preços</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
-    <style>
-        .pricing-card {
-            transition: transform 0.3s ease;
-            border: 2px solid #e9ecef;
-        }
-        .pricing-card:hover {
-            transform: translateY(-10px);
-            border-color: #007bff;
-        }
-        .pricing-card.featured {
-            border-color: #28a745;
-            box-shadow: 0 10px 30px rgba(40, 167, 69, 0.3);
-        }
-        .feature-list {
-            list-style: none;
-            padding: 0;
-        }
-        .feature-list li {
-            padding: 8px 0;
-            border-bottom: 1px solid #f8f9fa;
-        }
-        .feature-list li:before {
-            content: "✅ ";
-            color: #28a745;
-        }
-        .price {
-            font-size: 3rem;
-            font-weight: bold;
-            color: #007bff;
-        }
-        .currency {
-            font-size: 1.5rem;
-            vertical-align: top;
-        }
-    </style>
-</head>
-<body class="bg-light">
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/">
-                <i class="fas fa-radar"></i> SNE Radar
-            </a>
-            <div class="navbar-nav ms-auto">
-                <a class="nav-link" href="/login">Login</a>
-                <a class="nav-link" href="/register">Registro</a>
+{% extends "base.html" %}
+{% block title %}SNE Radar - Planos e Preços{% endblock %}
+{% block content %}
+
+<div class="terminal-header">
+    <div style="display: flex; justify-content: space-between; align-items: center;">
+        <div>
+            <div class="terminal-title">
+                <i class="fas fa-rocket"></i> SNE RADAR
+            </div>
+            <div class="terminal-subtitle">
+                SISTEMA DE PLANOS E PREÇOS
             </div>
         </div>
-    </nav>
-
-    <div class="container py-5">
-        <div class="text-center mb-5">
-            <h1 class="display-4 mb-3">Escolha Seu Plano</h1>
-            <p class="lead text-muted">Acesso completo ao sistema neural estratégico de trading</p>
+        <div style="text-align: right;">
+            <div class="status-online">
+                <i class="fas fa-circle"></i> SISTEMA ONLINE
+            </div>
+            <div style="color: #00aa00; font-size: 12px;">
+                <a href="/dashboard" style="color: #00aa00; text-decoration: none;">
+                    <i class="fas fa-arrow-left"></i> VOLTAR AO DASHBOARD
+                </a>
+            </div>
         </div>
+    </div>
+</div>
 
-        <div class="row justify-content-center">
-            <!-- Plano Free -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card pricing-card h-100">
-                    <div class="card-body text-center p-4">
-                        <h3 class="card-title text-primary">🆓 Free</h3>
-                        <div class="price mb-3">
-                            <span class="currency">R$</span>0
-                        </div>
-                        <p class="text-muted">Para iniciantes e testes</p>
-                        
-                        <ul class="feature-list text-start mb-4">
-                            <li>1 par (BTCUSDT)</li>
-                            <li>1-2 alertas por dia</li>
-                            <li>1 timeframe (1m)</li>
-                            <li>Delay: 2-5 minutos</li>
-                            <li>Acesso ao canal público</li>
-                            <li>100 requests/dia</li>
-                        </ul>
-                        
-                        <a href="/register" class="btn btn-outline-primary btn-lg w-100">
-                            Começar Grátis
-                        </a>
-                    </div>
-                </div>
+<div class="terminal-container">
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <i class="fas fa-credit-card"></i> PLANOS: <span class="status-value status-online">DISPONÍVEIS</span>
+        </div>
+        <div class="status-item">
+            <i class="fas fa-users"></i> USUÁRIOS: <span class="status-value status-online">ATIVOS</span>
+        </div>
+        <div class="status-item">
+            <i class="fas fa-shield-alt"></i> SEGURANÇA: <span class="status-value status-online">GARANTIDA</span>
+        </div>
+        <div class="status-item">
+            <i class="fas fa-brain"></i> IA: <span class="status-value status-online">ATIVA</span>
+        </div>
+    </div>
+
+    <!-- Main Content -->
+    <div class="grid-3">
+        <!-- Plano Free -->
+        <div class="terminal-card">
+            <div class="card-title">
+                <i class="fas fa-user"></i> PLANO FREE
             </div>
-
-            <!-- Plano Pro -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card pricing-card featured h-100">
-                    <div class="card-body text-center p-4">
-                        <div class="badge bg-success mb-2">Mais Popular</div>
-                        <h3 class="card-title text-success">💎 Pro</h3>
-                        <div class="price mb-3">
-                            <span class="currency">R$</span>29
-                            <small class="text-muted">/mês</small>
-                        </div>
-                        <p class="text-muted">Para traders ativos</p>
-                        
-                        <ul class="feature-list text-start mb-4">
-                            <li>3 pares (BTC, ETH, SOL)</li>
-                            <li>Alertas ilimitados</li>
-                            <li>Todos timeframes</li>
-                            <li>Tempo real (30s)</li>
-                            <li>Relatórios semanais</li>
-                            <li>API key incluída</li>
-                            <li>1000 requests/dia</li>
-                        </ul>
-                        
-                        <a href="/upgrade/pro" class="btn btn-success btn-lg w-100">
-                            Upgrade para Pro
-                        </a>
-                    </div>
+            <div class="card-content">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 2.5em; color: #00ff00; font-weight: bold;">R$ 0</div>
+                    <div style="color: #00aa00; font-size: 14px;">Para iniciantes e testes</div>
                 </div>
-            </div>
-
-            <!-- Plano Institutional -->
-            <div class="col-lg-4 col-md-6 mb-4">
-                <div class="card pricing-card h-100">
-                    <div class="card-body text-center p-4">
-                        <h3 class="card-title text-dark">🏢 Institutional</h3>
-                        <div class="price mb-3">
-                            <span class="currency">R$</span>99
-                            <small class="text-muted">/mês</small>
-                        </div>
-                        <p class="text-muted">Para empresas e profissionais</p>
-                        
-                        <ul class="feature-list text-start mb-4">
-                            <li>Todos os pares disponíveis</li>
-                            <li>Alertas ilimitados</li>
-                            <li>Tempo real (15s)</li>
-                            <li>SLA garantido (99.9%)</li>
-                            <li>Webhooks personalizados</li>
-                            <li>Painéis dedicados</li>
-                            <li>White-label disponível</li>
-                            <li>10000 requests/dia</li>
-                        </ul>
-                        
-                        <a href="/upgrade/institutional" class="btn btn-dark btn-lg w-100">
-                            Upgrade Institutional
-                        </a>
-                    </div>
+                
+                <div style="color: #00ff00; font-size: 12px; margin-bottom: 15px;">
+                    <strong>INCLUSO:</strong>
+                </div>
+                
+                <div style="color: #00aa00; font-size: 11px; line-height: 1.6;">
+                    ✅ 1 par (BTCUSDT)<br>
+                    ✅ 1-2 alertas por dia<br>
+                    ✅ 1 timeframe (1m)<br>
+                    ✅ Delay: 2-5 minutos<br>
+                    ✅ Acesso ao canal público<br>
+                    ✅ 100 requests/dia<br>
+                    ✅ Análise básica<br>
+                    ✅ Suporte comunitário
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="/register" class="btn-primary" style="display: inline-block; padding: 10px 20px; text-decoration: none;">
+                        <i class="fas fa-rocket"></i> COMEÇAR GRÁTIS
+                    </a>
                 </div>
             </div>
         </div>
-
-        <div class="text-center mt-5">
-            <h4>Por que escolher o SNE Radar?</h4>
-            <div class="row mt-4">
-                <div class="col-md-4">
-                    <i class="fas fa-brain fa-3x text-primary mb-3"></i>
-                    <h5>Algoritmos Neurais</h5>
-                    <p>Indicadores proprietários baseados em IA</p>
+        
+        <!-- Plano Pro -->
+        <div class="terminal-card featured">
+            <div class="card-title" style="color: #00ff00;">
+                <i class="fas fa-crown"></i> PLANO PRO
+            </div>
+            <div class="card-content">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="background: #00ff00; color: #000; padding: 5px 10px; border-radius: 4px; font-size: 10px; margin-bottom: 10px;">
+                        MAIS POPULAR
+                    </div>
+                    <div style="font-size: 2.5em; color: #00ff00; font-weight: bold;">R$ 29</div>
+                    <div style="color: #00aa00; font-size: 14px;">Para traders ativos</div>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-chart-line fa-3x text-success mb-3"></i>
-                    <h5>Análise Multi-Timeframe</h5>
-                    <p>Validação de sinais em múltiplos períodos</p>
+                
+                <div style="color: #00ff00; font-size: 12px; margin-bottom: 15px;">
+                    <strong>INCLUSO:</strong>
                 </div>
-                <div class="col-md-4">
-                    <i class="fas fa-bolt fa-3x text-warning mb-3"></i>
-                    <h5>Tempo Real</h5>
-                    <p>Alertas instantâneos via Telegram</p>
+                
+                <div style="color: #00aa00; font-size: 11px; line-height: 1.6;">
+                    ✅ 3 pares (BTC, ETH, SOL)<br>
+                    ✅ Alertas ilimitados<br>
+                    ✅ Todos timeframes<br>
+                    ✅ Tempo real (30s)<br>
+                    ✅ Relatórios semanais<br>
+                    ✅ API key incluída<br>
+                    ✅ 1000 requests/dia<br>
+                    ✅ Análise avançada<br>
+                    ✅ Suporte prioritário
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="/upgrade/pro" class="btn-success" style="display: inline-block; padding: 10px 20px; text-decoration: none;">
+                        <i class="fas fa-arrow-up"></i> UPGRADE PARA PRO
+                    </a>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Plano Institutional -->
+        <div class="terminal-card">
+            <div class="card-title" style="color: #00ff00;">
+                <i class="fas fa-building"></i> PLANO INSTITUTIONAL
+            </div>
+            <div class="card-content">
+                <div style="text-align: center; margin-bottom: 20px;">
+                    <div style="font-size: 2.5em; color: #00ff00; font-weight: bold;">R$ 99</div>
+                    <div style="color: #00aa00; font-size: 14px;">Para empresas e profissionais</div>
+                </div>
+                
+                <div style="color: #00ff00; font-size: 12px; margin-bottom: 15px;">
+                    <strong>INCLUSO:</strong>
+                </div>
+                
+                <div style="color: #00aa00; font-size: 11px; line-height: 1.6;">
+                    ✅ Todos os pares disponíveis<br>
+                    ✅ Alertas ilimitados<br>
+                    ✅ Tempo real (15s)<br>
+                    ✅ SLA garantido (99.9%)<br>
+                    ✅ Webhooks personalizados<br>
+                    ✅ Painéis dedicados<br>
+                    ✅ White-label disponível<br>
+                    ✅ 10000 requests/dia<br>
+                    ✅ Suporte 24/7
+                </div>
+                
+                <div style="margin-top: 20px; text-align: center;">
+                    <a href="/upgrade/institutional" class="btn-success" style="display: inline-block; padding: 10px 20px; text-decoration: none;">
+                        <i class="fas fa-arrow-up"></i> UPGRADE INSTITUTIONAL
+                    </a>
                 </div>
             </div>
         </div>
     </div>
 
-    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
-</body>
-</html>
+    <!-- Features Section -->
+    <div class="grid-2">
+        <!-- Por que escolher -->
+        <div class="terminal-card">
+            <div class="card-title">
+                <i class="fas fa-question-circle"></i> POR QUE ESCOLHER O SNE RADAR?
+            </div>
+            <div class="card-content">
+                <div style="color: #00aa00; font-size: 12px; line-height: 1.8;">
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-brain" style="color: #00ff00;"></i> 
+                        <strong>ALGORITMOS NEURAIS</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Indicadores proprietários baseados em IA</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-chart-line" style="color: #00ff00;"></i> 
+                        <strong>ANÁLISE MULTI-TIMEFRAME</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Validação de sinais em múltiplos períodos</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-bolt" style="color: #00ff00;"></i> 
+                        <strong>TEMPO REAL</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Alertas instantâneos via Telegram</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-shield-alt" style="color: #00ff00;"></i> 
+                        <strong>SEGURANÇA</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Sistema robusto com fallbacks múltiplos</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Garantias -->
+        <div class="terminal-card">
+            <div class="card-title">
+                <i class="fas fa-shield-alt"></i> GARANTIAS E SUPORTE
+            </div>
+            <div class="card-content">
+                <div style="color: #00aa00; font-size: 12px; line-height: 1.8;">
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-clock" style="color: #00ff00;"></i> 
+                        <strong>GARANTIA DE 7 DIAS</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Devolução do dinheiro se não estiver satisfeito</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-credit-card" style="color: #00ff00;"></i> 
+                        <strong>PAGAMENTO SEGURO</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Stripe e PIX com criptografia SSL</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-sync" style="color: #00ff00;"></i> 
+                        <strong>CANCELAMENTO LIVRE</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Cancele a qualquer momento sem taxas</span>
+                    </div>
+                    
+                    <div style="margin-bottom: 15px;">
+                        <i class="fas fa-headset" style="color: #00ff00;"></i> 
+                        <strong>SUPORTE TÉCNICO</strong><br>
+                        <span style="color: #00aa00; font-size: 11px;">Equipe especializada disponível</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Call to Action -->
+    <div class="terminal-card" style="text-align: center; margin-top: 20px;">
+        <div class="card-title">
+            <i class="fas fa-rocket"></i> PRONTO PARA COMEÇAR?
+        </div>
+        <div class="card-content">
+            <div style="color: #00aa00; font-size: 14px; margin-bottom: 20px;">
+                Junte-se a milhares de traders que já confiam no SNE Radar
+            </div>
+            
+            <div style="margin-bottom: 20px;">
+                <a href="/register" class="btn-primary" style="display: inline-block; padding: 15px 30px; text-decoration: none; margin-right: 15px;">
+                    <i class="fas fa-user-plus"></i> CRIAR CONTA GRÁTIS
+                </a>
+                
+                <a href="/dashboard" class="btn-secondary" style="display: inline-block; padding: 15px 30px; text-decoration: none;">
+                    <i class="fas fa-chart-line"></i> VER DEMO
+                </a>
+            </div>
+            
+            <div style="color: #00aa00; font-size: 11px;">
+                <i class="fas fa-info-circle"></i> 
+                Comece grátis e faça upgrade quando quiser
+            </div>
+        </div>
+    </div>
+</div>
+
+<style>
+.terminal-card.featured {
+    border: 2px solid #00ff00;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.3);
+}
+
+.btn-primary {
+    background: #00ff00;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-primary:hover {
+    background: #00cc00;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+}
+
+.btn-success {
+    background: #00aa00;
+    color: #000;
+    border: none;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-success:hover {
+    background: #008800;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 170, 0, 0.4);
+}
+
+.btn-secondary {
+    background: #333;
+    color: #00ff00;
+    border: 1px solid #00ff00;
+    border-radius: 4px;
+    font-family: 'Courier New', monospace;
+    font-weight: bold;
+    transition: all 0.3s ease;
+}
+
+.btn-secondary:hover {
+    background: #00ff00;
+    color: #000;
+    transform: translateY(-2px);
+    box-shadow: 0 5px 15px rgba(0, 255, 0, 0.4);
+}
+</style>
+
+{% endblock %}
