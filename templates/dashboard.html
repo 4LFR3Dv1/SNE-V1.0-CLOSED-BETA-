@@ -18,6 +18,14 @@
             <div style="color: #00aa00; font-size: 12px;">
                 USUÁRIO: {{ current_user.username }}
             </div>
+            <div style="color: #00aa00; font-size: 12px;">
+                TIER: <span id="user-tier">{{ current_user.tier.upper() }}</span>
+                {% if current_user.tier == 'free' %}
+                    <a href="/pricing" class="btn-upgrade" style="margin-left: 10px; padding: 2px 8px; background: #ff6b35; color: white; text-decoration: none; border-radius: 4px; font-size: 10px;">
+                        UPGRADE
+                    </a>
+                {% endif %}
+            </div>
             <div style="color: #00aa00; font-size: 12px;" id="current-time"></div>
         </div>
     </div>
@@ -88,6 +96,31 @@
     </div>
 
     <div class="grid-2">
+        <!-- User Info -->
+        <div class="terminal-card">
+            <div class="card-title">
+                <i class="fas fa-user"></i> INFORMAÇÕES DO USUÁRIO
+            </div>
+            <div id="user-info" class="scroll-container">
+                <div style="color: #00aa00; font-size: 12px;">
+                    <strong>Tier:</strong> <span id="user-tier-info">{{ current_user.tier.upper() }}</span><br>
+                    <strong>API Calls Hoje:</strong> <span id="api-calls-used">0</span><br>
+                    <strong>Limite Diário:</strong> <span id="api-calls-limit">100</span><br>
+                    {% if current_user.tier == 'free' %}
+                        <div style="margin-top: 10px; padding: 10px; background: #2a2a2a; border-radius: 4px;">
+                            <strong style="color: #ff6b35;">🔒 LIMITAÇÕES DO PLANO FREE:</strong><br>
+                            • Apenas 1 par (BTCUSDT)<br>
+                            • Máximo 2 alertas/dia<br>
+                            • Delay de 2-5 minutos<br>
+                            <a href="/pricing" class="btn-upgrade" style="display: inline-block; margin-top: 10px; padding: 8px 16px; background: #ff6b35; color: white; text-decoration: none; border-radius: 4px;">
+                                💎 UPGRADE PARA PRO
+                            </a>
+                        </div>
+                    {% endif %}
+                </div>
+            </div>
+        </div>
+        
         <!-- Trading Tips -->
         <div class="terminal-card">
             <div class="card-title">
@@ -300,6 +333,25 @@ function loadInitialData() {
     });
     
     loadAlerts();
+    loadUserInfo();
+}
+
+function loadUserInfo() {
+    fetch('/api/user-limits')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('user-tier-info').textContent = data.tier.toUpperCase();
+                document.getElementById('api-calls-used').textContent = data.api_calls_used;
+                document.getElementById('api-calls-limit').textContent = data.limits.api_calls_per_day;
+                
+                // Atualizar tier no header também
+                document.getElementById('user-tier').textContent = data.tier.toUpperCase();
+            }
+        })
+        .catch(error => {
+            console.error('Erro ao carregar informações do usuário:', error);
+        });
 }
 
 function loadAlerts() {

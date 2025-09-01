@@ -76,6 +76,11 @@ class User(UserMixin, db.Model):
     id = db.Column(db.Integer, primary_key=True)
     username = db.Column(db.String(80), unique=True, nullable=False)
     password = db.Column(db.String(120), nullable=False)
+    tier = db.Column(db.String(20), default='free')  # free, pro, institutional
+    api_calls_today = db.Column(db.Integer, default=0)
+    last_api_reset = db.Column(db.Date, default=datetime.date.today)
+    subscription_expires = db.Column(db.DateTime, nullable=True)
+    api_key = db.Column(db.String(64), unique=True, nullable=True)
 
 class MarketData(db.Model):
     id = db.Column(db.Integer, primary_key=True)
@@ -97,6 +102,16 @@ class Alert(db.Model):
     message = db.Column(db.String(200), nullable=False)
     tipo = db.Column(db.String(20), nullable=False)
     timestamp = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+
+class Subscription(db.Model):
+    id = db.Column(db.Integer, primary_key=True)
+    user_id = db.Column(db.Integer, db.ForeignKey('user.id'), nullable=False)
+    tier = db.Column(db.String(20), nullable=False)
+    start_date = db.Column(db.DateTime, default=datetime.datetime.utcnow)
+    end_date = db.Column(db.DateTime, nullable=False)
+    payment_method = db.Column(db.String(50), nullable=False)
+    amount = db.Column(db.Float, nullable=False)
+    status = db.Column(db.String(20), default='active')  # active, cancelled, expired
 
 @login_manager.user_loader
 def load_user(user_id):
@@ -126,6 +141,71 @@ def check_rate_limit(api_name, max_calls=10, window_seconds=60):
     sistema_estado["api_call_count"][api_name] += 1
     
     return True
+
+def check_user_rate_limit(user_id, tier='free'):
+    """Verifica rate limit por usuário baseado no tier"""
+    try:
+        with app.app_context():
+            user = User.query.get(user_id)
+            if not user:
+                return False
+            
+            # Reset diário do contador
+            today = datetime.date.today()
+            if user.last_api_reset != today:
+                user.api_calls_today = 0
+                user.last_api_reset = today
+                db.session.commit()
+            
+            # Limites por tier
+            tier_limits = {
+                'free': 100,        # 100 requests/dia
+                'pro': 1000,        # 1000 requests/dia
+                'institutional': 10000  # 10000 requests/dia
+            }
+            
+            limit = tier_limits.get(tier, 100)
+            
+            if user.api_calls_today >= limit:
+                print(f"⏳ Rate limit usuário {user.username} ({tier}): {user.api_calls_today}/{limit}")
+                return False
+            
+            # Incrementar contador
+            user.api_calls_today += 1
+            db.session.commit()
+            
+            return True
+            
+    except Exception as e:
+        print(f"❌ Erro ao verificar rate limit do usuário: {e}")
+        return False
+
+def get_user_tier_limits(tier):
+    """Retorna limites baseados no tier do usuário"""
+    limits = {
+        'free': {
+            'symbols': ['BTCUSDT'],
+            'timeframes': ['1m'],
+            'update_interval': 300,  # 5 minutos
+            'max_alerts_per_day': 2,
+            'api_calls_per_day': 100
+        },
+        'pro': {
+            'symbols': ['BTCUSDT', 'ETHUSDT', 'SOLUSDT'],
+            'timeframes': ['1m', '5m', '15m', '1h', '4h', '1d'],
+            'update_interval': 30,   # 30 segundos
+            'max_alerts_per_day': -1,  # Ilimitado
+            'api_calls_per_day': 1000
+        },
+        'institutional': {
+            'symbols': ['BTCUSDT', 'ETHUSDT', 'SOLUSDT', 'ADAUSDT', 'DOTUSDT', 'LINKUSDT'],
+            'timeframes': ['1m', '5m', '15m', '1h', '4h', '1d'],
+            'update_interval': 15,   # 15 segundos
+            'max_alerts_per_day': -1,  # Ilimitado
+            'api_calls_per_day': 10000
+        }
+    }
+    return limits.get(tier, limits['free'])
 
 def criar_dados_mock(symbol, interval):
     """Cria dados mock para teste quando API falha"""
@@ -1867,6 +1947,91 @@ def api_validation_stats():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+# Rotas de Monetização
+@app.route('/pricing')
+def pricing():
+    """Página de preços e planos"""
+    return render_template('pricing.html')
+
+@app.route('/upgrade/<tier>')
+@login_required
+def upgrade_tier(tier):
+    """Upgrade para tier específico"""
+    if tier not in ['pro', 'institutional']:
+        flash('Tier inválido')
+        return redirect(url_for('dashboard'))
+    
+    # Preços dos tiers
+    prices = {
+        'pro': 29.99,
+        'institutional': 99.99
+    }
+    
+    return render_template('upgrade.html', tier=tier, price=prices[tier])
+
+@app.route('/api/upgrade', methods=['POST'])
+@login_required
+def api_upgrade():
+    """API para processar upgrade de tier"""
+    try:
+        data = request.json
+        tier = data.get('tier')
+        payment_method = data.get('payment_method', 'stripe')
+        
+        if tier not in ['pro', 'institutional']:
+            return jsonify({'success': False, 'error': 'Tier inválido'})
+        
+        # Preços dos tiers
+        prices = {
+            'pro': 29.99,
+            'institutional': 99.99
+        }
+        
+        price = prices[tier]
+        
+        # Criar subscription
+        subscription = Subscription(
+            user_id=current_user.id,
+            tier=tier,
+            end_date=datetime.datetime.utcnow() + datetime.timedelta(days=30),
+            payment_method=payment_method,
+            amount=price
+        )
+        
+        db.session.add(subscription)
+        
+        # Atualizar usuário
+        current_user.tier = tier
+        current_user.subscription_expires = subscription.end_date
+        
+        db.session.commit()
+        
+        return jsonify({
+            'success': True,
+            'message': f'Upgrade para {tier} realizado com sucesso!',
+            'tier': tier,
+            'expires': subscription.end_date.isoformat()
+        })
+        
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/user-limits')
+@login_required
+def api_user_limits():
+    """Retorna limites do usuário baseado no tier"""
+    try:
+        limits = get_user_tier_limits(current_user.tier)
+        return jsonify({
+            'success': True,
+            'tier': current_user.tier,
+            'limits': limits,
+            'api_calls_used': current_user.api_calls_today,
+            'subscription_expires': current_user.subscription_expires.isoformat() if current_user.subscription_expires else None
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
 # Eventos SocketIO
 @socketio.on('connect')
 def handle_connect():
@@ -1898,10 +2063,16 @@ def init_database():
         
         # Criar usuário padrão se não existir
         if not User.query.filter_by(username='admin').first():
-            user = User(username='admin', password='admin')
+            user = User(
+                username='admin', 
+                password='admin',
+                tier='free',
+                api_calls_today=0,
+                last_api_reset=datetime.date.today()
+            )
             db.session.add(user)
             db.session.commit()
-            print("✅ Usuário padrão criado: admin/admin")
+            print("✅ Usuário padrão criado: admin/admin (tier: free)")
 
 def testar_conectividade_api():
     """Testa conectividade com a API da Binance"""

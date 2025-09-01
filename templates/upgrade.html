@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SNE Radar - Upgrade para {{ tier.title() }}</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <style>
+        .upgrade-card {
+            max-width: 600px;
+            margin: 0 auto;
+        }
+        .feature-highlight {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 15px;
+            margin: 20px 0;
+        }
+        .payment-method {
+            border: 2px solid #e9ecef;
+            border-radius: 10px;
+            padding: 15px;
+            margin: 10px 0;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        .payment-method:hover {
+            border-color: #007bff;
+            background-color: #f8f9fa;
+        }
+        .payment-method.selected {
+            border-color: #007bff;
+            background-color: #e3f2fd;
+        }
+    </style>
+</head>
+<body class="bg-light">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+        <div class="container">
+            <a class="navbar-brand" href="/">
+                <i class="fas fa-radar"></i> SNE Radar
+            </a>
+            <div class="navbar-nav ms-auto">
+                <a class="nav-link" href="/dashboard">Dashboard</a>
+                <a class="nav-link" href="/logout">Logout</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container py-5">
+        <div class="upgrade-card">
+            <div class="text-center mb-4">
+                <h1 class="display-5 mb-3">
+                    {% if tier == 'pro' %}
+                        💎 Upgrade para Pro
+                    {% else %}
+                        🏢 Upgrade para Institutional
+                    {% endif %}
+                </h1>
+                <p class="lead text-muted">Desbloqueie todo o potencial do SNE Radar</p>
+            </div>
+
+            <div class="card shadow">
+                <div class="card-body p-4">
+                    <!-- Resumo do Plano -->
+                    <div class="feature-highlight text-center">
+                        <h3 class="mb-3">
+                            {% if tier == 'pro' %}
+                                Plano Pro - R$ 29/mês
+                            {% else %}
+                                Plano Institutional - R$ 99/mês
+                            {% endif %}
+                        </h3>
+                        <p class="mb-0">
+                            {% if tier == 'pro' %}
+                                Acesso completo para traders ativos
+                            {% else %}
+                                Solução empresarial com SLA garantido
+                            {% endif %}
+                        </p>
+                    </div>
+
+                    <!-- Benefícios do Plano -->
+                    <h5 class="mb-3">🚀 O que você ganha:</h5>
+                    <ul class="list-group list-group-flush mb-4">
+                        {% if tier == 'pro' %}
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                3 pares (BTC, ETH, SOL)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Alertas ilimitados
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Todos timeframes (1m, 5m, 15m, 1h, 4h, 1d)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Tempo real (30s delay)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Relatórios semanais
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                API key incluída
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                1000 requests/dia
+                            </li>
+                        {% else %}
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Todos os pares disponíveis
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Alertas ilimitados
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Tempo real (15s delay)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                SLA garantido (99.9%)
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Webhooks personalizados
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                Painéis dedicados
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                White-label disponível
+                            </li>
+                            <li class="list-group-item">
+                                <i class="fas fa-check text-success me-2"></i>
+                                10000 requests/dia
+                            </li>
+                        {% endif %}
+                    </ul>
+
+                    <!-- Método de Pagamento -->
+                    <h5 class="mb-3">💳 Método de Pagamento:</h5>
+                    <div class="mb-4">
+                        <div class="payment-method selected" data-method="stripe">
+                            <div class="d-flex align-items-center">
+                                <i class="fab fa-stripe fa-2x text-primary me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">Cartão de Crédito/Débito</h6>
+                                    <small class="text-muted">Visa, Mastercard, American Express</small>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="payment-method" data-method="pix">
+                            <div class="d-flex align-items-center">
+                                <i class="fas fa-qrcode fa-2x text-success me-3"></i>
+                                <div>
+                                    <h6 class="mb-1">PIX</h6>
+                                    <small class="text-muted">Pagamento instantâneo brasileiro</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Botão de Upgrade -->
+                    <div class="text-center">
+                        <button id="upgradeBtn" class="btn btn-success btn-lg px-5">
+                            <i class="fas fa-rocket me-2"></i>
+                            Fazer Upgrade Agora
+                        </button>
+                        <p class="text-muted mt-2">
+                            <small>Cancelamento a qualquer momento • Sem taxas ocultas</small>
+                        </p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Garantia -->
+            <div class="text-center mt-4">
+                <div class="card border-success">
+                    <div class="card-body">
+                        <i class="fas fa-shield-alt fa-2x text-success mb-2"></i>
+                        <h6>Garantia de 7 dias</h6>
+                        <p class="mb-0 text-muted">
+                            Se não estiver satisfeito, devolvemos seu dinheiro em até 7 dias
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        // Seleção de método de pagamento
+        document.querySelectorAll('.payment-method').forEach(method => {
+            method.addEventListener('click', function() {
+                document.querySelectorAll('.payment-method').forEach(m => m.classList.remove('selected'));
+                this.classList.add('selected');
+            });
+        });
+
+        // Botão de upgrade
+        document.getElementById('upgradeBtn').addEventListener('click', async function() {
+            const selectedMethod = document.querySelector('.payment-method.selected').dataset.method;
+            const tier = '{{ tier }}';
+            
+            this.disabled = true;
+            this.innerHTML = '<i class="fas fa-spinner fa-spin me-2"></i>Processando...';
+            
+            try {
+                const response = await fetch('/api/upgrade', {
+                    method: 'POST',
+                    headers: {
+                        'Content-Type': 'application/json',
+                    },
+                    body: JSON.stringify({
+                        tier: tier,
+                        payment_method: selectedMethod
+                    })
+                });
+                
+                const result = await response.json();
+                
+                if (result.success) {
+                    alert('Upgrade realizado com sucesso! Redirecionando...');
+                    window.location.href = '/dashboard';
+                } else {
+                    alert('Erro: ' + result.error);
+                    this.disabled = false;
+                    this.innerHTML = '<i class="fas fa-rocket me-2"></i>Fazer Upgrade Agora';
+                }
+            } catch (error) {
+                alert('Erro ao processar upgrade: ' + error.message);
+                this.disabled = false;
+                this.innerHTML = '<i class="fas fa-rocket me-2"></i>Fazer Upgrade Agora';
+            }
+        });
+    </script>
+</body>
+</html>
