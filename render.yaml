@@ -1,0 +1,23 @@
+services:
+  - type: web
+    name: sne-radar
+    env: python
+    region: oregon
+    plan: starter
+    pythonVersion: 3.11
+    healthCheckPath: /
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: CHAT_ID
+        sync: false
+      - key: DEBUG
+        value: false
+      - key: PORT
+        value: 10000
+    buildCommand: pip install -r requirements.txt
+    startCommand: python sne_radar_web.py

@@ -1126,7 +1126,8 @@ def main():
         print("👤 Login: admin / admin")
         
         # Executar Flask
-        socketio.run(app, host='0.0.0.0', port=9999, debug=False)
+        port = int(os.environ.get('PORT', 9999))
+        socketio.run(app, host='0.0.0.0', port=port, debug=False)
         
     except KeyboardInterrupt:
         print("\n⏹️ Encerrando SNE Radar Web...")
