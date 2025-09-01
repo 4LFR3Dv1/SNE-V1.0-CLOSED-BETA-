@@ -1573,9 +1573,13 @@ def calcular_forca_mercado(df, volume_ratio, volatilidade, rsi):
 def analisar_simbolo(symbol):
     """Análise completa de um símbolo"""
     try:
+        print(f"🔍 Buscando dados para {symbol}...")
         df = buscar_dados_binance(symbol, interval, limit)
         if df is None or df.empty:
+            print(f"❌ Dados vazios para {symbol}")
             return None
+        
+        print(f"✅ Dados obtidos para {symbol}: {len(df)} registros")
         
         ruptura, percentual = detectar_ruptura(df)
         
@@ -1637,15 +1641,22 @@ def analisar_simbolo(symbol):
 
 def executar_ciclo_analise():
     """Executa ciclo de análise contínua"""
+    print("🔄 Iniciando ciclo de análise...")
     while sistema_estado["ativo"]:
         try:
+            print(f"📊 Processando {len(symbols)} símbolos...")
             dados_atualizados = {}
             
             for symbol in symbols:
+                print(f"🔍 Analisando {symbol}...")
                 analise = analisar_simbolo(symbol)
                 if analise:
                     dados_atualizados[symbol] = analise
+                    print(f"✅ {symbol} processado com sucesso")
+                else:
+                    print(f"❌ {symbol} falhou na análise")
             
+            print(f"📈 {len(dados_atualizados)} símbolos atualizados")
             sistema_estado["dados_mercado"] = dados_atualizados
             sistema_estado["ultima_atualizacao"] = datetime.datetime.now()
             
