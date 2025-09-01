@@ -6,10 +6,14 @@ Dashboard web com análise estratégica, múltiplos pares e recomendações de t
 """
 
 import os, json, threading, webbrowser, time, datetime, sys, requests, pandas as pd, numpy as np, platform, random, pytz
+import urllib3
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash, make_response
 from flask_socketio import SocketIO, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+
+# Desabilitar warnings SSL
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
 # Importar sistema de validação multi-timeframe
 try:
@@ -232,7 +236,7 @@ def buscar_dados_coingecko(symbol, interval, limit):
         # Delay para evitar rate limit
         time.sleep(1)
         
-        response = requests.get(url, params=params, timeout=15)
+        response = requests.get(url, params=params, timeout=15, verify=False)
         
         if response.status_code != 200:
             print(f"❌ Erro na API CoinGecko: {response.status_code}")
@@ -926,7 +930,7 @@ def buscar_dados_binance(symbol, interval, limit):
         # Delay para respeitar rate limit
         time.sleep(0.1)
         
-        response = requests.get(url, params=params, headers=headers, proxies=proxies, timeout=30)
+        response = requests.get(url, params=params, headers=headers, proxies=proxies, timeout=30, verify=False)
         
         if response.status_code != 200:
             print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
