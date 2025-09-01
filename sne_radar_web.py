@@ -45,7 +45,7 @@ socketio = SocketIO(app, cors_allowed_origins="*")
 symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]  # Apenas os símbolos desejados
 interval = "1m"
 limit = 100
-update_interval = 30  # segundos
+update_interval = 120  # segundos (AUMENTADO para economizar requests)
 br_tz = pytz.timezone("America/Sao_Paulo")
 
 # Configurações multi-timeframe
@@ -885,10 +885,10 @@ def buscar_dados_kraken(symbol, interval, limit):
         return buscar_dados_coingecko(symbol, interval, limit)
 
 def buscar_dados_binance(symbol, interval, limit):
-    """Busca dados da Binance Data API (API pública sem geoblocking)"""
+    """Busca dados da Binance via ScraperAPI (USO LIMITADO)"""
     try:
-        # Verificar rate limit
-        if not check_rate_limit("binance", max_calls=30, window_seconds=10):
+        # Verificar rate limit (MUITO REDUZIDO para economizar ScraperAPI)
+        if not check_rate_limit("binance", max_calls=5, window_seconds=300):  # 5 calls/5min
             print(f"⏳ Rate limit Binance atingido para {symbol}")
             return buscar_dados_coingecko(symbol, interval, limit)
         
