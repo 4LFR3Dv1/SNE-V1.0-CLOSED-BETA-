@@ -864,17 +864,42 @@ def buscar_dados_kraken(symbol, interval, limit):
         return buscar_dados_coingecko(symbol, interval, limit)
 
 def buscar_dados_binance(symbol, interval, limit):
-    """Busca dados da Binance API (fallback para CoinGecko)"""
+    """Busca dados da Binance Data API (API pública sem geoblocking)"""
     try:
-        url = "https://api.binance.com/api/v3/klines"
-        params = {"symbol": symbol, "interval": "1m", "limit": limit}
+        # Verificar rate limit
+        if not check_rate_limit("binance_data", max_calls=20, window_seconds=10):
+            print(f"⏳ Rate limit Binance Data atingido para {symbol}")
+            return buscar_dados_kraken(symbol, interval, limit)
         
-        print(f"🔍 Buscando dados: {symbol} {interval}...")
+        # Mapear intervalos para Binance Data API
+        interval_mapping = {
+            "1m": "1m",
+            "5m": "5m", 
+            "15m": "15m",
+            "1h": "1h",
+            "4h": "4h",
+            "1d": "1d"
+        }
+        
+        binance_interval = interval_mapping.get(interval, "1m")
+        
+        # Binance Data API (pública, sem geoblocking)
+        url = f"https://data.binance.com/api/v3/klines"
+        params = {
+            "symbol": symbol,
+            "interval": binance_interval,
+            "limit": limit
+        }
+        
+        print(f"🔍 Buscando dados Binance Data: {symbol} {interval}...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.05)
         
         response = requests.get(url, params=params, timeout=15)
         
         if response.status_code != 200:
-            print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
+            print(f"❌ Erro na API Binance Data: {response.status_code} - {response.text}")
             print("🔄 Tentando Kraken API...")
             return buscar_dados_kraken(symbol, interval, limit)
             
@@ -906,6 +931,7 @@ def buscar_dados_binance(symbol, interval, limit):
         df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
         df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
         
+        print(f"✅ Dados Binance Data carregados para {symbol}")
         return df
     except Exception as e:
         print(f"❌ Erro ao buscar dados: {e}")
