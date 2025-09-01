@@ -1,0 +1,44 @@
+{% extends "base.html" %}
+{% block title %}Login - SNE Radar{% endblock %}
+{% block content %}
+<div class="login-container">
+    <div class="login-form">
+        <div class="login-title">
+            <i class="fas fa-rocket"></i> SNE RADAR
+        </div>
+        <div style="text-align: center; color: #00aa00; margin-bottom: 20px; font-size: 12px;">
+            SISTEMA NEURAL ESTRATÉGICO
+        </div>
+        
+        {% with messages = get_flashed_messages() %}
+            {% if messages %}
+                {% for message in messages %}
+                    <div style="background-color: #1a0000; border: 1px solid #ff0000; color: #ff0000; padding: 10px; margin-bottom: 15px; border-radius: 3px;">
+                        <i class="fas fa-exclamation-triangle"></i> {{ message }}
+                    </div>
+                {% endfor %}
+            {% endif %}
+        {% endwith %}
+        
+        <form method="POST">
+            <div class="form-group">
+                <label class="form-label">USUÁRIO</label>
+                <input type="text" name="username" required class="form-input">
+            </div>
+            <div class="form-group">
+                <label class="form-label">SENHA</label>
+                <input type="password" name="password" required class="form-input">
+            </div>
+            <button type="submit" class="btn-primary">
+                <i class="fas fa-sign-in-alt"></i> ENTRAR NO SISTEMA
+            </button>
+        </form>
+        
+        <div style="text-align: center; margin-top: 20px;">
+            <a href="{{ url_for('register') }}" style="color: #00ff00; text-decoration: none; font-size: 12px;">
+                <i class="fas fa-user-plus"></i> CRIAR CONTA
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}
