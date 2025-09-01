@@ -223,9 +223,15 @@ def buscar_dados_coingecko(symbol, interval, limit):
         url = f"https://api.coingecko.com/api/v3/coins/{coin_id}/market_chart"
         params = {
             "vs_currency": "usd",
-            "days": "1",  # 1 dia de dados
-            "interval": "hourly" if interval in ["1h", "4h"] else "minute",
-            "x_cg_demo_api_key": COINGECKO_KEY
+            "days": "1"  # 1 dia de dados (sem interval para dados por minuto)
+        }
+        
+        # Headers para CoinGecko com API key
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "X-CG-Demo-API-Key": COINGECKO_KEY
         }
         
         print(f"🔍 Buscando dados CoinGecko Pro: {symbol} ({coin_id})...")
@@ -896,11 +902,12 @@ def buscar_dados_binance(symbol, interval, limit):
         binance_interval = interval_mapping.get(interval, "1m")
         
         # ScraperAPI para Binance (proxy + anti-geoblocking)
-        url = f"http://api.scraperapi.com/api/v1"
+        url = f"http://api.scraperapi.com"
         params = {
             "api_key": SCRAPERAPI_KEY,
             "url": f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={binance_interval}&limit={limit}",
             "country_code": "us",
+            "ultra_premium": "true",
             "render": "false"
         }
         
