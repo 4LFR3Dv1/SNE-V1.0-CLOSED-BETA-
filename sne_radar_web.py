@@ -204,7 +204,7 @@ def buscar_dados_coingecko(symbol, interval, limit):
         # Verificar rate limit (máximo 5 chamadas por minuto)
         if not check_rate_limit("coingecko", max_calls=5, window_seconds=60):
             print(f"⏳ Rate limit CoinGecko atingido para {symbol}")
-            return buscar_dados_simples(symbol, interval, limit)
+            return buscar_dados_bybit(symbol, interval, limit)
         
         # Mapear símbolos para IDs do CoinGecko
         symbol_mapping = {
