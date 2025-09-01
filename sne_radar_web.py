@@ -41,6 +41,9 @@ login_manager.init_app(app)
 login_manager.login_view = 'login'
 socketio = SocketIO(app, cors_allowed_origins="*")
 
+# Importar inspector para verificação de colunas
+from sqlalchemy import inspect
+
 # Configurações do sistema
 symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]  # Apenas os símbolos desejados
 interval = "1m"
@@ -2059,20 +2062,55 @@ def create_templates():
 def init_database():
     """Inicializa banco de dados"""
     with app.app_context():
-        db.create_all()
-        
-        # Criar usuário padrão se não existir
-        if not User.query.filter_by(username='admin').first():
-            user = User(
-                username='admin', 
-                password='admin',
-                tier='free',
-                api_calls_today=0,
-                last_api_reset=datetime.date.today()
-            )
-            db.session.add(user)
-            db.session.commit()
-            print("✅ Usuário padrão criado: admin/admin (tier: free)")
+        try:
+            # Tentar criar/atualizar banco
+            db.create_all()
+            
+            # Verificar se as novas colunas existem
+            inspector = db.inspect(db.engine)
+            columns = [col['name'] for col in inspector.get_columns('user')]
+            
+            if 'tier' not in columns:
+                print("⚠️ Colunas de monetização não encontradas. Recriando banco...")
+                db.drop_all()
+                db.create_all()
+                print("✅ Banco recriado com sucesso!")
+            
+            # Criar usuário padrão se não existir
+            if not User.query.filter_by(username='admin').first():
+                user = User(
+                    username='admin', 
+                    password='admin',
+                    tier='free',
+                    api_calls_today=0,
+                    last_api_reset=datetime.date.today()
+                )
+                db.session.add(user)
+                db.session.commit()
+                print("✅ Usuário padrão criado: admin/admin (tier: free)")
+            
+            print("✅ Banco de dados inicializado com sucesso!")
+            
+        except Exception as e:
+            print(f"❌ Erro ao inicializar banco: {e}")
+            print("🔄 Tentando recriar banco...")
+            try:
+                db.drop_all()
+                db.create_all()
+                
+                user = User(
+                    username='admin', 
+                    password='admin',
+                    tier='free',
+                    api_calls_today=0,
+                    last_api_reset=datetime.date.today()
+                )
+                db.session.add(user)
+                db.session.commit()
+                print("✅ Banco recriado com sucesso!")
+            except Exception as e2:
+                print(f"❌ Erro fatal ao recriar banco: {e2}")
+                raise e2
 
 def testar_conectividade_api():
     """Testa conectividade com a API da Binance"""
