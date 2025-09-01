@@ -110,6 +110,7 @@ def check_rate_limit(api_name, max_calls=10, window_seconds=60):
     
     # Verificar se pode fazer nova chamada
     if len(sistema_estado["last_api_call"][api_name]) >= max_calls:
+        print(f"⏳ Rate limit {api_name}: {len(sistema_estado['last_api_call'][api_name])}/{max_calls} calls")
         return False
     
     # Registrar nova chamada
@@ -203,7 +204,7 @@ def buscar_dados_coingecko(symbol, interval, limit):
         # Verificar rate limit (máximo 5 chamadas por minuto)
         if not check_rate_limit("coingecko", max_calls=5, window_seconds=60):
             print(f"⏳ Rate limit CoinGecko atingido para {symbol}")
-            return criar_dados_mock(symbol, interval)
+            return buscar_dados_simples(symbol, interval, limit)
         
         # Mapear símbolos para IDs do CoinGecko
         symbol_mapping = {
@@ -307,14 +308,45 @@ def buscar_dados_kraken(symbol, interval, limit):
             print(f"⏳ Rate limit Kraken atingido para {symbol}")
             return buscar_dados_coingecko(symbol, interval, limit)
         
-        # Mapear símbolos para Kraken
+        # Mapear símbolos para Kraken (nomes corretos)
         symbol_mapping = {
             "BTCUSDT": "XBTUSD",
             "ETHUSDT": "ETHUSD", 
             "SOLUSDT": "SOLUSD"
         }
         
+        # Verificar se o símbolo existe na Kraken
         kraken_symbol = symbol_mapping.get(symbol, "XBTUSD")
+        
+        # Testar primeiro se o par existe
+        test_url = "https://api.kraken.com/0/public/AssetPairs"
+        test_response = requests.get(test_url, timeout=10)
+        
+        if test_response.status_code == 200:
+            pairs_data = test_response.json()
+            available_pairs = pairs_data.get("result", {}).keys()
+            
+            # Tentar variações do símbolo
+            possible_symbols = [
+                kraken_symbol,
+                f"{kraken_symbol}.d",  # Com .d
+                kraken_symbol.replace("USD", "USDT"),  # USDT em vez de USD
+                kraken_symbol.replace("XBT", "BTC")  # BTC em vez de XBT
+            ]
+            
+            # Encontrar símbolo válido
+            valid_symbol = None
+            for sym in possible_symbols:
+                if sym in available_pairs:
+                    valid_symbol = sym
+                    break
+            
+            if valid_symbol:
+                kraken_symbol = valid_symbol
+                print(f"✅ Símbolo Kraken encontrado: {kraken_symbol}")
+            else:
+                print(f"❌ Símbolo {kraken_symbol} não encontrado na Kraken")
+                return buscar_dados_coingecko(symbol, interval, limit)
         
         # Mapear intervalos para Kraken
         interval_mapping = {
