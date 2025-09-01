@@ -58,7 +58,9 @@ sistema_estado = {
     "rupturas_detectadas": [],
     "alertas_enviados": 0,
     "inicio_execucao": None,
-    "analise_thread": None
+    "analise_thread": None,
+    "last_api_call": {},  # Rate limiting por API
+    "api_call_count": {}  # Contador de chamadas
 }
 
 # Modelos de dados
@@ -91,6 +93,30 @@ class Alert(db.Model):
 @login_manager.user_loader
 def load_user(user_id):
     return User.query.get(int(user_id))
+
+def check_rate_limit(api_name, max_calls=10, window_seconds=60):
+    """Verifica rate limit para APIs"""
+    now = time.time()
+    
+    if api_name not in sistema_estado["last_api_call"]:
+        sistema_estado["last_api_call"][api_name] = []
+        sistema_estado["api_call_count"][api_name] = 0
+    
+    # Limpar chamadas antigas
+    sistema_estado["last_api_call"][api_name] = [
+        call_time for call_time in sistema_estado["last_api_call"][api_name]
+        if now - call_time < window_seconds
+    ]
+    
+    # Verificar se pode fazer nova chamada
+    if len(sistema_estado["last_api_call"][api_name]) >= max_calls:
+        return False
+    
+    # Registrar nova chamada
+    sistema_estado["last_api_call"][api_name].append(now)
+    sistema_estado["api_call_count"][api_name] += 1
+    
+    return True
 
 def criar_dados_mock(symbol, interval):
     """Cria dados mock para teste quando API falha"""
@@ -174,6 +200,11 @@ def criar_dados_mock(symbol, interval):
 def buscar_dados_coingecko(symbol, interval, limit):
     """Busca dados da CoinGecko API (alternativa à Binance)"""
     try:
+        # Verificar rate limit (máximo 5 chamadas por minuto)
+        if not check_rate_limit("coingecko", max_calls=5, window_seconds=60):
+            print(f"⏳ Rate limit CoinGecko atingido para {symbol}")
+            return criar_dados_mock(symbol, interval)
+        
         # Mapear símbolos para IDs do CoinGecko
         symbol_mapping = {
             "BTCUSDT": "bitcoin",
@@ -193,10 +224,14 @@ def buscar_dados_coingecko(symbol, interval, limit):
         
         print(f"🔍 Buscando dados CoinGecko: {symbol} ({coin_id})...")
         
+        # Adicionar delay para evitar rate limit
+        time.sleep(1)
+        
         response = requests.get(url, params=params, timeout=15)
         
         if response.status_code != 200:
             print(f"❌ Erro na API CoinGecko: {response.status_code}")
+            print("🔄 Usando dados mock como último recurso...")
             return criar_dados_mock(symbol, interval)
             
         data = response.json()
@@ -262,7 +297,113 @@ def buscar_dados_coingecko(symbol, interval, limit):
         
     except Exception as e:
         print(f"❌ Erro ao buscar dados CoinGecko: {e}")
-        return criar_dados_mock(symbol, interval)
+                 return criar_dados_mock(symbol, interval)
+
+def buscar_dados_kraken(symbol, interval, limit):
+    """Busca dados da Kraken API (alternativa confiável)"""
+    try:
+        # Verificar rate limit (máximo 10 chamadas por 10 segundos)
+        if not check_rate_limit("kraken", max_calls=10, window_seconds=10):
+            print(f"⏳ Rate limit Kraken atingido para {symbol}")
+            return buscar_dados_coingecko(symbol, interval, limit)
+        
+        # Mapear símbolos para Kraken
+        symbol_mapping = {
+            "BTCUSDT": "XBTUSD",
+            "ETHUSDT": "ETHUSD", 
+            "SOLUSDT": "SOLUSD"
+        }
+        
+        kraken_symbol = symbol_mapping.get(symbol, "XBTUSD")
+        
+        # Mapear intervalos para Kraken
+        interval_mapping = {
+            "1m": 1,
+            "5m": 5,
+            "15m": 15,
+            "1h": 60,
+            "4h": 240,
+            "1d": 1440
+        }
+        
+        kraken_interval = interval_mapping.get(interval, 1)
+        
+        # API Kraken OHLC
+        url = "https://api.kraken.com/0/public/OHLC"
+        params = {
+            "pair": kraken_symbol,
+            "interval": kraken_interval,
+            "since": int((time.time() - 86400) * 1000)  # Últimas 24h
+        }
+        
+        print(f"🔍 Buscando dados Kraken: {symbol} ({kraken_symbol})...")
+        
+        # Delay para respeitar rate limit
+        time.sleep(0.1)
+        
+        response = requests.get(url, params=params, timeout=15)
+        
+        if response.status_code != 200:
+            print(f"❌ Erro na API Kraken: {response.status_code}")
+            return buscar_dados_coingecko(symbol, interval, limit)
+            
+        data = response.json()
+        
+        if not data or "error" in data or not data.get("result"):
+            print(f"❌ Dados vazios da Kraken para {symbol}")
+            return buscar_dados_coingecko(symbol, interval, limit)
+        
+        # Extrair dados OHLC
+        ohlc_data = data["result"][kraken_symbol]
+        
+        # Criar DataFrame
+        df_data = []
+        for candle in ohlc_data:
+            timestamp, open_price, high_price, low_price, close_price, vwap, volume, count = candle
+            
+            df_data.append([
+                timestamp * 1000,  # open_time (ms)
+                float(open_price),
+                float(high_price),
+                float(low_price),
+                float(close_price),
+                float(volume),
+                (timestamp + kraken_interval * 60) * 1000,  # close_time
+                float(volume) * 0.5,  # qav
+                int(count),  # trades
+                float(volume) * 0.3,  # tbb
+                float(volume) * 0.7,  # tbq
+                0  # ignore
+            ])
+        
+        df = pd.DataFrame(df_data, columns=[
+            "open_time", "open", "high", "low", "close", "volume",
+            "close_time", "qav", "trades", "tbb", "tbq", "ignore"
+        ])
+        
+        df["time"] = pd.to_datetime(df["open_time"], unit="ms").dt.tz_localize("UTC").dt.tz_convert(br_tz)
+        df = df[["time", "open", "high", "low", "close", "volume", "trades"]].astype({
+            "open": float, "high": float, "low": float, "close": float,
+            "volume": float, "trades": int
+        })
+        df.set_index("time", inplace=True)
+        
+        # Calcular indicadores técnicos
+        df["EMA8"] = df["close"].ewm(span=8).mean()
+        df["EMA21"] = df["close"].ewm(span=21).mean()
+        df["SMA200"] = df["close"].rolling(window=20).mean()
+        df["densidade"] = 1 / (abs(df["EMA8"] - df["EMA21"]) + abs(df["EMA21"] - df["SMA200"]) + 1e-6)
+        df["ruptura"] = (df["densidade"].diff().abs() > df["densidade"].diff().abs().quantile(0.98)) & \
+                        (df["volume"] > df["volume"].quantile(0.9))
+        df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
+        df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
+        
+        print(f"✅ Dados Kraken carregados para {symbol}")
+        return df
+        
+    except Exception as e:
+        print(f"❌ Erro ao buscar dados Kraken: {e}")
+        return buscar_dados_coingecko(symbol, interval, limit)
 
 def buscar_dados_binance(symbol, interval, limit):
     """Busca dados da Binance API (fallback para CoinGecko)"""
@@ -276,8 +417,8 @@ def buscar_dados_binance(symbol, interval, limit):
         
         if response.status_code != 200:
             print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
-            print("🔄 Tentando CoinGecko API...")
-            return buscar_dados_coingecko(symbol, interval, limit)
+            print("🔄 Tentando Kraken API...")
+            return buscar_dados_kraken(symbol, interval, limit)
             
         data = response.json()
         
