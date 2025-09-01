@@ -297,7 +297,7 @@ def buscar_dados_coingecko(symbol, interval, limit):
         
     except Exception as e:
         print(f"❌ Erro ao buscar dados CoinGecko: {e}")
-                 return criar_dados_mock(symbol, interval)
+        return criar_dados_mock(symbol, interval)
 
 def buscar_dados_kraken(symbol, interval, limit):
     """Busca dados da Kraken API (alternativa confiável)"""
