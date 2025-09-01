@@ -883,23 +883,32 @@ def buscar_dados_binance(symbol, interval, limit):
         
         binance_interval = interval_mapping.get(interval, "1m")
         
-        # Binance Data API (pública, sem geoblocking)
-        url = f"https://data.binance.com/api/v3/klines"
+        # Binance API oficial (funcionando)
+        url = f"https://api.binance.com/api/v3/klines"
         params = {
             "symbol": symbol,
             "interval": binance_interval,
             "limit": limit
         }
         
-        print(f"🔍 Buscando dados Binance Data: {symbol} {interval}...")
+        print(f"🔍 Buscando dados Binance: {symbol} {interval}...")
         
         # Delay para respeitar rate limit
         time.sleep(0.05)
         
-        response = requests.get(url, params=params, timeout=15)
+        # Headers para evitar geoblocking
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9",
+            "Accept-Encoding": "gzip, deflate, br",
+            "Connection": "keep-alive"
+        }
+        
+        response = requests.get(url, params=params, headers=headers, timeout=15)
         
         if response.status_code != 200:
-            print(f"❌ Erro na API Binance Data: {response.status_code} - {response.text}")
+            print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
             print("🔄 Tentando Kraken API...")
             return buscar_dados_kraken(symbol, interval, limit)
             
@@ -931,7 +940,7 @@ def buscar_dados_binance(symbol, interval, limit):
         df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
         df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
         
-        print(f"✅ Dados Binance Data carregados para {symbol}")
+        print(f"✅ Dados Binance carregados para {symbol}")
         return df
     except Exception as e:
         print(f"❌ Erro ao buscar dados: {e}")
