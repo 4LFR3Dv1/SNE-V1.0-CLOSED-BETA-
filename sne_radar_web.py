@@ -205,8 +205,8 @@ def criar_dados_mock(symbol, interval):
 def buscar_dados_coingecko(symbol, interval, limit):
     """Busca dados da CoinGecko API com ScraperAPI (proxy + API key)"""
     try:
-        # Verificar rate limit (máximo 50 chamadas por minuto com API key)
-        if not check_rate_limit("coingecko", max_calls=50, window_seconds=60):
+        # Verificar rate limit (máximo 10 chamadas por minuto com API key)
+        if not check_rate_limit("coingecko", max_calls=10, window_seconds=60):
             print(f"⏳ Rate limit CoinGecko atingido para {symbol}")
             return buscar_dados_bybit(symbol, interval, limit)
         
@@ -244,7 +244,7 @@ def buscar_dados_coingecko(symbol, interval, limit):
         }
         
         # Delay para evitar rate limit
-        time.sleep(0.1)
+        time.sleep(2)
         
         response = requests.get(url, params=params, headers=headers, timeout=15)
         
@@ -901,22 +901,27 @@ def buscar_dados_binance(symbol, interval, limit):
         
         binance_interval = interval_mapping.get(interval, "1m")
         
-        # ScraperAPI para Binance (proxy + anti-geoblocking)
-        url = f"http://api.scraperapi.com"
+        # Binance API direta (pode falhar por geoblocking)
+        url = f"https://api.binance.com/api/v3/klines"
         params = {
-            "api_key": SCRAPERAPI_KEY,
-            "url": f"https://api.binance.com/api/v3/klines?symbol={symbol}&interval={binance_interval}&limit={limit}",
-            "country_code": "us",
-            "ultra_premium": "true",
-            "render": "false"
+            "symbol": symbol,
+            "interval": binance_interval,
+            "limit": limit
         }
         
-        print(f"🔍 Buscando dados Binance via ScraperAPI: {symbol} {interval}...")
+        print(f"🔍 Buscando dados Binance: {symbol} {interval}...")
+        
+        # Headers para evitar geoblocking
+        headers = {
+            "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36",
+            "Accept": "application/json",
+            "Accept-Language": "en-US,en;q=0.9"
+        }
         
         # Delay para respeitar rate limit
         time.sleep(0.1)
         
-        response = requests.get(url, params=params, timeout=30)
+        response = requests.get(url, params=params, headers=headers, timeout=15)
         
         if response.status_code != 200:
             print(f"❌ Erro na API Binance: {response.status_code} - {response.text}")
@@ -951,7 +956,7 @@ def buscar_dados_binance(symbol, interval, limit):
         df["sinal_compra"] = (df["EMA8"] > df["EMA21"]) & (df["EMA8"].shift(1) <= df["EMA21"].shift(1))
         df["sinal_venda"] = (df["EMA8"] < df["EMA21"]) & (df["EMA8"].shift(1) >= df["EMA21"].shift(1))
         
-        print(f"✅ Dados Binance via ScraperAPI carregados para {symbol}")
+        print(f"✅ Dados Binance carregados para {symbol}")
         return df
     except Exception as e:
         print(f"❌ Erro ao buscar dados: {e}")
