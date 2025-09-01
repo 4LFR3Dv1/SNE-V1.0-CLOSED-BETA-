@@ -847,8 +847,11 @@ def start_market_analysis():
 def stop_market_analysis():
     """Para análise de mercado"""
     sistema_estado["ativo"] = False
-    if sistema_estado["analise_thread"]:
-        sistema_estado["analise_thread"].join()
+    if sistema_estado["analise_thread"] and sistema_estado["analise_thread"].is_alive():
+        try:
+            sistema_estado["analise_thread"].join(timeout=5)
+        except:
+            pass
     print("⏹️ Análise de mercado parada")
 
 # Rotas Flask
@@ -1127,7 +1130,7 @@ def main():
         
         # Executar Flask
         port = int(os.environ.get('PORT', 9999))
-        socketio.run(app, host='0.0.0.0', port=port, debug=False)
+        socketio.run(app, host='0.0.0.0', port=port, debug=False, allow_unsafe_werkzeug=True)
         
     except KeyboardInterrupt:
         print("\n⏹️ Encerrando SNE Radar Web...")
