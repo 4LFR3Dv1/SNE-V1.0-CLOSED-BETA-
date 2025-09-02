@@ -2216,8 +2216,8 @@ def init_database():
     with app.app_context():
         try:
             # Tentar criar/atualizar banco
-        db.create_all()
-        
+            db.create_all()
+            
             # Verificar se as novas colunas existem
             inspector = db.inspect(db.engine)
             columns = [col['name'] for col in inspector.get_columns('user')]
@@ -2228,22 +2228,22 @@ def init_database():
                 db.create_all()
                 print("✅ Banco recriado com sucesso!")
             
-                # Criar usuário padrão se não existir
-        if not User.query.filter_by(username='admin').first():
-            # Criar hash da senha admin
-            admin_password_hash = hash_password('Admin123!')
-            
-            user = User(
-                username='admin', 
-                password=admin_password_hash.decode('utf-8'),
-                tier='free',
-                api_calls_today=0,
-                last_api_reset=datetime.date.today()
-            )
-            db.session.add(user)
-            db.session.commit()
-            print("✅ Usuário padrão criado: admin/Admin123! (tier: free)")
-            print("⚠️ IMPORTANTE: Altere a senha do admin após o primeiro login!")
+            # Criar usuário padrão se não existir
+            if not User.query.filter_by(username='admin').first():
+                # Criar hash da senha admin
+                admin_password_hash = hash_password('Admin123!')
+                
+                user = User(
+                    username='admin', 
+                    password=admin_password_hash.decode('utf-8'),
+                    tier='free',
+                    api_calls_today=0,
+                    last_api_reset=datetime.date.today()
+                )
+                db.session.add(user)
+                db.session.commit()
+                print("✅ Usuário padrão criado: admin/Admin123! (tier: free)")
+                print("⚠️ IMPORTANTE: Altere a senha do admin após o primeiro login!")
             
             print("✅ Banco de dados inicializado com sucesso!")
             
@@ -2254,9 +2254,11 @@ def init_database():
                 db.drop_all()
                 db.create_all()
                 
+                # Criar usuário padrão com hash
+                admin_password_hash = hash_password('Admin123!')
                 user = User(
                     username='admin', 
-                    password='admin',
+                    password=admin_password_hash.decode('utf-8'),
                     tier='free',
                     api_calls_today=0,
                     last_api_reset=datetime.date.today()
