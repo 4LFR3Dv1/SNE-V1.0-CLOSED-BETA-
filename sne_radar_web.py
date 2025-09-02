@@ -2304,6 +2304,96 @@ def open_browser():
     time.sleep(2)
     webbrowser.open('http://localhost:9999')
 
+# === ENDPOINTS ADMINISTRATIVOS SIMPLES ===
+@app.route('/api/users')
+@login_required
+def api_users():
+    """API simples para listar usuários (requer login)"""
+    try:
+        if current_user.username == 'admin':
+            users = User.query.all()
+            user_list = []
+            for user in users:
+                user_list.append({
+                    'id': user.id,
+                    'username': user.username,
+                    'tier': getattr(user, 'tier', 'free'),
+                    'api_calls_today': getattr(user, 'api_calls_today', 0),
+                    'last_api_reset': str(getattr(user, 'last_api_reset', 'N/A'))
+                })
+            return jsonify({'success': True, 'users': user_list, 'total': len(user_list)})
+        else:
+            return jsonify({
+                'success': True, 
+                'users': [{
+                    'id': current_user.id,
+                    'username': current_user.username,
+                    'tier': getattr(current_user, 'tier', 'free'),
+                    'api_calls_today': getattr(current_user, 'api_calls_today', 0),
+                    'last_api_reset': str(getattr(current_user, 'last_api_reset', 'N/A'))
+                }], 
+                'total': 1
+            })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/admin/users')
+@login_required
+def api_admin_users():
+    """API para admin ver usuários (requer ser admin)"""
+    try:
+        if current_user.username != 'admin':
+            return jsonify({'error': 'Acesso negado. Apenas administradores.'}), 403
+        
+        users = User.query.all()
+        user_list = []
+        for user in users:
+            user_list.append({
+                'id': user.id,
+                'username': user.username,
+                'tier': getattr(user, 'tier', 'free'),
+                'api_calls_today': getattr(user, 'api_calls_today', 0),
+                'last_api_reset': str(getattr(user, 'last_api_reset', 'N/A'))
+            })
+        
+        return jsonify({'success': True, 'users': user_list, 'total': len(user_list)})
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
+@app.route('/api/admin/users/stats')
+@login_required
+def api_admin_users_stats():
+    """API para estatísticas de usuários (requer ser admin)"""
+    try:
+        if current_user.username != 'admin':
+            return jsonify({'error': 'Acesso negado. Apenas administradores.'}), 403
+        
+        total_users = User.query.count()
+        
+        from sqlalchemy import func
+        tier_stats = db.session.query(
+            User.tier, 
+            func.count(User.id).label('count')
+        ).group_by(User.tier).all()
+        
+        tier_data = []
+        for tier, count in tier_stats:
+            tier_data.append({
+                'tier': tier or 'free',
+                'count': count,
+                'percentage': round((count / total_users * 100), 1) if total_users > 0 else 0
+            })
+        
+        return jsonify({
+            'success': True,
+            'stats': {
+                'total_users': total_users,
+                'by_tier': tier_data
+            }
+        })
+    except Exception as e:
+        return jsonify({'success': False, 'error': str(e)})
+
 def main():
     """Função principal"""
     try:
