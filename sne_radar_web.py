@@ -1287,8 +1287,6 @@ def analisar_simbolo_estrategico(symbol, df, ruptura, percentual):
             "pulso_magnetico": pulso_magnetico,
             "memoria_neural": memoria_neural,
             "fluxo_mental": fluxo_mental,
-            "validacao_multitimeframe": validacao_multitimeframe,
-            "divergencias": divergencias,
             "estrategia": estrategia,
             "interpretacao": interpretacao,
             "dicas": dicas,
@@ -1824,10 +1822,12 @@ def executar_ciclo_analise():
             # Emitir dados via WebSocket
             with app.app_context():
                 for symbol, dados in dados_atualizados.items():
-                    socketio.emit('market_data', {
+                    dados_emitidos = {
                         'symbol': symbol,
                         'data': serializar_dados_json(dados)
-                    })
+                    }
+                    print(f"📡 Emitindo dados para {symbol}: {len(dados_emitidos['data'])} campos")
+                    socketio.emit('market_data', dados_emitidos)
             
             time.sleep(update_interval)
             
