@@ -21,14 +21,19 @@
             <div style="color: #00aa00; font-size: 12px;">
                 TIER: <span id="user-tier">{{ current_user.tier.upper() }}</span>
                 {% if current_user.tier == 'free' %}
-                    <a href="/pricing" class="btn-upgrade" style="margin-left: 10px; padding: 2px 8px; background: #ff6b35; color: white; text-decoration: none; border-radius: 4px; font-size: 10px;">
+                    <a href="/" class="btn-upgrade" style="margin-left: 10px; padding: 2px 8px; background: #ff6b35; color: white; text-decoration: none; border-radius: 4px; font-size: 10px;">
                         UPGRADE
                     </a>
                 {% else %}
-                    <a href="/pricing" class="btn-upgrade" style="margin-left: 10px; padding: 2px 8px; background: #00aa00; color: black; text-decoration: none; border-radius: 4px; font-size: 10px;">
+                    <a href="/" class="btn-upgrade" style="margin-left: 10px; padding: 2px 8px; background: #00aa00; color: black; text-decoration: none; border-radius: 4px; font-size: 10px;">
                         PLANOS
                     </a>
                 {% endif %}
+            </div>
+            <div style="color: #00aa00; font-size: 12px;">
+                <a href="/" style="color: #00aa00; text-decoration: none; font-size: 10px;">
+                    <i class="fas fa-home"></i> HOME
+                </a>
             </div>
             <div style="color: #00aa00; font-size: 12px;" id="current-time"></div>
         </div>

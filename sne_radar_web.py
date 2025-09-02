@@ -1783,9 +1783,13 @@ def stop_market_analysis():
 # Rotas Flask
 @app.route('/')
 def index():
-    if current_user.is_authenticated:
-        return redirect(url_for('dashboard'))
-    return redirect(url_for('login'))
+    """Homepage - Página de pricing"""
+    return render_template('pricing.html')
+
+@app.route('/home')
+def home():
+    """Redireciona para pricing (homepage)"""
+    return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
@@ -1835,11 +1839,19 @@ def logout():
 @app.route('/dashboard')
 @login_required
 def dashboard():
+    """Dashboard principal para usuários autenticados"""
     response = make_response(render_template('dashboard.html'))
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
     response.headers['Pragma'] = 'no-cache'
     response.headers['Expires'] = '0'
     return response
+
+@app.route('/app')
+def app_redirect():
+    """Redireciona usuários autenticados para dashboard, outros para pricing"""
+    if current_user.is_authenticated:
+        return redirect(url_for('dashboard'))
+    return redirect(url_for('index'))
 
 def serializar_dados_json(dados):
     """Serializa dados para JSON de forma segura"""
