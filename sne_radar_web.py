@@ -34,8 +34,7 @@ app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(32).hex())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sne_radar.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
-# Configurações de segurança
-app.config['SESSION_COOKIE_SECURE'] = True
+# Configurações de segurança (compatíveis com Render)
 app.config['SESSION_COOKIE_HTTPONLY'] = True
 app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
 app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=24)
@@ -2178,13 +2177,10 @@ def api_user_limits():
 # Headers de segurança
 @app.after_request
 def add_security_headers(response):
-    """Adiciona headers de segurança"""
+    """Adiciona headers de segurança (compatíveis com Render)"""
     response.headers['X-Content-Type-Options'] = 'nosniff'
     response.headers['X-Frame-Options'] = 'DENY'
     response.headers['X-XSS-Protection'] = '1; mode=block'
-    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
-    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
-    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:;"
     return response
 
 # Eventos SocketIO
