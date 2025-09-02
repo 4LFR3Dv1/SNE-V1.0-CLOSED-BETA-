@@ -7,10 +7,14 @@ Dashboard web com análise estratégica, múltiplos pares e recomendações de t
 
 import os, json, threading, webbrowser, time, datetime, sys, requests, pandas as pd, numpy as np, platform, random, pytz
 import urllib3
+import bcrypt
+import re
 from flask import Flask, render_template, jsonify, request, redirect, url_for, flash, make_response
 from flask_socketio import SocketIO, emit
 from flask_sqlalchemy import SQLAlchemy
 from flask_login import LoginManager, UserMixin, login_user, login_required, logout_user, current_user
+from flask_limiter import Limiter
+from flask_limiter.util import get_remote_address
 
 # Desabilitar warnings SSL
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -26,9 +30,15 @@ except ImportError as e:
 
 # Configurações Flask
 app = Flask(__name__)
-app.config['SECRET_KEY'] = 'sne_radar_secret_key_2024'
+app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', os.urandom(32).hex())
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///sne_radar.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
+
+# Configurações de segurança
+app.config['SESSION_COOKIE_SECURE'] = True
+app.config['SESSION_COOKIE_HTTPONLY'] = True
+app.config['SESSION_COOKIE_SAMESITE'] = 'Lax'
+app.config['PERMANENT_SESSION_LIFETIME'] = datetime.timedelta(hours=24)
 
 # API Keys
 COINGECKO_KEY = os.environ.get('COINGECKO_KEY', 'CG-dnjaiDwoE6ncJ3djKKUQeSkx')
@@ -39,10 +49,75 @@ db = SQLAlchemy(app)
 login_manager = LoginManager()
 login_manager.init_app(app)
 login_manager.login_view = 'login'
+
+# Rate limiting
+limiter = Limiter(
+    app=app,
+    key_func=get_remote_address,
+    default_limits=["200 per day", "50 per hour"]
+)
+
 socketio = SocketIO(app, cors_allowed_origins="*")
 
 # Importar inspector para verificação de colunas
 from sqlalchemy import inspect
+
+# Funções de segurança
+def sanitize_input(text):
+    """Sanitiza entrada de texto para prevenir XSS e injeção"""
+    if not text:
+        return ""
+    
+    # Remover caracteres perigosos
+    text = re.sub(r'[<>"\']', '', str(text))
+    text = text.strip()
+    
+    # Limitar tamanho
+    if len(text) > 100:
+        text = text[:100]
+    
+    return text
+
+def validate_username(username):
+    """Valida formato do username"""
+    if not username:
+        return False, "Username é obrigatório"
+    
+    username = sanitize_input(username)
+    
+    # Verificar formato (apenas letras, números e underscore)
+    if not re.match(r'^[a-zA-Z0-9_]{3,20}$', username):
+        return False, "Username deve ter 3-20 caracteres (apenas letras, números e _)"
+    
+    return True, username
+
+def validate_password(password):
+    """Valida força da senha"""
+    if not password:
+        return False, "Senha é obrigatória"
+    
+    if len(password) < 8:
+        return False, "Senha deve ter pelo menos 8 caracteres"
+    
+    if not re.search(r'[A-Z]', password):
+        return False, "Senha deve conter pelo menos uma letra maiúscula"
+    
+    if not re.search(r'[a-z]', password):
+        return False, "Senha deve conter pelo menos uma letra minúscula"
+    
+    if not re.search(r'\d', password):
+        return False, "Senha deve conter pelo menos um número"
+    
+    return True, password
+
+def hash_password(password):
+    """Cria hash seguro da senha"""
+    salt = bcrypt.gensalt()
+    return bcrypt.hashpw(password.encode('utf-8'), salt)
+
+def verify_password(password, hashed):
+    """Verifica senha contra hash"""
+    return bcrypt.checkpw(password.encode('utf-8'), hashed)
 
 # Configurações do sistema
 symbols = ["BTCUSDT", "ETHUSDT", "SOLUSDT"]  # Apenas os símbolos desejados
@@ -1792,17 +1867,36 @@ def home():
     return redirect(url_for('index'))
 
 @app.route('/login', methods=['GET', 'POST'])
+@limiter.limit("5 per minute")  # Rate limiting: 5 tentativas por minuto
 def login():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
-        user = User.query.filter_by(username=username).first()
+        # Validar e sanitizar entrada
+        username = request.form.get('username', '')
+        password = request.form.get('password', '')
         
-        if user and user.password == password:
-            login_user(user)
+        # Validação de entrada
+        username_valid, username_msg = validate_username(username)
+        password_valid, password_msg = validate_password(password)
+        
+        if not username_valid:
+            flash(f'❌ {username_msg}')
+            return render_template('login.html')
+        
+        if not password_valid:
+            flash(f'❌ {password_msg}')
+            return render_template('login.html')
+        
+        # Buscar usuário
+        user = User.query.filter_by(username=username_msg).first()
+        
+        if user and verify_password(password, user.password.encode('utf-8')):
+            login_user(user, remember=True)
+            flash(f'✅ Login realizado com sucesso! Bem-vindo, {user.username}')
             return redirect(url_for('dashboard'))
         else:
-            flash('Usuário ou senha inválidos')
+            flash('❌ Usuário ou senha inválidos')
+            # Log de tentativa falhada
+            print(f"⚠️ Tentativa de login falhada para usuário: {username}")
     
     response = make_response(render_template('login.html'))
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
@@ -1811,19 +1905,53 @@ def login():
     return response
 
 @app.route('/register', methods=['GET', 'POST'])
+@limiter.limit("3 per hour")  # Rate limiting: 3 registros por hora
 def register():
     if request.method == 'POST':
-        username = request.form['username']
-        password = request.form['password']
+        # Validar e sanitizar entrada
+        username = request.form.get('username', '')
+        password = request.form.get('password', '')
         
-        if User.query.filter_by(username=username).first():
-            flash('Usuário já existe')
-        else:
-            user = User(username=username, password=password)
+        # Validação de entrada
+        username_valid, username_msg = validate_username(username)
+        password_valid, password_msg = validate_password(password)
+        
+        if not username_valid:
+            flash(f'❌ {username_msg}')
+            return render_template('register.html')
+        
+        if not password_valid:
+            flash(f'❌ {password_msg}')
+            return render_template('register.html')
+        
+        # Verificar se usuário já existe
+        if User.query.filter_by(username=username_msg).first():
+            flash('❌ Usuário já existe')
+            return render_template('register.html')
+        
+        try:
+            # Criar hash da senha
+            password_hash = hash_password(password)
+            
+            # Criar usuário
+            user = User(
+                username=username_msg, 
+                password=password_hash.decode('utf-8'),
+                tier='free',
+                api_calls_today=0,
+                last_api_reset=datetime.date.today()
+            )
+            
             db.session.add(user)
             db.session.commit()
-            flash('Conta criada com sucesso!')
+            
+            flash('✅ Conta criada com sucesso! Faça login para continuar.')
             return redirect(url_for('login'))
+            
+        except Exception as e:
+            db.session.rollback()
+            flash(f'❌ Erro ao criar conta: {str(e)}')
+            print(f"❌ Erro ao criar usuário: {e}")
     
     response = make_response(render_template('register.html'))
     response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
@@ -2047,6 +2175,18 @@ def api_user_limits():
     except Exception as e:
         return jsonify({'success': False, 'error': str(e)})
 
+# Headers de segurança
+@app.after_request
+def add_security_headers(response):
+    """Adiciona headers de segurança"""
+    response.headers['X-Content-Type-Options'] = 'nosniff'
+    response.headers['X-Frame-Options'] = 'DENY'
+    response.headers['X-XSS-Protection'] = '1; mode=block'
+    response.headers['Strict-Transport-Security'] = 'max-age=31536000; includeSubDomains'
+    response.headers['Referrer-Policy'] = 'strict-origin-when-cross-origin'
+    response.headers['Content-Security-Policy'] = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline'; img-src 'self' data: https:; font-src 'self' https:;"
+    return response
+
 # Eventos SocketIO
 @socketio.on('connect')
 def handle_connect():
@@ -2076,8 +2216,8 @@ def init_database():
     with app.app_context():
         try:
             # Tentar criar/atualizar banco
-            db.create_all()
-            
+        db.create_all()
+        
             # Verificar se as novas colunas existem
             inspector = db.inspect(db.engine)
             columns = [col['name'] for col in inspector.get_columns('user')]
@@ -2088,18 +2228,22 @@ def init_database():
                 db.create_all()
                 print("✅ Banco recriado com sucesso!")
             
-            # Criar usuário padrão se não existir
-            if not User.query.filter_by(username='admin').first():
-                user = User(
-                    username='admin', 
-                    password='admin',
-                    tier='free',
-                    api_calls_today=0,
-                    last_api_reset=datetime.date.today()
-                )
-                db.session.add(user)
-                db.session.commit()
-                print("✅ Usuário padrão criado: admin/admin (tier: free)")
+                # Criar usuário padrão se não existir
+        if not User.query.filter_by(username='admin').first():
+            # Criar hash da senha admin
+            admin_password_hash = hash_password('Admin123!')
+            
+            user = User(
+                username='admin', 
+                password=admin_password_hash.decode('utf-8'),
+                tier='free',
+                api_calls_today=0,
+                last_api_reset=datetime.date.today()
+            )
+            db.session.add(user)
+            db.session.commit()
+            print("✅ Usuário padrão criado: admin/Admin123! (tier: free)")
+            print("⚠️ IMPORTANTE: Altere a senha do admin após o primeiro login!")
             
             print("✅ Banco de dados inicializado com sucesso!")
             
