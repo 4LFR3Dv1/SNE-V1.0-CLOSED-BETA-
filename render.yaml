@@ -5,25 +5,33 @@ services:
     region: oregon
     plan: starter
     pythonVersion: 3.11
-    healthCheckPath: /
-               envVars:
-             - key: FLASK_ENV
-               value: production
-             - key: SECRET_KEY
-               generateValue: true
-             - key: FLASK_ENV
-               value: production
-             - key: TELEGRAM_TOKEN
-               sync: false
-             - key: CHAT_ID
-               sync: false
-             - key: COINGECKO_KEY
-               value: CG-dnjaiDwoE6ncJ3djKKUQeSkx
-             - key: SCRAPERAPI_KEY
-               value: 92c73c12f88f65c2525f77ac5511d3d4
-             - key: DEBUG
-               value: false
-             - key: PORT
-               value: 10000
+    healthCheckPath: /health
+    envVars:
+      - key: FLASK_ENV
+        value: production
+      - key: SECRET_KEY
+        generateValue: true
+      - key: TELEGRAM_TOKEN
+        sync: false
+      - key: CHAT_ID
+        sync: false
+      - key: COINGECKO_KEY
+        sync: false
+      - key: SCRAPERAPI_KEY
+        sync: false
+      - key: COINGLASS_API_KEY
+        sync: false
+      - key: COINMARKETCAP_API_KEY
+        sync: false
+      - key: ENABLE_COINGLASS
+        value: "true"
+      - key: ENABLE_CMC
+        value: "true"
+      - key: ENABLE_TA_SUMMARY
+        value: "true"
+      - key: DEBUG
+        value: "false"
+      - key: PORT
+        value: "10000"
     buildCommand: pip install -r requirements.txt
     startCommand: python sne_radar_web.py
