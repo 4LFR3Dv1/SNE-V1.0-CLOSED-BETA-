@@ -25,10 +25,15 @@ DATABASE_CONFIGS = {
     }
 }
 
-def get_database_url(config_name: str = 'local') -> Optional[str]:
+def get_database_url(config_name: str = None) -> Optional[str]:
     """
     Retorna a URL de conexão para o banco especificado
+    Se config_name for None, detecta automaticamente o ambiente
     """
+    # Detectar ambiente automaticamente se não especificado
+    if config_name is None:
+        config_name = 'production' if os.environ.get('FLASK_ENV') == 'production' else 'local'
+    
     if config_name not in DATABASE_CONFIGS:
         print(f"❌ Configuração '{config_name}' não encontrada")
         return None

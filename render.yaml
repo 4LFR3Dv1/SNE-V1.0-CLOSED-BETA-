@@ -6,6 +6,11 @@ services:
     plan: starter
     pythonVersion: 3.11
     healthCheckPath: /health
+  - type: pserv
+    name: sne-radar-db
+    env: postgresql
+    region: oregon
+    plan: starter
     envVars:
       - key: FLASK_ENV
         value: production
@@ -23,6 +28,26 @@ services:
         sync: false
       - key: COINMARKETCAP_API_KEY
         sync: false
+      - key: DB_HOST
+        fromDatabase:
+          name: sne-radar-db
+          property: host
+      - key: DB_PORT
+        fromDatabase:
+          name: sne-radar-db
+          property: port
+      - key: DB_NAME
+        fromDatabase:
+          name: sne-radar-db
+          property: database
+      - key: DB_USER
+        fromDatabase:
+          name: sne-radar-db
+          property: user
+      - key: DB_PASSWORD
+        fromDatabase:
+          name: sne-radar-db
+          property: password
       - key: ENABLE_COINGLASS
         value: "true"
       - key: ENABLE_CMC

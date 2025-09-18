@@ -56,12 +56,11 @@ FLASK_ENV = os.environ.get('FLASK_ENV', 'development').lower()
 IS_PRODUCTION = FLASK_ENV == 'production'
 
 # Banco de dados centralizado via database_config
-db_url = None
-if IS_PRODUCTION:
-    db_url = get_database_url('production')
+# Detecta automaticamente o ambiente (production ou local)
+db_url = get_database_url()
 if not db_url:
-    # fallback para local
-    db_url = get_database_url('local') or 'sqlite:///sne_radar.db'
+    # fallback para SQLite local
+    db_url = 'sqlite:///sne_radar.db'
 
 app.config['SQLALCHEMY_DATABASE_URI'] = db_url
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
