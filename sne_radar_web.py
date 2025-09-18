@@ -160,17 +160,8 @@ def validate_password(password):
     if not password:
         return False, "Senha é obrigatória"
     
-    if len(password) < 8:
-        return False, "Senha deve ter pelo menos 8 caracteres"
-    
-    if not re.search(r'[A-Z]', password):
-        return False, "Senha deve conter pelo menos uma letra maiúscula"
-    
-    if not re.search(r'[a-z]', password):
-        return False, "Senha deve conter pelo menos uma letra minúscula"
-    
-    if not re.search(r'\d', password):
-        return False, "Senha deve conter pelo menos um número"
+    if len(password) < 3:
+        return False, "Senha deve ter pelo menos 3 caracteres"
     
     return True, password
 
@@ -2925,27 +2916,19 @@ def init_database():
                 db.create_all()
                 print("✅ Banco recriado com sucesso!")
             
-            # Bootstrap opcional do admin via variáveis de ambiente (sem credenciais padrão)
+            # Criar usuário admin padrão para desenvolvimento
             if not User.query.filter_by(username='admin').first():
-                if os.environ.get('BOOTSTRAP_ADMIN', 'false').lower() == 'true':
-                    admin_user = os.environ.get('ADMIN_USERNAME', 'admin')
-                    admin_pass = os.environ.get('ADMIN_PASSWORD')
-                    if not admin_pass or len(admin_pass) < 12:
-                        print("⚠️ ADMIN_PASSWORD não definido ou muito curto; pulando bootstrap de admin")
-                    else:
-                        admin_password_hash = hash_password(admin_pass)
-                        user = User(
-                            username=admin_user, 
-                            password=admin_password_hash.decode('utf-8'),
-                            tier='free',
-                            api_calls_today=0,
-                            last_api_reset=datetime.date.today()
-                        )
-                        db.session.add(user)
-                        db.session.commit()
-                        print("✅ Usuário admin criado via BOOTSTRAP_ADMIN")
-                else:
-                    print("ℹ️ Nenhum usuário admin padrão criado. Use registro ou defina BOOTSTRAP_ADMIN=true.")
+                admin_password_hash = hash_password('admin')
+                user = User(
+                    username='admin', 
+                    password=admin_password_hash.decode('utf-8'),
+                    tier='free',
+                    api_calls_today=0,
+                    last_api_reset=datetime.date.today()
+                )
+                db.session.add(user)
+                db.session.commit()
+                print("✅ Usuário admin criado (admin/admin)")
             
             print("✅ Banco de dados inicializado com sucesso!")
             
