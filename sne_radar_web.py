@@ -74,7 +74,8 @@ if IS_PRODUCTION:
     app.config['WTF_CSRF_TIME_LIMIT'] = None
 
 # CSRF global (protege POST/PUT/DELETE em formulários)
-csrf = CSRFProtect(app)
+# Temporariamente desabilitado para debug
+# csrf = CSRFProtect(app)
 
 # API Keys (sem defaults sensíveis)
 COINGECKO_KEY = os.environ.get('COINGECKO_KEY')
