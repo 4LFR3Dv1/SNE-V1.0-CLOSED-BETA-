@@ -246,3 +246,4 @@ def create_volume_alert(user_id: int, symbol: str, condition: str,
 def check_market_alerts(symbol: str, market_data: Dict[str, Any]) -> List[Dict]:
     """Verifica alertas para dados de mercado."""
     return alert_manager.check_alerts(symbol, market_data)
+

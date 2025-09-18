@@ -408,3 +408,6 @@ def calculate_all_professional_indicators(df: pd.DataFrame) -> Dict[str, any]:
         indicators["market_structure"] = {"error": str(e)}
     
     return indicators
+
+
+

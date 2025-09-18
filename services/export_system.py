@@ -290,3 +290,4 @@ class DataExporter:
 
 # Instância global do exportador
 data_exporter = DataExporter()
+

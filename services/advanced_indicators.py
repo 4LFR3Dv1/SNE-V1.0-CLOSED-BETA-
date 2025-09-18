@@ -265,3 +265,4 @@ def calculate_all_indicators(df: pd.DataFrame) -> Dict[str, any]:
         indicators["adx"] = {"error": str(e)}
     
     return indicators
+

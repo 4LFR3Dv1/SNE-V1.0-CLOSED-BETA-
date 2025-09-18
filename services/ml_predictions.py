@@ -335,3 +335,6 @@ def ensemble_predict(df: pd.DataFrame, horizon: int = 1) -> Dict[str, Any]:
 def get_ml_performance() -> Dict[str, Any]:
     """Função para obter performance dos modelos."""
     return ml_predictor.get_model_performance()
+
+
+
