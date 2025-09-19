@@ -384,7 +384,7 @@ def criar_dados_mock(symbol, interval):
             else:
                 # Movimento mais realista com correlação
                 movimento_base = tendencia_geral + random.gauss(0, volatilidade)
-                preco = dados[-1][4] * (1 + movimento_base)  # Usar close anterior
+                preco = float(dados[-1][4]) * (1 + movimento_base)  # Usar close anterior
             
             # Gerar OHLC com correlação realista
             open_price = preco
