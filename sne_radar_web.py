@@ -2118,6 +2118,16 @@ def dashboard():
     response.headers['Expires'] = '0'
     return response
 
+@app.route('/professional')
+@login_required
+def professional_dashboard():
+    """Dashboard profissional com funcionalidades avançadas"""
+    response = make_response(render_template('professional_dashboard.html'))
+    response.headers['Cache-Control'] = 'no-cache, no-store, must-revalidate'
+    response.headers['Pragma'] = 'no-cache'
+    response.headers['Expires'] = '0'
+    return response
+
 @app.route('/app')
 def app_redirect():
     """Redireciona usuários autenticados para dashboard, outros para pricing"""

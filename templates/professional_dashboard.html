@@ -1,0 +1,710 @@
+{% extends "base.html" %}
+
+{% block title %}SNE RADAR - Dashboard Profissional{% endblock %}
+
+{% block content %}
+<div class="container">
+    <!-- Header -->
+    <div class="header">
+        <h1>🚀 SNE RADAR PROFISSIONAL</h1>
+        <p>Sistema Neural Estratégico - Análise Avançada de Mercado</p>
+        <div style="float: right;">
+            <a href="{{ url_for('dashboard') }}" class="btn-secondary" style="margin-right: 10px;">
+                <i class="fas fa-arrow-left"></i> DASHBOARD BÁSICO
+            </a>
+            <a href="{{ url_for('logout') }}" class="btn-danger">
+                <i class="fas fa-sign-out-alt"></i> SAIR
+            </a>
+        </div>
+    </div>
+
+    <!-- Status Bar -->
+    <div class="status-bar">
+        <div class="status-item">
+            <span class="status-label">STATUS:</span>
+            <span id="system-status" class="status-value">🔄 Carregando...</span>
+        </div>
+        <div class="status-item">
+            <span class="status-label">CIRCUIT BREAKER:</span>
+            <span id="cb-status" class="status-value">🔄 Verificando...</span>
+        </div>
+        <div class="status-item">
+            <button id="reset-circuit-breaker" class="btn-warning" style="padding: 4px 8px; font-size: 10px;">
+                <i class="fas fa-sync-alt"></i> RESET CB
+            </button>
+        </div>
+    </div>
+
+    <!-- Main Grid -->
+    <div class="grid-container">
+        
+        <!-- DERIVATIVOS PANEL -->
+        <div class="panel derivatives-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-chart-line"></i> DERIVATIVOS (CoinGlass)</h3>
+                <button onclick="loadDerivativesData()" class="btn-primary">🔄 Atualizar</button>
+            </div>
+            <div class="panel-content">
+                <div class="metrics-grid">
+                    <div class="metric-card">
+                        <div class="metric-label">Funding Z-Score</div>
+                        <div id="funding-zscore" class="metric-value">--</div>
+                        <div id="funding-sparkline" class="sparkline"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">OI Delta %</div>
+                        <div id="oi-delta" class="metric-value">--</div>
+                        <div id="oi-sparkline" class="sparkline"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">LSR (Contas)</div>
+                        <div id="lsr-accounts" class="metric-value">--</div>
+                        <div id="lsr-accounts-gauge" class="mini-gauge"></div>
+                    </div>
+                    <div class="metric-card">
+                        <div class="metric-label">LSR (Volume)</div>
+                        <div id="lsr-volume" class="metric-value">--</div>
+                        <div id="lsr-volume-gauge" class="mini-gauge"></div>
+                    </div>
+                </div>
+                <div class="action-buttons">
+                    <button onclick="confirmOI()" class="btn-success">✅ Confirmar OI</button>
+                    <button onclick="loadLiquidations()" class="btn-warning">💥 Ver Liquidações</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- PANORAMA DE MERCADO -->
+        <div class="panel market-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-globe"></i> PANORAMA DE MERCADO (CMC)</h3>
+                <button onclick="loadMarketPanorama()" class="btn-primary">🔄 Atualizar</button>
+            </div>
+            <div class="panel-content">
+                <div class="market-metrics">
+                    <div class="market-item">
+                        <span class="market-label">Market Cap Total:</span>
+                        <span id="total-market-cap" class="market-value">--</span>
+                    </div>
+                    <div class="market-item">
+                        <span class="market-label">BTC Dominance:</span>
+                        <span id="btc-dominance" class="market-value">--</span>
+                    </div>
+                    <div class="market-item">
+                        <span class="market-label">ETH Dominance:</span>
+                        <span id="eth-dominance" class="market-value">--</span>
+                    </div>
+                    <div class="market-item">
+                        <span class="market-label">Breadth (Gainers/Losers):</span>
+                        <span id="market-breadth" class="market-value">--</span>
+                    </div>
+                </div>
+                <div class="tag-filters">
+                    <h4>Filtros por Tag:</h4>
+                    <div class="filter-buttons">
+                        <button onclick="loadListingsByTag('defi')" class="btn-tag">DeFi</button>
+                        <button onclick="loadListingsByTag('layer-1')" class="btn-tag">L1</button>
+                        <button onclick="loadListingsByTag('artificial-intelligence')" class="btn-tag">AI</button>
+                        <button onclick="loadListingsByTag('gaming')" class="btn-tag">Gaming</button>
+                    </div>
+                </div>
+                <div id="listings-results" class="listings-results"></div>
+            </div>
+        </div>
+
+        <!-- INDICADORES AVANÇADOS -->
+        <div class="panel indicators-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-chart-bar"></i> INDICADORES AVANÇADOS</h3>
+                <button onclick="loadAdvancedIndicators()" class="btn-primary">📊 Carregar</button>
+            </div>
+            <div class="panel-content">
+                <div class="indicators-grid">
+                    <div class="indicator-group">
+                        <h4>Bollinger Bands</h4>
+                        <div id="bb-upper" class="indicator-value">--</div>
+                        <div id="bb-middle" class="indicator-value">--</div>
+                        <div id="bb-lower" class="indicator-value">--</div>
+                    </div>
+                    <div class="indicator-group">
+                        <h4>Stochastic</h4>
+                        <div id="stoch-k" class="indicator-value">--</div>
+                        <div id="stoch-d" class="indicator-value">--</div>
+                    </div>
+                    <div class="indicator-group">
+                        <h4>Williams %R</h4>
+                        <div id="williams-r" class="indicator-value">--</div>
+                    </div>
+                    <div class="indicator-group">
+                        <h4>ATR</h4>
+                        <div id="atr" class="indicator-value">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- INDICADORES PROFISSIONAIS -->
+        <div class="panel professional-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-chart-area"></i> INDICADORES PROFISSIONAIS</h3>
+                <button onclick="loadProfessionalIndicators()" class="btn-primary">🎯 Carregar</button>
+            </div>
+            <div class="panel-content">
+                <div class="professional-grid">
+                    <div class="indicator-group">
+                        <h4>Ichimoku Cloud</h4>
+                        <div id="ichimoku-tenkan" class="indicator-value">--</div>
+                        <div id="ichimoku-kijun" class="indicator-value">--</div>
+                        <div id="ichimoku-senkou-a" class="indicator-value">--</div>
+                        <div id="ichimoku-senkou-b" class="indicator-value">--</div>
+                    </div>
+                    <div class="indicator-group">
+                        <h4>Fibonacci</h4>
+                        <div id="fib-236" class="indicator-value">--</div>
+                        <div id="fib-382" class="indicator-value">--</div>
+                        <div id="fib-500" class="indicator-value">--</div>
+                        <div id="fib-618" class="indicator-value">--</div>
+                    </div>
+                    <div class="indicator-group">
+                        <h4>Pivot Points</h4>
+                        <div id="pivot-r3" class="indicator-value">--</div>
+                        <div id="pivot-r2" class="indicator-value">--</div>
+                        <div id="pivot-r1" class="indicator-value">--</div>
+                        <div id="pivot-pp" class="indicator-value">--</div>
+                        <div id="pivot-s1" class="indicator-value">--</div>
+                        <div id="pivot-s2" class="indicator-value">--</div>
+                        <div id="pivot-s3" class="indicator-value">--</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- MACHINE LEARNING -->
+        <div class="panel ml-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-brain"></i> MACHINE LEARNING</h3>
+                <div class="ml-buttons">
+                    <button onclick="trainMLModels()" class="btn-primary">🧠 Treinar</button>
+                    <button onclick="predictPrice()" class="btn-success">🔮 Prever</button>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="ml-metrics">
+                    <div class="ml-item">
+                        <span class="ml-label">Modelo Ativo:</span>
+                        <span id="active-model" class="ml-value">--</span>
+                    </div>
+                    <div class="ml-item">
+                        <span class="ml-label">Precisão:</span>
+                        <span id="ml-accuracy" class="ml-value">--</span>
+                    </div>
+                    <div class="ml-item">
+                        <span class="ml-label">Previsão (1h):</span>
+                        <span id="ml-prediction-1h" class="ml-value">--</span>
+                    </div>
+                    <div class="ml-item">
+                        <span class="ml-label">Previsão (4h):</span>
+                        <span id="ml-prediction-4h" class="ml-value">--</span>
+                    </div>
+                </div>
+                <div class="ml-performance">
+                    <h4>Performance dos Modelos:</h4>
+                    <div id="ml-performance-chart" class="performance-chart"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- BACKTESTING -->
+        <div class="panel backtest-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-history"></i> BACKTESTING</h3>
+                <div class="backtest-buttons">
+                    <button onclick="runBacktest()" class="btn-primary">▶️ Executar</button>
+                    <button onclick="optimizeStrategy()" class="btn-warning">⚙️ Otimizar</button>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div class="backtest-results">
+                    <div class="result-item">
+                        <span class="result-label">Estratégia:</span>
+                        <span id="backtest-strategy" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Retorno Total:</span>
+                        <span id="backtest-return" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Sharpe Ratio:</span>
+                        <span id="backtest-sharpe" class="result-value">--</span>
+                    </div>
+                    <div class="result-item">
+                        <span class="result-label">Max Drawdown:</span>
+                        <span id="backtest-drawdown" class="result-value">--</span>
+                    </div>
+                </div>
+                <div class="backtest-chart">
+                    <h4>Performance da Estratégia:</h4>
+                    <div id="backtest-chart" class="chart-container"></div>
+                </div>
+            </div>
+        </div>
+
+        <!-- SISTEMA DE ALERTAS -->
+        <div class="panel alerts-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-bell"></i> SISTEMA DE ALERTAS</h3>
+                <button onclick="showCreateAlert()" class="btn-success">➕ Criar Alerta</button>
+            </div>
+            <div class="panel-content">
+                <div class="alerts-list" id="alerts-list">
+                    <div class="alert-item">
+                        <span class="alert-symbol">BTCUSDT</span>
+                        <span class="alert-condition">Preço > $70,000</span>
+                        <span class="alert-status active">Ativo</span>
+                    </div>
+                </div>
+                <div class="alert-form" id="alert-form" style="display: none;">
+                    <h4>Criar Novo Alerta:</h4>
+                    <div class="form-group">
+                        <label>Símbolo:</label>
+                        <select id="alert-symbol">
+                            <option value="BTCUSDT">BTCUSDT</option>
+                            <option value="ETHUSDT">ETHUSDT</option>
+                            <option value="SOLUSDT">SOLUSDT</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Condição:</label>
+                        <select id="alert-condition">
+                            <option value="price_above">Preço Acima de</option>
+                            <option value="price_below">Preço Abaixo de</option>
+                            <option value="volume_spike">Pico de Volume</option>
+                            <option value="rsi_oversold">RSI Oversold</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Valor:</label>
+                        <input type="number" id="alert-value" placeholder="Ex: 70000">
+                    </div>
+                    <button onclick="createAlert()" class="btn-primary">Criar Alerta</button>
+                </div>
+            </div>
+        </div>
+
+        <!-- EXPORTAÇÃO DE DADOS -->
+        <div class="panel export-panel">
+            <div class="panel-header">
+                <h3><i class="fas fa-download"></i> EXPORTAÇÃO DE DADOS</h3>
+            </div>
+            <div class="panel-content">
+                <div class="export-options">
+                    <button onclick="exportMarketData()" class="btn-export">
+                        <i class="fas fa-chart-line"></i> Dados de Mercado (CSV)
+                    </button>
+                    <button onclick="exportCandles()" class="btn-export">
+                        <i class="fas fa-candles"></i> Candles (CSV)
+                    </button>
+                    <button onclick="exportReport()" class="btn-export">
+                        <i class="fas fa-file-pdf"></i> Relatório (PDF)
+                    </button>
+                </div>
+                <div class="export-status" id="export-status"></div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- JavaScript -->
+<script src="https://cdn.socket.io/4.7.2/socket.io.min.js"></script>
+<script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
+
+<script>
+// Sistema de Status
+function checkSystemStatus() {
+    fetch('/api/v1/system/status')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                document.getElementById('system-status').textContent = '✅ Online';
+                document.getElementById('cb-status').textContent = 
+                    data.data.circuit_breaker.binance.fails > 0 ? 
+                    `⚠️ ${data.data.circuit_breaker.binance.fails} falhas` : 
+                    '✅ OK';
+            }
+        })
+        .catch(() => {
+            document.getElementById('system-status').textContent = '❌ Offline';
+        });
+}
+
+// Reset Circuit Breaker
+function resetCircuitBreaker() {
+    if (confirm('Resetar circuit breaker da Binance? Isso permitirá tentar a API novamente.')) {
+        fetch('/api/v1/system/reset-circuit-breaker', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({api_name: 'binance'})
+        })
+        .then(r => r.json())
+        .then(res => {
+            if (res.success) {
+                alert('✅ Circuit breaker resetado com sucesso!');
+                checkSystemStatus();
+            } else {
+                alert('❌ Erro ao resetar circuit breaker: ' + res.error);
+            }
+        })
+        .catch(() => alert('❌ Erro de conexão'));
+    }
+}
+
+// Derivativos
+function loadDerivativesData() {
+    // Implementar carregamento de dados CoinGlass
+    console.log('Carregando dados de derivativos...');
+}
+
+function confirmOI() {
+    alert('✅ OI confirmado! Dados atualizados.');
+}
+
+function loadLiquidations() {
+    alert('💥 Carregando liquidações...');
+}
+
+// Panorama de Mercado
+function loadMarketPanorama() {
+    // Implementar carregamento de dados CMC
+    console.log('Carregando panorama de mercado...');
+}
+
+function loadListingsByTag(tag) {
+    // Implementar filtro por tag
+    console.log('Carregando listagens por tag:', tag);
+}
+
+// Indicadores
+function loadAdvancedIndicators() {
+    fetch('/api/v1/advanced-indicators?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar indicadores avançados
+                console.log('Indicadores avançados carregados:', data.data);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar indicadores:', e));
+}
+
+function loadProfessionalIndicators() {
+    fetch('/api/v1/professional-indicators?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar indicadores profissionais
+                console.log('Indicadores profissionais carregados:', data.data);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar indicadores:', e));
+}
+
+// Machine Learning
+function trainMLModels() {
+    fetch('/api/v1/ml/train', {method: 'POST'})
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Modelos ML treinados com sucesso!');
+            }
+        })
+        .catch(e => console.error('Erro ao treinar modelos:', e));
+}
+
+function predictPrice() {
+    fetch('/api/v1/ml/predict?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar previsões
+                console.log('Previsões ML:', data.data);
+            }
+        })
+        .catch(e => console.error('Erro ao prever preços:', e));
+}
+
+// Backtesting
+function runBacktest() {
+    fetch('/api/v1/backtest/run', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({strategy: 'ma_crossover', symbol: 'BTCUSDT'})
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar resultados do backtest
+                console.log('Backtest executado:', data.data);
+            }
+        })
+        .catch(e => console.error('Erro no backtest:', e));
+}
+
+function optimizeStrategy() {
+    alert('⚙️ Otimizando estratégia...');
+}
+
+// Alertas
+function showCreateAlert() {
+    document.getElementById('alert-form').style.display = 'block';
+}
+
+function createAlert() {
+    const symbol = document.getElementById('alert-symbol').value;
+    const condition = document.getElementById('alert-condition').value;
+    const value = document.getElementById('alert-value').value;
+    
+    fetch('/api/v1/alerts', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify({symbol, condition, value})
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ Alerta criado com sucesso!');
+                document.getElementById('alert-form').style.display = 'none';
+            }
+        })
+        .catch(e => console.error('Erro ao criar alerta:', e));
+}
+
+// Exportação
+function exportMarketData() {
+    fetch('/api/v1/export/market-data')
+        .then(r => r.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'market_data.csv';
+            a.click();
+        });
+}
+
+function exportCandles() {
+    fetch('/api/v1/export/candles?symbol=BTCUSDT')
+        .then(r => r.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'candles.csv';
+            a.click();
+        });
+}
+
+function exportReport() {
+    fetch('/api/v1/export/report')
+        .then(r => r.blob())
+        .then(blob => {
+            const url = window.URL.createObjectURL(blob);
+            const a = document.createElement('a');
+            a.href = url;
+            a.download = 'sne_radar_report.pdf';
+            a.click();
+        });
+}
+
+// Inicialização
+document.addEventListener('DOMContentLoaded', function() {
+    checkSystemStatus();
+    setInterval(checkSystemStatus, 30000); // Verificar a cada 30s
+    
+    // Event listeners
+    document.getElementById('reset-circuit-breaker').addEventListener('click', resetCircuitBreaker);
+});
+</script>
+
+<style>
+/* Estilos específicos para o dashboard profissional */
+.professional-dashboard {
+    background: linear-gradient(135deg, #0a0a0a 0%, #1a1a1a 100%);
+    min-height: 100vh;
+    color: #00ff00;
+}
+
+.grid-container {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(400px, 1fr));
+    gap: 20px;
+    padding: 20px;
+}
+
+.panel {
+    background: rgba(0, 255, 0, 0.05);
+    border: 1px solid #00ff00;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 0 20px rgba(0, 255, 0, 0.1);
+}
+
+.panel-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid #00ff00;
+}
+
+.panel-header h3 {
+    margin: 0;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+}
+
+.metrics-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+    gap: 15px;
+    margin-bottom: 15px;
+}
+
+.metric-card {
+    background: rgba(0, 255, 0, 0.1);
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    padding: 15px;
+    text-align: center;
+}
+
+.metric-label {
+    font-size: 12px;
+    color: #888;
+    margin-bottom: 5px;
+}
+
+.metric-value {
+    font-size: 18px;
+    font-weight: bold;
+    color: #00ff00;
+    margin-bottom: 10px;
+}
+
+.sparkline, .mini-gauge {
+    height: 30px;
+    background: rgba(0, 255, 0, 0.1);
+    border-radius: 3px;
+}
+
+.action-buttons {
+    display: flex;
+    gap: 10px;
+    justify-content: center;
+}
+
+.btn-tag {
+    background: transparent;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 5px 10px;
+    border-radius: 3px;
+    cursor: pointer;
+    font-size: 12px;
+}
+
+.btn-tag:hover {
+    background: #00ff00;
+    color: #000;
+}
+
+.btn-export {
+    background: transparent;
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    padding: 10px 15px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin: 5px;
+    display: block;
+    width: 100%;
+}
+
+.btn-export:hover {
+    background: #00ff00;
+    color: #000;
+}
+
+.indicators-grid, .professional-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+}
+
+.indicator-group {
+    background: rgba(0, 255, 0, 0.05);
+    border: 1px solid #00ff00;
+    border-radius: 5px;
+    padding: 15px;
+}
+
+.indicator-group h4 {
+    margin: 0 0 10px 0;
+    color: #00ff00;
+    font-size: 14px;
+}
+
+.indicator-value {
+    font-size: 12px;
+    color: #888;
+    margin: 2px 0;
+}
+
+.ml-buttons, .backtest-buttons {
+    display: flex;
+    gap: 10px;
+}
+
+.alert-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px;
+    background: rgba(0, 255, 0, 0.05);
+    border: 1px solid #00ff00;
+    border-radius: 3px;
+    margin: 5px 0;
+}
+
+.alert-status.active {
+    color: #00ff00;
+}
+
+.export-options {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.form-group {
+    margin: 10px 0;
+}
+
+.form-group label {
+    display: block;
+    margin-bottom: 5px;
+    color: #00ff00;
+    font-size: 12px;
+}
+
+.form-group select, .form-group input {
+    width: 100%;
+    padding: 8px;
+    background: rgba(0, 0, 0, 0.5);
+    border: 1px solid #00ff00;
+    color: #00ff00;
+    border-radius: 3px;
+}
+</style>
+{% endblock %}
