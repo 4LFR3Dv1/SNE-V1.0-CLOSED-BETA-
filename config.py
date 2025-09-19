@@ -25,10 +25,10 @@ class Settings:
 
     # Atualização/coleta
     UPDATE_INTERVAL = int(os.environ.get('UPDATE_INTERVAL', '30'))
-    BINANCE_CALLS_PER_WINDOW = int(os.environ.get('BINANCE_CALLS_PER_WINDOW', '30'))
+    BINANCE_CALLS_PER_WINDOW = int(os.environ.get('BINANCE_CALLS_PER_WINDOW', '10'))
     BINANCE_WINDOW_SECONDS = int(os.environ.get('BINANCE_WINDOW_SECONDS', '60'))
-    BINANCE_CB_THRESHOLD = int(os.environ.get('BINANCE_CB_THRESHOLD', '3'))
-    BINANCE_CB_COOLDOWN = int(os.environ.get('BINANCE_CB_COOLDOWN', '60'))
+    BINANCE_CB_THRESHOLD = int(os.environ.get('BINANCE_CB_THRESHOLD', '5'))
+    BINANCE_CB_COOLDOWN = int(os.environ.get('BINANCE_CB_COOLDOWN', '30'))
 
     # APIs externas
     COINGECKO_KEY = os.environ.get('COINGECKO_KEY')

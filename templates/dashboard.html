@@ -56,6 +56,9 @@
             <i class="fas fa-brain"></i> IA: <span class="status-value status-online">ATIVA</span>
         </div>
         <div style="float: right;">
+            <button id="reset-circuit-breaker" class="btn-warning" style="margin-right: 10px; padding: 4px 8px; font-size: 10px;">
+                <i class="fas fa-sync-alt"></i> RESET CB
+            </button>
             <a href="{{ url_for('logout') }}" class="btn-danger">
                 <i class="fas fa-sign-out-alt"></i> SAIR
             </a>
@@ -1238,6 +1241,49 @@ function viewBacktestResults() {
     alert('Funcionalidade de visualização de resultados será implementada em breve.');
 }
 
+// Função para resetar circuit breaker
+function resetCircuitBreaker() {
+    if (confirm('Resetar circuit breaker da Binance? Isso permitirá tentar a API novamente.')) {
+        fetch('/api/v1/system/reset-circuit-breaker', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({api_name: 'binance'})
+        })
+        .then(r => r.json())
+        .then(res => {
+            if (res.success) {
+                alert('✅ Circuit breaker resetado com sucesso!');
+                // Recarregar dados
+                loadInitialData();
+            } else {
+                alert('❌ Erro ao resetar circuit breaker: ' + res.error);
+            }
+        })
+        .catch(() => alert('❌ Erro de conexão'));
+    }
+}
+
+// Função para verificar status do sistema
+function checkSystemStatus() {
+    fetch('/api/v1/system/status')
+        .then(r => r.json())
+        .then(res => {
+            if (res.success) {
+                const status = res.data;
+                console.log('Status do Sistema:', status);
+                
+                // Mostrar status dos circuit breakers
+                const cbStatus = status.circuit_breakers;
+                for (const [api, cb] of Object.entries(cbStatus)) {
+                    if (cb.open_until > Date.now() / 1000) {
+                        console.warn(`⚠️ Circuit breaker aberto para ${api} até ${new Date(cb.open_until * 1000)}`);
+                    }
+                }
+            }
+        })
+        .catch(err => console.error('Erro ao verificar status:', err));
+}
+
 // Event listeners adicionais
 document.addEventListener('DOMContentLoaded', function() {
     // Botão de indicadores profissionais
@@ -1248,6 +1294,12 @@ document.addEventListener('DOMContentLoaded', function() {
     
     // Botão de executar backtest
     document.getElementById('run-backtest-btn').addEventListener('click', runBacktest);
+    
+    // Botão de resetar circuit breaker
+    document.getElementById('reset-circuit-breaker').addEventListener('click', resetCircuitBreaker);
+    
+    // Verificar status do sistema a cada 30 segundos
+    setInterval(checkSystemStatus, 30000);
 });
 </script>
 {% endblock %}

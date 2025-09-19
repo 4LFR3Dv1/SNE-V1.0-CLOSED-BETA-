@@ -281,6 +281,13 @@ def check_rate_limit(api_name, max_calls=10, window_seconds=60):
     
     return True
 
+def reset_circuit_breaker(api_name):
+    """Reseta o circuit breaker para uma API específica"""
+    with estado_lock:
+        if api_name in sistema_estado["circuit_breaker"]:
+            sistema_estado["circuit_breaker"][api_name] = {"fails": 0, "open_until": 0}
+            print(f"✅ Circuit breaker resetado para {api_name}")
+
 def check_user_rate_limit(user_id, tier='free'):
     """Verifica rate limit por usuário baseado no tier"""
     try:
@@ -352,11 +359,11 @@ def criar_dados_mock(symbol, interval):
         import random
         from datetime import datetime, timedelta
         
-        # Dados base para diferentes símbolos
+        # Dados base mais realistas para diferentes símbolos
         precos_base = {
-            "BTCUSDT": 65000,
-            "ETHUSDT": 3500,
-            "SOLUSDT": 150
+            "BTCUSDT": 68000,
+            "ETHUSDT": 3800,
+            "SOLUSDT": 180
         }
         
         preco_base = precos_base.get(symbol, 100)
@@ -365,20 +372,40 @@ def criar_dados_mock(symbol, interval):
         dados = []
         agora = datetime.now()
         
+        # Simular tendência de mercado
+        tendencia_geral = random.uniform(-0.001, 0.001)  # Tendência geral
+        volatilidade = random.uniform(0.005, 0.015)  # Volatilidade variável
+        
         for i in range(100):
             timestamp = agora - timedelta(minutes=i)
             
-            # Variação aleatória
-            variacao = random.uniform(-0.02, 0.02)  # ±2%
-            preco = preco_base * (1 + variacao)
+            if i == 0:
+                preco = preco_base
+            else:
+                # Movimento mais realista com correlação
+                movimento_base = tendencia_geral + random.gauss(0, volatilidade)
+                preco = dados[-1][4] * (1 + movimento_base)  # Usar close anterior
             
-            # Simular candle
+            # Gerar OHLC com correlação realista
             open_price = preco
-            high_price = preco * random.uniform(1.001, 1.005)
-            low_price = preco * random.uniform(0.995, 0.999)
-            close_price = preco * random.uniform(0.998, 1.002)
-            volume = random.uniform(1000, 10000)
-            trades = random.randint(100, 1000)
+            range_candle = abs(random.gauss(0, volatilidade * 0.5))
+            high_price = open_price * (1 + range_candle)
+            low_price = open_price * (1 - range_candle)
+            
+            # Close price com viés baseado na tendência
+            close_bias = random.uniform(-0.3, 0.7)  # Viés para alta
+            close_price = low_price + (high_price - low_price) * close_bias
+            
+            # Volume correlacionado com volatilidade
+            volume_base = {
+                "BTCUSDT": 2000000,
+                "ETHUSDT": 1000000, 
+                "SOLUSDT": 500000
+            }.get(symbol, 1000000)
+            
+            volume_multiplier = 1 + range_candle * 2  # Volume maior em candles mais voláteis
+            volume = volume_base * volume_multiplier * random.uniform(0.7, 1.3)
+            trades = int(volume / 1000)  # Trades baseado no volume
             
             dados.append([
                 int(timestamp.timestamp() * 1000),  # open_time
@@ -2502,6 +2529,47 @@ def api_v1_export_list():
     try:
         exports = data_exporter.get_export_list()
         return jsonify({"success": True, "data": exports})
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+# Endpoint para resetar circuit breaker
+@app.route('/api/v1/system/reset-circuit-breaker', methods=['POST'])
+@login_required
+def api_v1_reset_circuit_breaker():
+    """Reseta circuit breaker para APIs."""
+    try:
+        data = request.get_json()
+        api_name = data.get('api_name', 'binance')
+        
+        reset_circuit_breaker(api_name)
+        
+        return jsonify({
+            "success": True,
+            "message": f"Circuit breaker resetado para {api_name}",
+            "data": {
+                "api_name": api_name,
+                "timestamp": int(time.time())
+            }
+        })
+    except Exception as e:
+        return jsonify({"success": False, "error": str(e)}), 500
+
+# Endpoint para status do sistema
+@app.route('/api/v1/system/status')
+@login_required
+def api_v1_system_status():
+    """Retorna status do sistema e circuit breakers."""
+    try:
+        status = {
+            "circuit_breakers": sistema_estado["circuit_breaker"],
+            "rate_limits": {
+                api: len(calls) for api, calls in sistema_estado["last_api_call"].items()
+            },
+            "api_call_counts": sistema_estado["api_call_count"],
+            "timestamp": int(time.time())
+        }
+        
+        return jsonify({"success": True, "data": status})
     except Exception as e:
         return jsonify({"success": False, "error": str(e)}), 500
 
