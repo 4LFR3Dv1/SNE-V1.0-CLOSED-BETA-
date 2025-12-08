@@ -188,6 +188,17 @@ docs/_build/
 site/
 
 # ===========================================
+# TERRAFORM
+# ===========================================
+.terraform/
+.terraform.lock.hcl
+*.tfstate
+*.tfstate.*
+*.tfplan
+terraform.tfvars
+.terraform.lock.hcl
+
+# ===========================================
 # BUILD E DISTRIBUIÇÃO
 # ===========================================
 *.dist-info/
