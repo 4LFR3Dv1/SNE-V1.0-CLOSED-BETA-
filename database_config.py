@@ -19,7 +19,7 @@ DATABASE_CONFIGS = {
         'host': os.environ.get('DB_HOST', 'localhost'),
         'port': os.environ.get('DB_PORT', '5432'),
         'database': os.environ.get('DB_NAME', 'sne_radar'),
-        'username': os.environ.get('DB_USER', ''),
+        'username': os.environ.get('DB_USER', 'sne_radar_user'),
         'password': os.environ.get('DB_PASSWORD', ''),
         'description': 'Banco de produção no Render'
     }

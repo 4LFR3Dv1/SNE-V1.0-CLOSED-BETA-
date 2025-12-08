@@ -1,0 +1,112 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 15:09:11
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.7/10)
+Volatilidade: 0.07%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: Aguardar setup claro - sem confluência suficiente
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (4.8/10)
+Volatilidade: 0.14%
+Tendência: ALTA
+Confluência: 4.3/10
+Recomendação: Aguardar setup claro - sem confluência suficiente
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.26%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: Aguardar setup claro - sem confluência suficiente
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (2.7/10)
+Volatilidade: 0.49%
+Tendência: LATERAL
+Confluência: 4.3/10
+Recomendação: Aguardar setup claro - sem confluência suficiente
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (1.8/10)
+Volatilidade: 0.48%
+Tendência: LATERAL
+Confluência: 4.3/10
+Recomendação: Aguardar setup claro - sem confluência suficiente
+
+
+📈 ANÁLISE INTRADAY - 15:09 - 14/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO SIDEWAYS
+📊 TIPO DE ENTRADA: AGUARDAR
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $113,138.24
+   Entry:        $112,932.98
+   Stop Loss:    $112,808.71
+   TP1 (0.5%):   $112,572.55
+   TP2 (1.0%):   $112,006.86
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟡 Volatilidade: MÉDIA
+   ATR(14): $646.97 (0.57%)
+   Range Atual: $437.75 (0.39%)
+
+   📍 ZONA DE RANGE:
+      Superior: $113,792.84
+      Inferior: $112,498.90
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $113,145.87
+
+   🔴 RESISTÊNCIAS:
+      R1: $113,297.75 (+0.13%)
+      R2: $114,000.00 (+0.75%)
+      R3: $115,000.00 (+1.64%)
+
+   ⚪ PIVOT: $113,011.87
+
+   🟢 SUPORTES:
+      S1: $113,000.00 (-0.13%)
+      S2: $112,422.25 (-0.64%)
+      S3: $111,000.00 (-1.90%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

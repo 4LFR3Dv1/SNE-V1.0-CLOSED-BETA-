@@ -1,0 +1,104 @@
+
+================================================================================
+📊 RELATÓRIO SEMANAL MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 17:25:17
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 4h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.82%
+Tendência: BAIXA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (4h) - Vender em $107,466.34 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 8h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 1.03%
+Tendência: BAIXA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (8h) - Vender em $108,530.45 (risco maior)
+
+⏰ 12h - ❌ '12h'
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1d
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 2.09%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 LONG ESPECULATIVO (1d) - Comprar em $106,706.17 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1w
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BULL_TREND (10/10)
+Volatilidade: 5.62%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: 📊 LONG ESPECULATIVO (1w) - Comprar em $106,706.18 (risco maior)
+
+
+📅 ANÁLISE POSITION TRADE - Semana 41 de 2025
+============================================================
+
+🎯 VIÉS SEMANAL: MODERADO SIDEWAYS
+📊 TENDÊNCIA DIÁRIA: LATERAL
+🌍 REGIME MACRO: SIDEWAYS
+
+💰 NÍVEIS POSITION (Próximas semanas):
+   Preço Atual:  $106,936.87
+   Entry Ideal:  $106,723.00 (Região SMA200)
+   Stop Loss:    $100,306.78
+   TP1 (10%):    $115,277.95
+   TP2 (20%):    $119,555.42
+   TP3 (35%):    $125,971.63
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🔴 Volatilidade: ALTA
+   ATR(14): $5,135.31 (4.80%)
+   Range Atual: $5,711.77 (5.34%)
+
+   📍 ZONA DE RANGE:
+      Superior: $112,072.18
+      Inferior: $101,801.56
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $106,936.87
+
+   🔴 RESISTÊNCIAS:
+      R1: $107,000.00 (+0.06%)
+      R2: $108,000.00 (+0.99%)
+      R3: $109,000.00 (+1.93%)
+
+   ⚪ PIVOT: $106,568.37
+
+   🟢 SUPORTES:
+      S1: $106,000.00 (-0.88%)
+      S2: $105,000.00 (-1.81%)
+      S3: $104,000.00 (-2.75%)
+
+
+💡 ESTRATÉGIA POSITION:
+   • Esperar correção para SMA200 (1d)
+   • Confirmar reversão em múltiplos TFs
+   • Manter posição semanas/meses
+   • Parcial 30% em TP1, 40% em TP2, 30% em TP3
+   • Trailing stop amplo (ATR x 3)
+   • Foco em tendência de longo prazo
+
+⏰ TIMEFRAMES: 4h, 8h, 12h, 1d, 1w
+🔄 Próxima atualização: Segunda-feira
+============================================================

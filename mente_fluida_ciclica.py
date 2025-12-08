@@ -41,9 +41,7 @@ def mente_fluidica_detectar_ciclos(df):
         data_ciclo = melhor_ciclo[0]
         erro_ciclo = melhor_ciclo[1]
 
-        print(f"[CICLO] Padrão cíclico detectado com erro médio {erro_ciclo:.4f}")
-        tocar_alerta_ciclo()
-
+        # Reduzir spam - só logar, não imprimir nem tocar som
         with open(caminho_ciclos, "a") as f:
             f.write(f"[{datetime.now(tz=zona)}] Ciclo semelhante a {data_ciclo} com erro {erro_ciclo:.4f}\n")
 

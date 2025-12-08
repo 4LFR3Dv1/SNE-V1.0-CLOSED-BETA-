@@ -25,7 +25,7 @@ class Settings:
 
     # Atualização/coleta
     UPDATE_INTERVAL = int(os.environ.get('UPDATE_INTERVAL', '30'))
-    BINANCE_CALLS_PER_WINDOW = int(os.environ.get('BINANCE_CALLS_PER_WINDOW', '10'))
+    BINANCE_CALLS_PER_WINDOW = int(os.environ.get('BINANCE_CALLS_PER_WINDOW', '50'))
     BINANCE_WINDOW_SECONDS = int(os.environ.get('BINANCE_WINDOW_SECONDS', '60'))
     BINANCE_CB_THRESHOLD = int(os.environ.get('BINANCE_CB_THRESHOLD', '5'))
     BINANCE_CB_COOLDOWN = int(os.environ.get('BINANCE_CB_COOLDOWN', '30'))
@@ -37,9 +37,9 @@ class Settings:
     COINGLASS_API_KEY = os.environ.get('COINGLASS_API_KEY')
 
     # Feature flags
-    ENABLE_COINGLASS = get_bool('ENABLE_COINGLASS', False)
-    ENABLE_CMC = get_bool('ENABLE_CMC', False)
-    ENABLE_TA_SUMMARY = get_bool('ENABLE_TA_SUMMARY', False)
+    ENABLE_COINGLASS = get_bool('ENABLE_COINGLASS', True)
+    ENABLE_CMC = get_bool('ENABLE_CMC', True)
+    ENABLE_TA_SUMMARY = get_bool('ENABLE_TA_SUMMARY', True)
 
     # TTLs/Timeouts
     REQUEST_TIMEOUT = int(os.environ.get('REQUEST_TIMEOUT', '12'))

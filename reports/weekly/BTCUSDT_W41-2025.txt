@@ -1,0 +1,84 @@
+
+================================================================================
+📊 RELATÓRIO SEMANAL MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 03:01:33
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 4h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.70%
+Tendência: LATERAL
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 8h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 1.26%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 12h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 1.44%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1d
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 2.11%
+Tendência: LATERAL
+Confluência: 7.0/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1w
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BULL_TREND (10/10)
+Volatilidade: 5.32%
+Tendência: ALTA
+Confluência: 7.0/10
+Recomendação: COMPRA com confluência forte
+
+
+📅 ANÁLISE POSITION TRADE - Semana 41 de 2025
+============================================================
+
+🎯 VIÉS SEMANAL: FORTE SIDEWAYS
+📊 TENDÊNCIA DIÁRIA: LATERAL
+🌍 REGIME MACRO: SIDEWAYS
+
+💰 NÍVEIS POSITION (Próximas semanas):
+   Preço Atual:  $112,656.11
+   Entry Ideal:  $116,438.81 (Região SMA200)
+   Stop Loss:    $122,260.75
+   TP1 (10%):    $101,390.50
+   TP2 (20%):    $90,124.89
+   TP3 (35%):    $73,226.47
+
+💡 ESTRATÉGIA POSITION:
+   • Esperar correção para SMA200 (1d)
+   • Confirmar reversão em múltiplos TFs
+   • Manter posição semanas/meses
+   • Parcial 30% em TP1, 40% em TP2, 30% em TP3
+   • Trailing stop amplo (ATR x 3)
+   • Foco em tendência de longo prazo
+
+⏰ TIMEFRAMES: 4h, 8h, 12h, 1d, 1w
+🔄 Próxima atualização: Segunda-feira
+============================================================

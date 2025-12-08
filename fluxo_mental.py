@@ -58,7 +58,7 @@ def analisar_fluxo_mental(df):
         mensagem = "[ANÁLISE] Túneis gravitacionais ativos: movimento pode ganhar propulsão."
         alertas.append(mensagem)
 
-    # 3️⃣ Ressonância com padrões históricos
+    # 3️⃣ Ressonância com padrões históricos (reduzir spam - só enviar se score alto)
     for i in range(len(df) - 30):
         trecho_antigo = df["close"].iloc[i:i+10].pct_change().dropna()
         trecho_recente = df["close"].iloc[-10:].pct_change().dropna()
@@ -66,18 +66,14 @@ def analisar_fluxo_mental(df):
         if erro < 0.012:
             data_similar = df.index[i].strftime('%Y-%m-%d %H:%M')
             mensagem = f"[RESSONÂNCIA HISTÓRICA] Padrão de movimento semelhante ao de {data_similar}"
-            alertas.append(mensagem)
+            # Não adicionar aos alertas para reduzir spam
+            # alertas.append(mensagem)
             break
 
-    # ✅ Exibir os alertas no terminal
-    for alerta in alertas:
-        print(alerta)
-
-    # ✅ Enviar para o Telegram
+    # ✅ Enviar para o Telegram apenas alertas importantes
     for alerta in alertas:
         try:
             enviar_oraculo(alerta)
-            print(f"[DEBUG] Envio para Telegram bem-sucedido: {alerta}")
         except Exception as e:
             print(f"[ERRO] Falha ao enviar alerta para o Telegram: {e}")
     

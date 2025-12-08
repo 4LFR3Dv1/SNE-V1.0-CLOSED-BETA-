@@ -67,10 +67,98 @@ instance/
 temp/
 tmp/
 
-# Environment variables
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+MANIFEST
+
+# Virtual environments
+venv/
+venv_new/
+venv_pdf/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+
+# Logs
+*.log
+logs/
+log_rupturas.txt
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+instance/
+
+# Cache
+.cache/
+*.cache
+
+# Temporary files
+*.tmp
+*.temp
+temp/
+tmp/
+
+# Environment variables and secrets
 .env
 .env.local
 .env.production
+.env.development
+.env.staging
+*.env
+config_secrets.py
+secrets.json
+credentials.json
+
+# Config files with sensitive data
+config_producao.txt
+config_secrets.py
+
+# Security and audit logs
+audit_logs_*.json
+security_logs/
+telegram_logs.txt
+
+# Cache files
+cache_*.pkl
+*.cache
 
 # ML Models
 ml_models/
@@ -80,8 +168,72 @@ ml_models/
 # Exports
 exports/
 
-# Config files with sensitive data
-config_producao.txt
+# Backup files
+*.bak
+*.backup
+backup_*/
 
+# Runtime files
+*.pid
+*.sock
+*.socket
 
+# Test coverage
+.coverage
+htmlcov/
+.pytest_cache/
 
+# Documentation builds
+docs/_build/
+site/
+
+# ===========================================
+# BUILD E DISTRIBUIÇÃO
+# ===========================================
+*.dist-info/
+*.dist/
+
+# Frontend builds
+frontend/dist/
+frontend/dist-ssr/
+frontend/.vite/
+
+# ===========================================
+# NODE.JS
+# ===========================================
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+.pnpm-store/
+package-lock.json.backup
+
+# ===========================================
+# DADOS E RUNTIME
+# ===========================================
+data/
+backtest_results/
+backtest_data/
+*.png
+*.jpg
+*.jpeg
+*.json
+!package.json
+!package-lock.json
+!tsconfig.json
+!*.config.json
+
+# ===========================================
+# SCRIPTS TEMPORÁRIOS (manter apenas essenciais)
+# ===========================================
+# fix_*.sh
+# corrigir_*.sh
+# commit_*.sh
+
+# ===========================================
+# ARQUIVOS DE ANÁLISE E DEBUG TEMPORÁRIOS
+# ===========================================
+# Manter documentação essencial, mas ignorar temporários
+# DEBUG_*.md
+# CORRECAO_*.md (manter apenas os essenciais)

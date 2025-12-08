@@ -1,0 +1,116 @@
+
+📌 ANÁLISE RÁPIDA | ETHUSDT | INTRADAY
+🕐 20/11/2025 16:03
+
+💰 PREÇO ATUAL: $2,798.74
+
+---
+🔴 Resistência: $3,022.70
+   Base: Máxima 20 períodos + Cluster de Volume
+🟢 Suporte: $2,790.01
+   Base: Mínima 20 períodos + EMA 8 (15m)
+⚪ Pivot: $2,906.36
+   Base: Ponto central do range (15m)
+
+---
+📊 INDICADORES TÉCNICOS (15m/1h)
+
+🕒 15m:
+EMA 8: $2,829.33 | EMA 21: $2,881.46
+SMA 200: $2,892.61 | Preço: $2,798.74
+RSI (14): 16.0 | Volume: $21,546
+
+🕑 1h:
+EMA 8: $2,887.03 | EMA 21: $2,953.95
+SMA 200: $2,983.75 | Preço: $2,798.74
+RSI (14): 11.9 | Volume: $21,565
+
+---
+🔮 CENÁRIO LONG (AGUARDAR CONFIRMAÇÃO)
+
+📍 Entry: $3,022.70
+   Justificativa: Quebra de resistência
+🛑 Stop: $2,790.01
+   Justificativa: Abaixo do suporte
+🎯 TP1: $3,139.04 | R:R: 1:2
+   Justificativa: Extensão 50%
+🎯 TP2: $3,255.39 | R:R: 1:4
+   Justificativa: Extensão 100%
+
+⚠️ CONDIÇÕES PARA ENTRY (LONG):
+- Quebra de $3,022.70 com volume > $43,092
+- RSI > 70 (sobrecompra)
+- Confirmação de padrão bullish
+
+---
+🔮 CENÁRIO SHORT (AGUARDAR CONFIRMAÇÃO)
+
+📍 Entry: $2,790.01
+   Justificativa: Quebra de suporte
+🛑 Stop: $3,022.70
+   Justificativa: Acima da resistência
+🎯 TP1: $2,673.67 | R:R: 1:2
+   Justificativa: Extensão 50%
+🎯 TP2: $2,557.32 | R:R: 1:4
+   Justificativa: Extensão 100%
+
+⚠️ CONDIÇÕES PARA ENTRY (SHORT):
+- Quebra de $2,790.01 com volume > $43,092
+- RSI < 30 (sobrevenda)
+- Confirmação de padrão bearish
+
+---
+📊 CONFLUÊNCIA CONSOLIDADA
+
+Volume > $43,092: ❌ $21,546 (peso: 3.0/10)
+RSI < 30 ou > 70: ✅ 16.0 (peso: 2.0/10)
+Padrão Gráfico: ❌ Sem formação (peso: 2.0/10)
+Alinhamento Multi-TF: ✅ 15m/1h lateral (peso: 1.0/10)
+
+Confluência Total: 7.0/10
+
+---
+🛡️ GESTÃO DE RISCO (TÉCNICA)
+
+Risco por operação: 1.0% do capital (padrão técnico)
+Posição: 30% do tamanho padrão (devido à baixa confluência)
+Status: ✅ Aprovado (confluência >= 7/10)
+
+Critérios para Aprovação:
+- Confluência mínima: 7/10
+- Volume > $43,092
+- RSI < 30 ou > 70
+- Padrão gráfico claro (wedge, flag, divergência)
+
+---
+⚠️ RECOMENDAÇÃO FINAL (TÉCNICA)
+
+✅ OPERAR COM CAUTELA
+
+Motivos Técnicos:
+1. Volume insuficiente em todos os timeframes (< $43,092)
+2. RSI extremo (16.0), com sobrecompra/sobrevenda
+3. Ausência de padrões gráficos (wedge, flag, divergência)
+4. Confluência moderada (7.0/10, mínimo aceitável: 7/10)
+
+🔍 AGUARDAR:
+- Quebra confirmada de $2,790.01 (suporte) ou $3,022.70 (resistência) com:
+  - Volume > $43,092
+  - RSI < 30 (sobrevenda) ou > 70 (sobrecompra)
+  - Formação de padrão gráfico (ex.: wedge bearish)
+- Reavaliar confluência após atendimento das condições acima
+
+🎯 CONCLUSÃO PARA O OPERADOR:
+"Mercado em consolidação lateral com confluência 7.0/10. Operar com cautela.
+
+CENÁRIOS HIPOTÉTICOS:
+
+LONG:
+- Quebra de $3,022.70 com volume > $43,092 e RSI > 70
+- DOM: Ratio > 1.2 (pressão de compra)
+
+SHORT:
+- Quebra de $2,790.01 com volume > $43,092 e RSI < 30
+- DOM: Ratio < 0.7 (pressão de venda)
+
+Risco: 1.0% do capital. Tamanho da posição: 30%."

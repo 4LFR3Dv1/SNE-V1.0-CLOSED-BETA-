@@ -1,0 +1,168 @@
+steps:
+  # Skip tests for now (no tests yet)
+  # Tests can be added later when test suite is ready
+
+  # Build sne-web image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-web:latest'
+      - './services/sne-web'
+    id: 'build-sne-web'
+    waitFor: ['-']
+
+  # Build sne-worker image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-worker:latest'
+      - './services/sne-worker'
+    id: 'build-sne-worker'
+    waitFor: ['-']
+
+  # Build sne-auto image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-auto:latest'
+      - './services/sne-auto'
+    id: 'build-sne-auto'
+    waitFor: ['-']
+
+  # Build sne-telegram image
+  - name: 'gcr.io/cloud-builders/docker'
+    args:
+      - 'build'
+      - '-t'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-telegram:latest'
+      - './services/sne-telegram'
+    id: 'build-sne-telegram'
+    waitFor: ['-']
+
+  # Push all images (only latest tag for now)
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-web:latest']
+    id: 'push-sne-web'
+    waitFor: ['build-sne-web']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-worker:latest']
+    id: 'push-sne-worker'
+    waitFor: ['build-sne-worker']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-auto:latest']
+    id: 'push-sne-auto'
+    waitFor: ['build-sne-auto']
+
+  - name: 'gcr.io/cloud-builders/docker'
+    args: ['push', '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-telegram:latest']
+    id: 'push-sne-telegram'
+    waitFor: ['build-sne-telegram']
+
+  # Run database migrations (skip for now, run manually after deploy)
+  # Migrations will be run manually using Cloud SQL Proxy or Cloud Shell
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        echo "⚠️  Database migrations skipped in build"
+        echo "Run migrations manually after deploy:"
+        echo "  ./deploy/init_db.sh sne-v1 us-central1 ${_DB_CONNECTION_NAME}"
+    id: 'skip-migrations'
+    waitFor: ['-']
+
+  # Deploy to Cloud Run
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sne-web'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-web:latest'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--allow-unauthenticated'
+    id: 'deploy-sne-web'
+    waitFor: ['push-sne-web']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sne-worker'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-worker:latest'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-sne-worker'
+    waitFor: ['push-sne-worker']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sne-auto'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-auto:latest'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-sne-auto'
+    waitFor: ['push-sne-auto']
+
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'gcloud'
+    args:
+      - 'run'
+      - 'deploy'
+      - 'sne-telegram'
+      - '--image'
+      - '${_REGION}-docker.pkg.dev/${_PROJECT_ID}/sne-artifacts/sne-telegram:latest'
+      - '--region'
+      - '${_REGION}'
+      - '--platform'
+      - 'managed'
+      - '--no-allow-unauthenticated'
+    id: 'deploy-sne-telegram'
+    waitFor: ['push-sne-telegram']
+
+  # Create version tag (only on main branch)
+  - name: 'gcr.io/google.com/cloudsdktool/cloud-sdk'
+    entrypoint: 'bash'
+    args:
+      - '-c'
+      - |
+        if [ "$BRANCH_NAME" = "main" ]; then
+          VERSION=$(date +%Y.%m.%d)-${SHORT_SHA}
+          git tag -a v$${VERSION} -m "Release v$${VERSION}"
+          git push origin v$${VERSION}
+        fi
+    id: 'create-tag'
+    waitFor: ['deploy-sne-web', 'deploy-sne-worker', 'deploy-sne-auto', 'deploy-sne-telegram']
+
+options:
+  machineType: 'E2_HIGHCPU_8'
+  logging: CLOUD_LOGGING_ONLY
+
+substitutions:
+  _PROJECT_ID: 'your-project-id'
+  _REGION: 'us-central1'
+  _DB_CONNECTION_NAME: 'your-project:us-central1:sne-db-prod'
+
+timeout: '3600s'
+

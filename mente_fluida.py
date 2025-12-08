@@ -37,7 +37,7 @@ def mente_fluidica_verificar_resonancia(preco_atual, timestamp_atual, densidade_
         delta = abs((timestamp_atual - mem_hora).total_seconds())
         if delta < 300:
             if abs(mem_preco - preco_atual) / preco_atual < 0.01:
-                print("[RESSONÂNCIA] O campo pulsa em sincronia com uma memória ancestral.")
+                # Reduzir spam - só logar, não imprimir
                 with open(caminho_memoria, "a") as f:
                     f.write(f"[{datetime.now(tz=zona)}] Ressonância detectada com ruptura de {mem_preco:.2f} em {mem_hora}\n")
                 break

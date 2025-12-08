@@ -1,0 +1,69 @@
+# ===========================================
+# CONFIGURAÇÕES SEGURAS DO SNE RADAR 3.0
+# ===========================================
+# ⚠️  NUNCA COMMITAR ESTE ARQUIVO!
+# ⚠️  ADICIONAR AO .gitignore!
+
+# ===========================================
+# TELEGRAM BOT CONFIGURATION
+# ===========================================
+TELEGRAM_BOT_TOKEN=7970664442:AAHTBoX69oRH-r_FxMXWDw8EZjnxxeBd69Y
+TELEGRAM_CHAT_ID=6457067653
+TELEGRAM_WEBHOOK_URL=https://seu-dominio.com/webhook
+
+# ===========================================
+# AUTENTICAÇÃO E SEGURANÇA
+# ===========================================
+AUTH_TOKEN=sne_radar_2024_secure_key
+ADMIN_USER_ID=6457067653
+API_RATE_LIMIT=5
+API_RATE_WINDOW=60
+
+# ===========================================
+# CONFIGURAÇÕES DE PERFORMANCE
+# ===========================================
+MAX_RETRIES=3
+REQUEST_TIMEOUT=10
+MESSAGE_LIMIT=3500
+CACHE_TTL=300
+MAX_CACHE_SIZE=100
+
+# ===========================================
+# BINANCE API (se necessário)
+# ===========================================
+BINANCE_API_KEY=your_binance_api_key
+BINANCE_SECRET_KEY=your_binance_secret_key
+
+# ===========================================
+# BANCO DE DADOS
+# ===========================================
+DATABASE_URL=sqlite:///sne_radar.db
+POSTGRES_URL=postgresql://user:pass@host:port/db
+
+# ===========================================
+# CONFIGURAÇÕES DE AMBIENTE
+# ===========================================
+ENVIRONMENT=development
+DEBUG=True
+LOG_LEVEL=INFO
+
+# ===========================================
+# CONFIGURAÇÕES DE NOTIFICAÇÃO
+# ===========================================
+ENABLE_NOTIFICATIONS=True
+NOTIFICATION_INTERVAL=300
+MAX_NOTIFICATIONS_PER_HOUR=10
+
+# ===========================================
+# CONFIGURAÇÕES DE ANÁLISE
+# ===========================================
+DEFAULT_TIMEFRAME=1h
+ANALYSIS_TIMEOUT=30
+MAX_CONCURRENT_ANALYSES=3
+
+# ===========================================
+# CONFIGURAÇÕES DE BACKUP
+# ===========================================
+BACKUP_ENABLED=True
+BACKUP_INTERVAL=3600
+BACKUP_RETENTION_DAYS=7

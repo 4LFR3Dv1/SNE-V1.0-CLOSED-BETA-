@@ -1,0 +1,101 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 03:39:08
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (7.6/10)
+Volatilidade: 0.06%
+Tendência: BAIXA
+Confluência: 5.5/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (1.9/10)
+Volatilidade: 0.11%
+Tendência: LATERAL
+Confluência: 7.0/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.21%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.43%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.4%
+Tendência: LATERAL
+Confluência: 7.0/10
+Recomendação: AGUARDAR confirmação adicional
+
+
+📈 ANÁLISE INTRADAY - 03:39 - 14/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: FORTE BEAR_TREND
+📊 TIPO DE ENTRADA: Rejeição ou pullback
+⚠️ RISCO: BAIXO - Posição confortável
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $112,114.82
+   Entry:        $112,850.31
+   Stop Loss:    $113,851.89
+   TP1 (0.5%):   $111,554.25
+   TP2 (1.0%):   $110,993.67
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $112,128.89
+
+   🔴 RESISTÊNCIAS:
+      R1: $112,343.27 (+0.19%)
+      R2: $113,000.00 (+0.78%)
+      R3: $114,000.00 (+1.67%)
+
+   ⚪ PIVOT: $112,221.23
+
+   🟢 SUPORTES:
+      S1: $112,006.85 (-0.11%)
+      S2: $111,177.75 (-0.85%)
+      S3: $110,000.00 (-1.90%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

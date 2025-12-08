@@ -1,0 +1,116 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT (TÉCNICO)
+================================================================================
+🕐 17/10/2025 21:24
+
+---
+### 1. CONTEXTO GERAL (1m–1h)
+| Timeframe | Regime      | Tendência | Confluência | Recomendação Técnica |
+|-----------|-------------|-----------|-------------|---------------------|
+| 1m        | Consolidação| Baixa     | 7.0/10      | SHORT (rejeitado: R:R 0.5) |
+| 5m        | Consolidação| Baixa     | 7.0/10      | SHORT (rejeitado: R:R 0.5) |
+| 15m       | Consolidação| Lateral   | 7.6/10      | LONG (rejeitado: volume baixo) |
+| 30m       | Consolidação| Lateral   | 8.1/10      | LONG (rejeitado: RSI neutro) |
+| 1h        | Consolidação| Lateral   | 4.0/10      | LONG (rejeitado: confluência baixa) |
+
+---
+### 2. NÍVEIS-CHAVE CONSOLIDADOS (15m–1h)
+| Tipo       | Preço     | Base Técnica                     |
+|-------------|-----------|----------------------------------|
+| Resistência | $106,451.78 | R1 + EMA 21 (15m) + Cluster de Volume |
+| Suporte    | $106,341.68 | S1 + EMA 8 (15m) + Mínima Recente   |
+| Pivot      | $106,401.89 | Ponto central do range (1h)          |
+
+---
+### 3. INDICADORES TÉCNICOS CONSOLIDADOS
+| Timeframe | EMA 8   | EMA 21  | SMA 50  | SMA 200 | RSI (14) | Volume  | DOM Ratio |
+|-----------|---------|---------|---------|---------|----------|---------|-----------|
+| 15m       | $106,380| $106,420| $106,350| $106,500| 52       | $110M   | 0.820     |
+| 1h        | $106,400| $106,450| $106,500| $106,700| 48       | $220M   | 0.850     |
+
+---
+### 4. CENÁRIOS HIPOTÉTICOS (AGUARDAR CONFIRMAÇÃO)
+🎯 CENÁRIO LONG:
+| Nível | Preço     | Justificativa Técnica          | R:R  |
+|-------|-----------|--------------------------------|------|
+| Entry | $106,451.78| Quebra de resistência ($106,451.78) | —    |
+| Stop  | $106,341.68| Abaixo do suporte ($106,341.68)   | —    |
+| TP1   | $106,561.78| R:R 1:2                        | 1:2  |
+| TP2   | $106,671.78| Extensão Fibonacci 1.618        | 1:4  |
+
+⚠️ CONDIÇÕES PARA ENTRY (LONG):
+☐ Quebra de $106,451.78 com volume > $200M
+☐ RSI > 70 (sobrecompra)
+☐ DOM: Ratio > 1.2 (pressão de compra)
+☐ Confirmação de padrão bullish
+
+---
+🎯 CENÁRIO SHORT:
+| Nível | Preço     | Justificativa Técnica          | R:R  |
+|-------|-----------|--------------------------------|------|
+| Entry | $106,341.68| Quebra de suporte ($106,341.68)   | —    |
+| Stop  | $106,451.78| Acima da resistência ($106,451.78) | —    |
+| TP1   | $106,221.68| R:R 1:2                        | 1:2  |
+| TP2   | $106,111.68| Extensão Fibonacci 1.618        | 1:4  |
+
+⚠️ CONDIÇÕES PARA ENTRY (SHORT):
+☐ Quebra de $106,341.68 com volume > $200M
+☐ RSI < 30 (sobrevenda)
+☐ DOM: Ratio < 0.7 (pressão de venda)
+☐ Confirmação de padrão bearish
+
+---
+### 5. CONFLUÊNCIA CONSOLIDADA
+| Fator               | Status          | Peso | Detalhes Técnicos               |
+|---------------------|-----------------|------|---------------------------------|
+| Volume > $200M      | ❌ $110M        | 3.0/10| Volume abaixo da média          |
+| RSI < 30 ou > 70    | ❌ Neutro (52)  | 2.0/10| Sem sobrecompra/sobrevenda     |
+| Padrão Gráfico      | ❌ Sem formação  | 2.0/10| Sem wedge/flag/divergência      |
+| Alinhamento Multi-TF| ✅ 15m/1h lateral| 1.0/10| Sem tendência clara            |
+| Confluência Total   | 4.0/10          | —    | —                               |
+
+---
+### 6. GESTÃO DE RISCO (TÉCNICA)
+- Risco por operação: 1.0% do capital (padrão técnico)
+- Posição: 30% do tamanho padrão (devido à baixa confluência)
+- Status: ❌ Rejeitado (confluência < 7/10)
+- Critérios para Aprovação:
+  - Confluência mínima: 7/10
+  - Volume > $200M
+  - RSI < 30 ou > 70
+  - Padrão gráfico claro (wedge, flag, divergência)
+
+---
+### 7. RECOMENDAÇÃO FINAL (TÉCNICA)
+❌ Não operar nenhum dos setups atuais.
+
+Motivos Técnicos:
+1. Volume insuficiente em todos os timeframes (< $200M)
+2. RSI neutro (45–52), sem sobrecompra/sobrevenda
+3. Ausência de padrões gráficos (wedge, flag, divergência)
+4. Confluência baixa (4.0–7.6/10, mínimo aceitável: 7/10)
+
+Aguardar:
+- Quebra confirmada de $106,341.68 (suporte) ou $106,451.78 (resistência) com:
+  - Volume > $200M
+  - RSI < 30 (sobrevenda) ou > 70 (sobrecompra)
+  - Formação de padrão gráfico (ex.: wedge bearish)
+- Reavaliar confluência após atendimento das condições acima
+
+🎯 CONCLUSÃO PARA O OPERADOR:
+> "Mercado em consolidação lateral com confluência 4.0/10. Não operar no momento.
+> 
+> CENÁRIOS HIPOTÉTICOS:
+> 
+> LONG:
+> - Quebra de $106,451.78 com volume > $200M e RSI > 70
+> - DOM: Ratio > 1.2 (pressão de compra)
+> 
+> SHORT:
+> - Quebra de $106,341.68 com volume > $200M e RSI < 30
+> - DOM: Ratio < 0.7 (pressão de venda)
+> 
+> Risco: 1.0% do capital. Tamanho da posição: 30%."
+
+================================================================================

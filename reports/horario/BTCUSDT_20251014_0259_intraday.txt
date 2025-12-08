@@ -1,0 +1,84 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 02:59:28
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (7.3/10)
+Volatilidade: 0.05%
+Tendência: LATERAL
+Confluência: 5.5/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (2.2/10)
+Volatilidade: 0.13%
+Tendência: LATERAL
+Confluência: 5.5/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.21%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 0.43%
+Tendência: BAIXA
+Confluência: 7.0/10
+Recomendação: VENDA com confluência forte
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.4%
+Tendência: LATERAL
+Confluência: 7.0/10
+Recomendação: AGUARDAR confirmação adicional
+
+
+📈 ANÁLISE INTRADAY - 02:59 - 14/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO BEAR_TREND
+📊 TIPO DE ENTRADA: Esperar estrutura clara
+⚠️ RISCO: BAIXO - Posição confortável
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $112,449.22
+   Entry:        $113,228.83
+   Stop Loss:    $114,174.76
+   TP1 (0.5%):   $111,886.97
+   TP2 (1.0%):   $111,324.73
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

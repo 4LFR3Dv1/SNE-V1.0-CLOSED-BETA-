@@ -1,0 +1,88 @@
+
+============================================================
+📊 ANÁLISE TÉCNICA COMPLETA - BTCUSDT
+============================================================
+🕐 14 de October, 2025 às 01:24:20 UTC
+
+📈 CONTEXTO MACRO:
+   Regime:          SIDEWAYS (Força 5.0/10)
+   Volatilidade:    0.66% (Muito Baixa)
+   Volume 24h:      $0.0B (Muito Baixo)
+   Sessão:          Asiática (Baixa (20%))
+   Horário Ideal:   ❌ NÃO
+   Liquidez Score:  3/10
+
+📊 ESTRUTURA DE MERCADO:
+   Tendência:       LATERAL
+   Tipo:            Sem estrutura clara
+   
+   🔴 RESISTÊNCIAS:
+   $123,951.73 (Força: 3, Dist: 9.22%)
+   $125,678.02 (Força: 3, Dist: 10.75%)
+   $115,963.81 (Força: 1, Dist: 2.19%)
+   
+   🟢 SUPORTES:
+   $102,000.00 (Força: 1, Dist: 10.12%)
+   $109,561.59 (Força: 1, Dist: 3.46%)
+   $112,656.27 (Força: 1, Dist: 0.73%)
+
+🔍 ANÁLISE MULTI-TIMEFRAME:
+   1m: ✓ Bullish (EMA8: 113432.51, RSI: 57.8)
+   5m: ✗ Bearish (EMA8: 113443.66, RSI: 49.2)
+   15m: ✗ Bearish (EMA8: 113618.39, RSI: 11.2)
+   1h: ✗ Bearish (EMA8: 114227.08, RSI: 43.1)
+   4h: ✗ Bearish (EMA8: 114180.92, RSI: 63.9)
+
+   ⚠️ 4/5 TFs em BAIXA (divergência)
+
+📊 INDICADORES TÉCNICOS:
+   EMA8:     $114,183.04
+   EMA21:    $114,723.48
+   RSI:      64.0
+   
+🧲 ZONAS MAGNÉTICAS:
+   Zona Próxima: $350.00 (99.69158403321728%)
+   Próximo de romper zona $350.00
+
+🌊 FLUXO DE LIQUIDEZ (DOM):
+   Bid/Ask Ratio:  0.350
+   Pressão:        VENDA (65%)
+   Desequilíbrio:  -0.68
+
+📉 PADRÕES TÉCNICOS:
+   Divergência: RSI divergente positivo
+   Candlestick: Doji
+   Chart Pattern: Possível Flag
+
+😨 SENTIMENT:
+   Fear & Greed:  72/100 (Greed)
+   Funding Rate:  -0.004% (Neutro)
+   
+🔮 PROJEÇÕES:
+
+   📊 BASE (47%):
+      Rompe resistência principal
+      Target: $123,951.73
+      Timeframe: 4-8 horas
+   
+   📈 OTIMISTA (-26%):
+      Ruptura forte + continuação
+      Target: $125,678.02
+   
+   📉 PESSIMISTA (79%):
+      Rejeição e correção
+      Target: $102,000.00
+
+💡 SCORE DE CONFLUÊNCIA: 7.9/10
+   Boa - Confluência satisfatória
+   
+   Validações:
+   ✅ Multi-Timeframe: +2.4000000000000004
+   ✅ Fluxo DOM: +2.5
+   ⚠️ Zonas Magnéticas: +0.5
+   ✅ Sentiment: +1.5
+   ✅ Volume: +1
+
+⏰ Validade: 2 horas
+🆔 SNE-20251014-0124
+============================================================

@@ -1,0 +1,170 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 18:17:22
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (7.6/10)
+Volatilidade: 0.05%
+Tendência: ALTA
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (1m) - Vender em $107,593.21
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:17:26 - 17/10/2025 18:18:26
+   Restante: 06:59
+   OHLC: O:$107,372.01 H:$107,378.45 L:$107,372.00 C:$107,378.45
+   Range: $6.45 (0.01%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Lateral Neutra
+   Resumo: Marubozu - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.8/10)
+Volatilidade: 0.15%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (5m) - Vender em $107,593.21 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:17:29 - 17/10/2025 18:22:29
+   Restante: 10:59
+   OHLC: O:$107,393.00 H:$107,432.02 L:$107,336.00 C:$107,378.45
+   Range: $96.02 (0.09%)
+   Tipo: Doji - Indecisão do mercado
+   Tendência: Lateral Neutra
+   Resumo: Doji - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.22%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,564.71 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:17:33 - 17/10/2025 18:32:33
+   Restante: 20:59
+   OHLC: O:$107,393.00 H:$107,432.02 L:$107,336.00 C:$107,350.01
+   Range: $96.02 (0.09%)
+   Tipo: Candle Normal - Queda moderada
+   Tendência: Lateral Neutra
+   Resumo: Candle Normal - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (1.8/10)
+Volatilidade: 0.34%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (30m) - Vender em $107,564.71 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:17:37 - 17/10/2025 18:47:37
+   Restante: 35:59
+   OHLC: O:$107,021.38 H:$107,432.02 L:$107,016.87 C:$107,350.01
+   Range: $415.15 (0.39%)
+   Tipo: Candle Forte - Movimento forte
+   Tendência: Alta Moderada
+   Resumo: Candle Forte - Alta Moderada | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.5/10)
+Volatilidade: 0.51%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1h) - Vender em $107,564.70 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:17:40 - 17/10/2025 19:17:40
+   Restante: 65:59
+   OHLC: O:$107,021.38 H:$107,432.02 L:$107,016.87 C:$107,350.00
+   Range: $415.15 (0.39%)
+   Tipo: Candle Forte - Movimento forte
+   Tendência: Alta Moderada
+   Resumo: Candle Forte - Alta Moderada | Volume Baixo
+
+
+📈 ANÁLISE INTRADAY - 18:17 - 17/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO SIDEWAYS
+📊 TIPO DE ENTRADA: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,564.70 (risco maior)
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+
+💰 NÍVEIS OPERACIONAIS PRECISOS (DAY_TRADE):
+   Preço Atual:  $106,892.64
+   Entry:        $107,018.85 (S/R + Confirmação)
+   Stop Loss:    $107,649.90 (ATR 2.5x)
+   TP1:          $106,703.32 (S/R Próximo)
+   TP2:          $106,387.79 (S/R Distante)
+   TP3:          $106,072.26 (S/R Principal)
+   ATR:          $252.42 (0.24%)
+   R/R Atual:    1:0.5
+   Estratégia:   DAY_TRADE
+
+
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.00, Margem $16.96 > capital $10.00
+   Avisos: Risco 1.0% próximo do máximo
+
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $310.79 (0.29%)
+   Range Atual: $96.02 (0.09%)
+
+   📍 ZONA DE RANGE:
+      Superior: $107,652.78
+      Inferior: $107,031.20
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $107,341.99
+
+   🔴 RESISTÊNCIAS:
+      R1: $107,404.01 (+0.06%)
+      R2: $108,000.00 (+0.61%)
+      R3: $109,000.00 (+1.54%)
+
+   ⚪ PIVOT: $107,370.00
+
+   🟢 SUPORTES:
+      S1: $107,307.99 (-0.03%)
+      S2: $106,000.00 (-1.25%)
+      S3: $105,000.00 (-2.18%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

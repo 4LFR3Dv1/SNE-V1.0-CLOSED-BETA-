@@ -1,0 +1,175 @@
+
+
+================================================================================
+🏛️ RELATÓRIO INSTITUCIONAL SNE RADAR
+================================================================================
+
+┌─────────────────────────────────────────────────────────────┐
+│                    SNE RADAR INSTITUCIONAL                  │
+│                    RELATÓRIO DE TRADING                      │
+├─────────────────────────────────────────────────────────────┤
+│ ID do Relatório: SNE-INST-20251021235108-001                    │
+│ Classificação: USO INTERNO APENAS                           │
+│ Gerado em: 21/10/2025 23:51:08                        │
+│ Válido até: 22/10/2025 01:51:08                        │
+│ Analista: SNE-AI-SYSTEM v2.1                               │
+│ Compliance: MiFID II / ESMA Guidelines                     │
+└─────────────────────────────────────────────────────────────┘
+
+SÍMBOLO: BTCUSDT
+TIMEFRAME: 1h
+DATA/HORA: 21/10/2025 23:51:08
+
+
+
+📊 RESUMO EXECUTIVO - INSIGHTS PRÁTICOS
+
+🎯 SITUAÇÃO ATUAL:
+• Regime: SIDEWAYS - Regime não identificado
+• Volatilidade: 0.64% (BAIXO) - Movimentos suaves esperados
+• Confluência: 7.9/10 (Boa - Confluência satisfatória)
+
+💡 RECOMENDAÇÃO: COMPRA
+📈 Probabilidade de Sucesso: 79%
+
+🔍 INSIGHTS PRÁTICOS:
+• Baixa volatilidade - movimento lateral esperado
+• Alta confluência - setup de qualidade
+
+⚡ AÇÃO IMEDIATA:
+• AGUARDAR PULLBACK - Entrar em correção
+• Confirmar suporte antes de entrar
+• Stop loss conservador
+• Timeframe: Próximas 2-4 horas
+
+
+
+🌍 CONTEXTO DE MERCADO
+
+Regime Atual: SIDEWAYS
+Volatilidade: 0.64% (BAIXA)
+Volume 24h: 25,000,000,000 BTC
+Sessão Ativa: Asiática
+
+📈 ESTRUTURA DE MERCADO:
+Tendência Principal: LATERAL
+Força da Tendência: 0.0/10 (FRACA)
+
+🔍 OBSERVAÇÕES:
+• Análise baseada em dados em tempo real da Binance
+• Indicadores técnicos calculados automaticamente
+• Contexto macro integrado à análise técnica
+• Volume: Volume normal - atividade moderada
+
+
+
+📊 ANÁLISE TÉCNICA - INSIGHTS PRÁTICOS
+
+🎯 SITUAÇÃO ATUAL:
+• Preço: $109,131.98 (EMA8) vs $109,678.00 (EMA21)
+• Gap entre EMAs: 0.50% - EMAs próximas - mercado lateral
+• RSI: 47.7 - NEUTRO - sem direção clara
+
+📈 TENDÊNCIA E MOMENTUM:
+• Tendência Principal: BAIXA
+• Momentum: MOMENTUM BAIXA - tendência de baixa confirmada
+• Força da Tendência: FRACA
+
+🧲 ZONAS MAGNÉTICAS:
+• Zona Próxima: $108,300.00
+• Distância: 0.02% - MUITO PRÓXIMO - atenção máxima
+
+⚡ OPORTUNIDADES IDENTIFICADAS:
+• RSI neutro - aguardar direção
+• EMAs convergindo - possível rompimento
+• Próximo à zona magnética - possível reação
+• Tendência de baixa - venda em rally
+• Baixa volatilidade - movimento lateral esperado
+
+🎯 NÍVEIS-CHAVE PARA MONITORAR:
+• Suporte Imediato: $109,131.98
+• Resistência Imediata: $109,678.00
+• Zona Magnética: $108,300.00
+
+
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL
+
+PARÂMETROS DE RISCO:
+• Risco por Operação: 1.5% do capital
+• Tamanho da Posição: 3.0% do capital
+• Score de Confluência: 7.9/10
+
+📊 CÁLCULOS DE RISCO:
+• Stop Loss: Baseado em ATR e níveis técnicos
+• Take Profit: R:R mínimo de 1:2
+• Gestão de Posição: Escalonamento recomendado
+
+⚠️ CONTROLES DE RISCO:
+• Limite máximo de risco: 5% do capital
+• Diversificação obrigatória
+• Monitoramento contínuo
+• Stop loss automático recomendado
+
+
+
+🎯 ESTRATÉGIA DE TRADING - PLANO DE AÇÃO
+
+💡 RECOMENDAÇÃO PRINCIPAL: COMPRA
+📊 Score de Confluência: 7.9/10
+🎯 Probabilidade de Sucesso: 79%
+
+⚡ PLANO DE EXECUÇÃO:
+
+• ENTRADA: Aguardar pullback para EMA21
+• STOP LOSS: 1.5-2% abaixo do suporte
+• TAKE PROFIT: 1:2 mínimo
+• GESTÃO: Parcial em 1:2, resto em 1:3
+• TIMEFRAME: Próximas 2-4 horas
+
+📊 CENÁRIOS E PROBABILIDADES:
+
+Cenário Base (50%):
+• Movimento: Rompe resistência principal
+• Target: $110,768.96
+• Timeframe: 4-8 horas
+
+Cenário Otimista (25%):
+• Movimento: Ruptura forte + continuação
+• Target: $112,405.94
+
+Cenário Pessimista (25%):
+• Movimento: Rejeição e correção
+• Target: $107,495.00
+
+🔍 MONITORAMENTO CONTÍNUO:
+• Alertar se RSI subir acima de 80
+• Alertar se preço quebrar suporte principal
+• Alertar se volume diminuir significativamente
+• Alertar se volatilidade aumentar drasticamente
+• Monitorar notícias e eventos macro
+
+
+
+📋 COMPLIANCE E AVISOS LEGAIS
+
+⚠️ AVISOS IMPORTANTES:
+• Relatório para uso interno apenas
+• Não constitui aconselhamento de investimento
+• Risco de perda total do capital
+• Consulte regulamentações locais
+
+🔍 AUDITORIA:
+• Operação registrada para auditoria
+• Logs de acesso mantidos
+• Integridade verificada por hash
+
+📊 QUALIDADE:
+• Dados em tempo real da Binance
+• Indicadores calculados automaticamente
+• Sistema validado por testes
+
+
+================================================================================
+🏛️ RELATÓRIO INSTITUCIONAL SNE RADAR - FIM
+================================================================================

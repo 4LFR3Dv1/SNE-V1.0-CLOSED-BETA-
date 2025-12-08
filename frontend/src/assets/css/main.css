@@ -1,0 +1,35 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-terminal-dark text-terminal-green font-mono;
+    margin: 0;
+    padding: 0;
+  }
+  
+  #app {
+    min-height: 100vh;
+    background: #000000;
+  }
+}
+
+@layer components {
+  .btn-primary {
+    @apply bg-terminal-green text-terminal-dark px-4 py-2 rounded font-bold hover:opacity-80 transition cursor-pointer;
+  }
+  
+  .btn-secondary {
+    @apply bg-terminal-gray border border-terminal-green text-terminal-green px-4 py-2 rounded hover:bg-terminal-green hover:text-terminal-dark transition cursor-pointer;
+  }
+  
+  .card {
+    @apply bg-terminal-gray border border-terminal-green/30 p-4 rounded;
+  }
+  
+  .input-field {
+    @apply bg-terminal-dark border border-terminal-green/50 text-terminal-green px-4 py-2 rounded focus:outline-none focus:border-terminal-green;
+  }
+}
+

@@ -1,0 +1,3 @@
+SNE RADAR 3.0 - RESULTADO DA INTEGRAÇÃO
+Status: BOM
+Main.py OK: False

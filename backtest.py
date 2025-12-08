@@ -183,7 +183,8 @@ def executar_backtest(df):
         timestamp = df.index[i].strftime('%Y-%m-%d %H:%M:%S')
 
         # === Verifica Zonas de Ressonância ===
-        if verificar_ressonancia(preco_atual):
+        # Só verificar ressonância a cada 10 iterações para reduzir spam
+        if i % 10 == 0 and verificar_ressonancia(preco_atual):
             registrar_ruptura(preco_atual, timestamp)
             estado["ressonancias_ignoradas"] += 1
             estado["buffer_estrategico"].append(f"️ Ressonância Ignorada em {preco_atual} USDT")

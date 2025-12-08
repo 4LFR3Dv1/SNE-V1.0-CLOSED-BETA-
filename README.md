@@ -1,102 +1,374 @@
-# SNE RADAR - BACKUP LIMPO
+# 🚀 SNE RADAR - Sistema Neural Estratégico
 
-## 📋 Descrição
-Backup limpo do Sistema Neural Estratégico (SNE Radar) contendo apenas os arquivos essenciais para funcionamento.
+Sistema profissional completo de análise técnica e trading assistido para criptomoedas, com múltiplas interfaces (CLI, Web, Desktop) e arquitetura híbrida.
 
-## 🚀 Como Executar
+[![Python](https://img.shields.io/badge/Python-3.10+-blue.svg)](https://www.python.org/)
+[![Vue.js](https://img.shields.io/badge/Vue.js-3.4-green.svg)](https://vuejs.org/)
+[![Flask](https://img.shields.io/badge/Flask-3.0-red.svg)](https://flask.palletsprojects.com/)
+[![License](https://img.shields.io/badge/License-Proprietary-yellow.svg)](LICENSE)
 
-### 1. Instalar Dependências
+---
+
+## 📋 Índice
+
+- [Visão Geral](#-visão-geral)
+- [Características](#-características)
+- [Arquitetura](#-arquitetura)
+- [Instalação](#-instalação)
+- [Build](#-build)
+- [Uso](#-uso)
+- [Documentação](#-documentação)
+- [Contribuição](#-contribuição)
+
+---
+
+## 🎯 Visão Geral
+
+O **SNE RADAR** é uma plataforma profissional de análise técnica para trading de criptomoedas, integrando:
+
+- ✅ **12+ camadas de análise técnica** multi-timeframe
+- ✅ **Interface web moderna** (Vue.js 3 + Vite)
+- ✅ **Aplicação desktop nativa** (macOS/Windows)
+- ✅ **Trading automatizado** com gestão de risco
+- ✅ **Backtesting profissional** com múltiplas estratégias
+- ✅ **Integração Telegram** para alertas
+- ✅ **Arquitetura de microserviços** (GCP)
+
+---
+
+## ✨ Características
+
+### **Análise Técnica Avançada**
+- Análise multi-timeframe (1m, 5m, 15m, 1h, 4h, 1d)
+- 50+ indicadores técnicos (RSI, MACD, Bollinger, Ichimoku, Fibonacci, etc.)
+- Detecção de padrões gráficos (triângulos, wedges, etc.)
+- Zonas magnéticas (suporte/resistência)
+- Análise de confluência
+- Análise de fluxo DOM (Depth of Market)
+- Machine Learning para previsão de preços
+
+### **Trading Automatizado**
+- Execução automática de ordens (Bybit)
+- Gestão de risco profissional
+- Múltiplas estratégias configuráveis
+- Pool de capital por estratégia
+- Sistema de compliance
+- Reconciliação automática
+
+### **Monitoramento**
+- Radar de oportunidades em tempo real
+- Scanner de volume
+- Scanner de pavios (wick radar)
+- Alertas inteligentes (Telegram)
+- Dashboard operacional
+
+### **Backtesting**
+- Backtest multi-estratégia
+- Otimização de parâmetros
+- Métricas profissionais (Sharpe, Sortino, etc.)
+- Visualização de resultados
+
+---
+
+## 🏗️ Arquitetura
+
+```
+┌─────────────────────────────────────────────────────────────┐
+│                    SNE RADAR SYSTEM                         │
+├─────────────────────────────────────────────────────────────┤
+│                                                              │
+│  ┌──────────────┐  ┌──────────────┐  ┌──────────────┐     │
+│  │   DESKTOP    │  │    WEB       │  │   CLOUD      │     │
+│  │   APP        │  │  DASHBOARD   │  │  SERVICES    │     │
+│  │ (PyInstaller)│  │  (Vue.js 3)  │  │  (GCP)       │     │
+│  └──────┬───────┘  └──────┬───────┘  └──────┬───────┘     │
+│         │                  │                  │             │
+│         └──────────────────┴──────────────────┘             │
+│                           │                                 │
+│         ┌─────────────────┴─────────────────┐              │
+│         ▼                                   ▼               │
+│  ┌──────────────┐                  ┌──────────────┐        │
+│  │   BACKEND    │                  │    MOTOR     │        │
+│  │   Flask      │◄─────────────────┤   ANÁLISE    │        │
+│  │   + SocketIO │                  │  (Python)    │        │
+│  └──────┬───────┘                  └──────────────┘        │
+│         │                                                   │
+│         ▼                                                   │
+│  ┌──────────────┐                                          │
+│  │   DATABASE   │                                          │
+│  │ SQLite/Postgres│                                        │
+│  └──────────────┘                                          │
+└─────────────────────────────────────────────────────────────┘
+```
+
+### **Componentes Principais**
+
+- **Backend**: Flask + SocketIO (API REST + WebSocket)
+- **Frontend**: Vue.js 3 + Vite + Tailwind CSS
+- **Desktop**: PyInstaller + pywebview
+- **Database**: SQLite (local) / PostgreSQL (produção)
+- **Cloud**: Google Cloud Platform (microserviços)
+
+---
+
+## 🚀 Instalação
+
+### **Pré-requisitos**
+
+- **Python**: 3.10 ou superior
+- **Node.js**: 18+ (LTS recomendado)
+- **Git**: Para clonar o repositório
+
+### **1. Clonar Repositório**
+
 ```bash
+git clone https://github.com/seu-usuario/SNE_RADAR.git
+cd SNE_RADAR
+```
+
+### **2. Configurar Ambiente Python**
+
+```bash
+# Criar ambiente virtual
+python -m venv venv
+
+# Ativar ambiente virtual
+# macOS/Linux:
+source venv/bin/activate
+# Windows:
+venv\Scripts\activate
+
+# Instalar dependências
 pip install -r requirements.txt
 ```
 
-### 2. Configurar Telegram (Opcional)
-Editar `xenos_bot.py` e configurar:
-- `TELEGRAM_TOKEN`: Seu token do bot
-- `CHAT_ID`: Seu ID do chat
+### **3. Configurar Frontend**
 
-### 3. Executar o Sistema
 ```bash
-python3 main.py
+cd frontend
+npm install
+cd ..
 ```
 
-## 📁 Arquivos Incluídos
+### **4. Configurar Variáveis de Ambiente**
 
-### Core System
-- `main.py` - Sistema principal com interface gráfica
-- `backtest.py` - Sistema de backtest e análise
-- `xenos_bot.py` - Integração com Telegram
+```bash
+# Copiar template
+cp .env.example .env
 
-### Módulos Estratégicos
-- `mente_fluida.py` - Sistema de ressonância neural
-- `mente_fluida_ciclica.py` - Detecção de ciclos
-- `catalogo_magnetico.py` - Mapeamento de zonas
-- `fluxo_mental.py` - Análise de fluxo de mercado
-- `mapeamento_gravitacional.py` - Detecção de zonas críticas
-- `previsao_magnetica.py` - Previsões de movimento
-- `pulso_magnetico.py` - Detecção de pulsos de massa
-- `memoria_neural.py` - Sistema de memória neural
+# Editar .env com suas configurações
+# (API keys, tokens, etc.)
+```
 
-### Configuração
-- `requirements.txt` - Dependências Python
-- `setup.sh` - Script de instalação
+### **5. Inicializar Banco de Dados**
 
-## 🔧 Funcionalidades
-
-### Sistema Principal (main.py)
-- Gráficos de candlestick em tempo real
-- Médias móveis (EMA8, EMA21, SMA200)
-- Detecção de rupturas gravitacionais
-- Book de ordens (DOM)
-- HUDs informativos
-- Integração com Telegram
-
-### Análise Estratégica
-- Detecção de padrões históricos
-- Mapeamento de zonas de suporte/resistência
-- Sistema de alertas automáticos
-- Backtest de estratégias
-- Gestão de risco
-
-### Indicadores Técnicos
-- Densidade gravitacional (customizado)
-- RSI
-- Volume analysis
-- Momentum indicators
-
-## 📊 Parâmetros de Configuração
-
-### Trading
-- Take Profit: 2%
-- Stop Loss: 1%
-- Cooldown: 15 minutos
-- Position Size: Máximo 2% por trade
-
-### Detecção
-- Sensibilidade Gravitacional: 0.95
-- Sensibilidade Magnética: 0.98
-- Intervalo de Atualização: 60 segundos
-
-## 🎯 Como Usar
-
-1. **Iniciar Sistema**: Execute `python3 main.py`
-2. **Terminal Interativo**: Use comandos 1-4 no terminal
-3. **Modo Silêncio**: Alternar alertas sonoros
-4. **Encerrar**: Comando 3 para finalizar
-
-## ⚠️ Observações
-
-- Sistema funciona com dados da Binance
-- Requer conexão com internet
-- Telegram opcional para alertas
-- Logs são salvos automaticamente
-
-## 🔄 Atualizações
-
-Para atualizar o sistema:
-1. Substitua os arquivos .py pelos novos
-2. Mantenha configurações personalizadas
-3. Reinicie o sistema
+```bash
+# Executar migrações Alembic
+alembic upgrade head
+```
 
 ---
-**SNE Radar v1.0** - Sistema Neural Estratégico de Análise de Mercado
+
+## 🔨 Build
+
+### **Build Frontend**
+
+```bash
+cd frontend
+npm run build
+cd ..
+```
+
+### **Build Desktop App (macOS)**
+
+```bash
+# Build frontend primeiro
+cd frontend && npm run build && cd ..
+
+# Build app
+python -m PyInstaller build_mac.spec --clean --noconfirm
+```
+
+**Resultado**: `dist/SNE_RADAR.app`
+
+### **Build Desktop App (Windows)**
+
+```powershell
+# PowerShell
+.\build_windows.ps1
+
+# Ou Batch
+build_windows.bat
+```
+
+**Resultado**: `dist/SNE_RADAR.exe`
+
+Para mais detalhes, veja: [docs/BUILD_WINDOWS_COMPLETO.md](docs/BUILD_WINDOWS_COMPLETO.md)
+
+---
+
+## 💻 Uso
+
+### **Modo Web (Desenvolvimento)**
+
+```bash
+# Terminal 1: Backend
+python sne_radar_web.py
+
+# Terminal 2: Frontend (desenvolvimento)
+cd frontend
+npm run dev
+```
+
+Acesse: `http://localhost:5173`
+
+### **Modo Desktop**
+
+```bash
+# Executar app desktop
+python sne_desktop.py
+```
+
+### **Modo Terminal (CLI)**
+
+```bash
+python main.py
+```
+
+---
+
+## 📚 Documentação
+
+Documentação completa disponível em `docs/`:
+
+- [Guia de Build Windows](docs/BUILD_WINDOWS_COMPLETO.md)
+- [Guia de Deploy](docs/DEPLOYMENT_GUIDE.md)
+- [Trading Automatizado](docs/COMO_FUNCIONA_TRADING_AUTOMATIZADO.md)
+- [Proteção IP](docs/GUIA_PROTECAO_IP_DISTRIBUICAO.md)
+
+---
+
+## 🏗️ Estrutura do Projeto
+
+```
+SNE_RADAR/
+├── app/                    # Aplicação Flask modular
+├── frontend/               # Frontend Vue.js
+├── services/               # Microserviços (GCP)
+├── integrations/           # Integrações externas
+├── monitors/               # Monitores de mercado
+├── scanners/               # Scanners de oportunidades
+├── notifications/          # Sistema de notificações
+├── alembic/                # Migrações de banco
+├── assets/                 # Assets (ícones, logos)
+├── docs/                   # Documentação
+├── sne_radar_web.py        # Aplicação Flask principal
+├── sne_desktop.py          # Launcher desktop
+├── motor_renan.py          # Motor de análise
+└── requirements.txt        # Dependências Python
+```
+
+---
+
+## 🔧 Configuração
+
+### **Variáveis de Ambiente Principais**
+
+```bash
+# Flask
+FLASK_ENV=development
+SECRET_KEY=your_secret_key
+
+# Database
+DATABASE_URL=sqlite:///data/sne_radar.db
+
+# APIs (Opcional)
+BINANCE_API_KEY=your_key
+BYBIT_API_KEY=your_key
+TELEGRAM_BOT_TOKEN=your_token
+```
+
+Veja `.env.example` para todas as variáveis disponíveis.
+
+---
+
+## 🧪 Desenvolvimento
+
+### **Executar Testes**
+
+```bash
+# Backend
+pytest tests/
+
+# Frontend
+cd frontend
+npm run test
+```
+
+### **Linting**
+
+```bash
+# Python
+flake8 .
+black .
+
+# Frontend
+cd frontend
+npm run lint
+```
+
+---
+
+## 📦 Deploy
+
+### **Deploy Cloud (GCP)**
+
+Veja [docs/DEPLOYMENT_GUIDE.md](docs/DEPLOYMENT_GUIDE.md) para instruções completas.
+
+### **Deploy Local**
+
+```bash
+# Build completo
+./build_completo.sh
+
+# Ou Windows
+.\build_windows.ps1
+```
+
+---
+
+## 🤝 Contribuição
+
+1. Fork o projeto
+2. Crie uma branch (`git checkout -b feature/nova-funcionalidade`)
+3. Commit suas mudanças (`git commit -m 'feat: adiciona nova funcionalidade'`)
+4. Push para a branch (`git push origin feature/nova-funcionalidade`)
+5. Abra um Pull Request
+
+---
+
+## 📄 Licença
+
+Este projeto é proprietário. Todos os direitos reservados.
+
+---
+
+## 📞 Suporte
+
+Para questões e suporte:
+- Abra uma [Issue](https://github.com/seu-usuario/SNE_RADAR/issues)
+- Consulte a [Documentação](docs/)
+
+---
+
+## 🎯 Roadmap
+
+- [ ] Suporte para mais exchanges
+- [ ] Interface mobile
+- [ ] Mais estratégias de trading
+- [ ] Dashboard analytics avançado
+- [ ] API pública
+
+---
+
+**SNE RADAR** - Sistema Neural Estratégico para Trading de Criptomoedas 🚀

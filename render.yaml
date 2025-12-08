@@ -1,33 +1,17 @@
 services:
   - type: web
-    name: sne-radar
+    name: sne-radar-web
     env: python
-    region: oregon
-    plan: starter
-    pythonVersion: 3.11
-    healthCheckPath: /health
-  - type: pserv
-    name: sne-radar-db
-    env: postgresql
-    region: oregon
-    plan: starter
+    plan: free
+    buildCommand: |
+      pip install -r requirements_render.txt
+      pip install psycopg2-binary
+    startCommand: gunicorn --bind 0.0.0.0:$PORT sne_radar_web:app
     envVars:
       - key: FLASK_ENV
         value: production
       - key: SECRET_KEY
         generateValue: true
-      - key: TELEGRAM_TOKEN
-        sync: false
-      - key: CHAT_ID
-        sync: false
-      - key: COINGECKO_KEY
-        sync: false
-      - key: SCRAPERAPI_KEY
-        sync: false
-      - key: COINGLASS_API_KEY
-        sync: false
-      - key: COINMARKETCAP_API_KEY
-        sync: false
       - key: DB_HOST
         fromDatabase:
           name: sne-radar-db
@@ -49,14 +33,18 @@ services:
           name: sne-radar-db
           property: password
       - key: ENABLE_COINGLASS
-        value: "true"
+        value: true
       - key: ENABLE_CMC
-        value: "true"
+        value: true
       - key: ENABLE_TA_SUMMARY
-        value: "true"
-      - key: DEBUG
-        value: "false"
-      - key: PORT
-        value: "10000"
-    buildCommand: pip install -r requirements.txt
-    startCommand: python sne_radar_web.py
+        value: true
+      - key: UPDATE_INTERVAL
+        value: 30
+      - key: REQUEST_TIMEOUT
+        value: 12
+
+databases:
+  - name: sne-radar-db
+    plan: free
+    databaseName: sne_radar
+    user: sne_radar_user

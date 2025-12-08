@@ -1,0 +1,116 @@
+
+📌 ANÁLISE RÁPIDA | ETHUSDT | SWING TRADE
+🕐 20/11/2025 09:34
+
+💰 PREÇO ATUAL: $3,027.92
+
+---
+🔴 Resistência: $3,223.38
+   Base: Máxima 20 períodos + Cluster de Volume
+🟢 Suporte: $2,873.64
+   Base: Mínima 20 períodos + EMA 8 (4h)
+⚪ Pivot: $3,048.51
+   Base: Ponto central do range (4h)
+
+---
+📊 INDICADORES TÉCNICOS (4h/1d)
+
+🕒 4h:
+EMA 8: $3,028.41 | EMA 21: $3,064.16
+SMA 200: $3,053.70 | Preço: $3,027.92
+RSI (14): 50.3 | Volume: $5,761
+
+🕑 1d:
+EMA 8: $3,128.89 | EMA 21: $3,352.28
+SMA 200: $3,352.39 | Preço: $3,027.92
+RSI (14): 38.0 | Volume: $226,320
+
+---
+🔮 CENÁRIO LONG (AGUARDAR CONFIRMAÇÃO)
+
+📍 Entry: $3,223.38
+   Justificativa: Quebra de resistência
+🛑 Stop: $2,873.64
+   Justificativa: Abaixo do suporte
+🎯 TP1: $3,398.25 | R:R: 1:2
+   Justificativa: Extensão 50%
+🎯 TP2: $3,573.12 | R:R: 1:4
+   Justificativa: Extensão 100%
+
+⚠️ CONDIÇÕES PARA ENTRY (LONG):
+- Quebra de $3,223.38 com volume > $11,521
+- RSI > 70 (sobrecompra)
+- Confirmação de padrão bullish
+
+---
+🔮 CENÁRIO SHORT (AGUARDAR CONFIRMAÇÃO)
+
+📍 Entry: $2,873.64
+   Justificativa: Quebra de suporte
+🛑 Stop: $3,223.38
+   Justificativa: Acima da resistência
+🎯 TP1: $2,698.77 | R:R: 1:2
+   Justificativa: Extensão 50%
+🎯 TP2: $2,523.90 | R:R: 1:4
+   Justificativa: Extensão 100%
+
+⚠️ CONDIÇÕES PARA ENTRY (SHORT):
+- Quebra de $2,873.64 com volume > $11,521
+- RSI < 30 (sobrevenda)
+- Confirmação de padrão bearish
+
+---
+📊 CONFLUÊNCIA CONSOLIDADA
+
+Volume > $11,521: ❌ $5,761 (peso: 3.0/10)
+RSI < 30 ou > 70: ❌ 50.3 (peso: 2.0/10)
+Padrão Gráfico: ❌ Sem formação (peso: 2.0/10)
+Alinhamento Multi-TF: ✅ 4h/1d lateral (peso: 1.5/10)
+
+Confluência Total: 4.0/10
+
+---
+🛡️ GESTÃO DE RISCO (SWING TRADE)
+
+Risco por operação: 2.0% do capital (padrão swing)
+Posição: 50% do tamanho padrão (devido à moderada confluência)
+Status: ❌ Rejeitado (confluência < 7/10)
+
+Critérios para Aprovação:
+- Confluência mínima: 7/10
+- Volume > $11,521
+- RSI < 30 ou > 70
+- Padrão gráfico claro (wedge, flag, divergência)
+
+---
+⚠️ RECOMENDAÇÃO FINAL (SWING TRADE)
+
+🚫 NÃO OPERAR NENHUM DOS SETUPS ATUAIS
+
+Motivos Técnicos:
+1. Volume insuficiente em todos os timeframes (< $11,521)
+2. RSI neutro (50.3), sem sobrecompra/sobrevenda
+3. Ausência de padrões gráficos (wedge, flag, divergência)
+4. Confluência baixa (4.0/10, mínimo aceitável: 7/10)
+
+🔍 AGUARDAR:
+- Quebra confirmada de $2,873.64 (suporte) ou $3,223.38 (resistência) com:
+  - Volume > $11,521
+  - RSI < 30 (sobrevenda) ou > 70 (sobrecompra)
+  - Formação de padrão gráfico (ex.: wedge bearish)
+- Reavaliar confluência após atendimento das condições acima
+
+🎯 CONCLUSÃO PARA O OPERADOR:
+"Mercado em consolidação lateral com confluência 4.0/10. Não operar no momento.
+
+CENÁRIOS HIPOTÉTICOS:
+
+LONG:
+- Quebra de $3,223.38 com volume > $11,521 e RSI > 70
+- DOM: Ratio > 1.2 (pressão de compra)
+
+SHORT:
+- Quebra de $2,873.64 com volume > $11,521 e RSI < 30
+- DOM: Ratio < 0.7 (pressão de venda)
+
+Risco: 2.0% do capital. Tamanho da posição: 50%."

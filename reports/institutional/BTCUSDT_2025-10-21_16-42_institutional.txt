@@ -1,0 +1,25 @@
+
+┌─────────────────────────────────────────────────────────────┐
+│                    SNE RADAR INSTITUTIONAL                  │
+│                    ERROR REPORT                             │
+├─────────────────────────────────────────────────────────────┤
+│ Report ID: SNE-ERROR-20251021164241                        │
+│ Classification: INTERNAL USE ONLY                           │
+│ Generated: 2025-10-21T16:42:41.451651                         │
+│ Analyst: SNE-AI-SYSTEM v2.1                                │
+└─────────────────────────────────────────────────────────────┘
+
+ERROR REPORT
+
+Symbol: BTCUSDT
+Timeframe: 1h
+Error: Dados institucionais inválidos
+Timestamp: 2025-10-21T16:42:41.451658
+
+This report could not be generated due to an error in the analysis process.
+Please contact the system administrator for assistance.
+
+Compliance Notes:
+• Error logged for audit purposes
+• No trading recommendations provided
+• Risk assessment unavailable

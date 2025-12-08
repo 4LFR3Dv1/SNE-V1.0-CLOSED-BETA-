@@ -1,0 +1,84 @@
+
+================================================================================
+📊 RELATÓRIO SEMANAL MULTI-TIMEFRAME - ETHUSDT
+================================================================================
+🕐 14/10/2025 03:22:47
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 4h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 1.43%
+Tendência: LATERAL
+Confluência: 6.4/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 8h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 2.36%
+Tendência: BAIXA
+Confluência: 6.4/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 12h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 3.02%
+Tendência: LATERAL
+Confluência: 6.4/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1d
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BEAR_TREND (10/10)
+Volatilidade: 4.13%
+Tendência: LATERAL
+Confluência: 6.4/10
+Recomendação: AGUARDAR confirmação adicional
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1w
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: BULL_TREND (10/10)
+Volatilidade: 8.90%
+Tendência: LATERAL
+Confluência: 4.9/10
+Recomendação: SEM SETUP - Mercado indefinido
+
+
+📅 ANÁLISE POSITION TRADE - Semana 41 de 2025
+============================================================
+
+🎯 VIÉS SEMANAL: MODERADO BEAR_TREND
+📊 TENDÊNCIA DIÁRIA: LATERAL
+🌍 REGIME MACRO: BEAR_TREND
+
+💰 NÍVEIS POSITION (Próximas semanas):
+   Preço Atual:  $4,056.08
+   Entry Ideal:  $4,251.05 (Região SMA200)
+   Stop Loss:    $4,463.60
+   TP1 (10%):    $3,650.47
+   TP2 (20%):    $3,244.86
+   TP3 (35%):    $2,636.45
+
+💡 ESTRATÉGIA POSITION:
+   • Esperar correção para SMA200 (1d)
+   • Confirmar reversão em múltiplos TFs
+   • Manter posição semanas/meses
+   • Parcial 30% em TP1, 40% em TP2, 30% em TP3
+   • Trailing stop amplo (ATR x 3)
+   • Foco em tendência de longo prazo
+
+⏰ TIMEFRAMES: 4h, 8h, 12h, 1d, 1w
+🔄 Próxima atualização: Segunda-feira
+============================================================

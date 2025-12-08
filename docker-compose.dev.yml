@@ -1,0 +1,107 @@
+version: '3.8'
+
+services:
+  postgres:
+    image: postgres:15-alpine
+    container_name: sne-postgres-dev
+    environment:
+      POSTGRES_DB: sne
+      POSTGRES_USER: sne_admin
+      POSTGRES_PASSWORD: dev_password_change_in_prod
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U sne_admin"]
+      interval: 5s
+      timeout: 5s
+      retries: 5
+
+  redis:
+    image: redis:7-alpine
+    container_name: sne-redis-dev
+    ports:
+      - "6379:6379"
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 5s
+      timeout: 3s
+      retries: 5
+
+  sne-web:
+    build:
+      context: ./services/sne-web
+      dockerfile: Dockerfile
+    container_name: sne-web-dev
+    ports:
+      - "8080:8080"
+    environment:
+      DATABASE_URL: postgresql://sne_admin:dev_password_change_in_prod@postgres:5432/sne
+      SECRET_KEY: dev-secret-key
+      PORT: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./services/sne-web:/app
+    command: gunicorn --bind 0.0.0.0:8080 --workers 2 --worker-class gevent --reload app.main:app
+
+  sne-worker:
+    build:
+      context: ./services/sne-worker
+      dockerfile: Dockerfile
+    container_name: sne-worker-dev
+    ports:
+      - "8081:8080"
+    environment:
+      DATABASE_URL: postgresql://sne_admin:dev_password_change_in_prod@postgres:5432/sne
+      REDIS_URL: redis://redis:6379/0
+      PORT: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+      redis:
+        condition: service_healthy
+    volumes:
+      - ./services/sne-worker:/app
+    command: gunicorn --bind 0.0.0.0:8080 --workers 1 --reload app.main:app
+
+  sne-auto:
+    build:
+      context: ./services/sne-auto
+      dockerfile: Dockerfile
+    container_name: sne-auto-dev
+    ports:
+      - "8082:8080"
+    environment:
+      DATABASE_URL: postgresql://sne_admin:dev_password_change_in_prod@postgres:5432/sne
+      PORT: 8080
+    depends_on:
+      postgres:
+        condition: service_healthy
+    volumes:
+      - ./services/sne-auto:/app
+    command: gunicorn --bind 0.0.0.0:8080 --workers 1 --reload app.main:app
+
+  sne-telegram:
+    build:
+      context: ./services/sne-telegram
+      dockerfile: Dockerfile
+    container_name: sne-telegram-dev
+    ports:
+      - "8083:8080"
+    environment:
+      TELEGRAM_BOT_TOKEN: ${TELEGRAM_BOT_TOKEN:-}
+      TELEGRAM_CHAT_ID: ${TELEGRAM_CHAT_ID:-}
+      SECRET_KEY: dev-secret-key
+      PORT: 8080
+    volumes:
+      - ./services/sne-telegram:/app
+    command: gunicorn --bind 0.0.0.0:8080 --workers 2 --reload app.main:app
+
+volumes:
+  postgres_data:
+
+
+

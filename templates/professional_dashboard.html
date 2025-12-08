@@ -38,6 +38,32 @@
     <!-- Main Grid -->
     <div class="grid-container">
         
+        <!-- GRÁFICO PRINCIPAL -->
+        <div class="panel chart-panel" style="grid-column: 1 / -1;">
+            <div class="panel-header">
+                <h3><i class="fas fa-chart-candlestick"></i> GRÁFICO PRINCIPAL</h3>
+                <div class="chart-controls">
+                    <select id="chart-symbol" onchange="updateChart()">
+                        <option value="BTCUSDT">BTC/USDT</option>
+                        <option value="ETHUSDT">ETH/USDT</option>
+                        <option value="ADAUSDT">ADA/USDT</option>
+                    </select>
+                    <select id="chart-interval" onchange="updateChart()">
+                        <option value="1m">1 Minuto</option>
+                        <option value="5m">5 Minutos</option>
+                        <option value="15m">15 Minutos</option>
+                        <option value="1h">1 Hora</option>
+                        <option value="4h">4 Horas</option>
+                        <option value="1d">1 Dia</option>
+                    </select>
+                    <button onclick="updateChart()" class="btn-primary">🔄 Atualizar</button>
+                </div>
+            </div>
+            <div class="panel-content">
+                <div id="main-chart" style="height: 400px; width: 100%;"></div>
+            </div>
+        </div>
+        
         <!-- DERIVATIVOS PANEL -->
         <div class="panel derivatives-panel">
             <div class="panel-header">
@@ -320,6 +346,214 @@
 <script src="https://unpkg.com/lightweight-charts/dist/lightweight-charts.standalone.production.js"></script>
 
 <script>
+// Variáveis globais para gráficos
+let mainChart, candleSeries, volumeSeries, mlChart, backtestChart;
+
+// Inicializar gráficos quando a página carregar
+document.addEventListener('DOMContentLoaded', function() {
+    initMainChart();
+    initMLChart();
+    initBacktestChart();
+    loadInitialData();
+});
+
+// GRÁFICO PRINCIPAL
+function initMainChart() {
+    const chartContainer = document.getElementById('main-chart');
+    if (!chartContainer || !window.LightweightCharts) return;
+    
+    mainChart = LightweightCharts.createChart(chartContainer, {
+        height: 400,
+        layout: {
+            background: { type: 'solid', color: '#0b0b0b' },
+            textColor: '#d0d0d0'
+        },
+        grid: {
+            vertLines: { color: '#1a1a1a' },
+            horzLines: { color: '#1a1a1a' }
+        },
+        timeScale: {
+            timeVisible: true,
+            secondsVisible: false
+        },
+        rightPriceScale: {
+            borderColor: '#1a1a1a'
+        }
+    });
+    
+    candleSeries = mainChart.addCandlestickSeries({
+        upColor: '#26a69a',
+        downColor: '#ef5350',
+        borderVisible: false,
+        wickUpColor: '#26a69a',
+        wickDownColor: '#ef5350'
+    });
+    
+    volumeSeries = mainChart.addHistogramSeries({
+        color: 'rgba(255,215,0,0.6)',
+        priceFormat: { type: 'volume' },
+        priceScaleId: 'volume'
+    });
+    
+    mainChart.priceScale('volume').applyOptions({
+        scaleMargins: { top: 0.8, bottom: 0 }
+    });
+}
+
+function updateChart() {
+    const symbol = document.getElementById('chart-symbol').value;
+    const interval = document.getElementById('chart-interval').value;
+    
+    fetch(`/api/v1/candles?symbol=${symbol}&interval=${interval}&limit=200`)
+        .then(r => r.json())
+        .then(res => {
+            if (res.success && res.data.candles) {
+                const candles = res.data.candles.map(c => ({
+                    time: Math.floor(c.time / 1000),
+                    open: c.open,
+                    high: c.high,
+                    low: c.low,
+                    close: c.close
+                }));
+                
+                const volumes = res.data.candles.map(c => ({
+                    time: Math.floor(c.time / 1000),
+                    value: c.volume,
+                    color: c.close >= c.open ? '#26a69a' : '#ef5350'
+                }));
+                
+                candleSeries.setData(candles);
+                volumeSeries.setData(volumes);
+                
+                // Adicionar indicadores técnicos
+                addTechnicalIndicators(candles);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar gráfico:', e));
+}
+
+function addTechnicalIndicators(candles) {
+    // Adicionar médias móveis
+    const ema20 = calculateEMA(candles.map(c => c.close), 20);
+    const ema50 = calculateEMA(candles.map(c => c.close), 50);
+    
+    const ema20Series = mainChart.addLineSeries({
+        color: '#ff9800',
+        lineWidth: 1,
+        title: 'EMA 20'
+    });
+    
+    const ema50Series = mainChart.addLineSeries({
+        color: '#2196f3',
+        lineWidth: 1,
+        title: 'EMA 50'
+    });
+    
+    const ema20Data = candles.slice(19).map((c, i) => ({
+        time: c.time,
+        value: ema20[i]
+    }));
+    
+    const ema50Data = candles.slice(49).map((c, i) => ({
+        time: c.time,
+        value: ema50[i]
+    }));
+    
+    ema20Series.setData(ema20Data);
+    ema50Series.setData(ema50Data);
+}
+
+function calculateEMA(prices, period) {
+    const multiplier = 2 / (period + 1);
+    const ema = [];
+    let sum = 0;
+    
+    for (let i = 0; i < prices.length; i++) {
+        if (i < period) {
+            sum += prices[i];
+            ema.push(sum / (i + 1));
+        } else {
+            ema.push((prices[i] - ema[i - 1]) * multiplier + ema[i - 1]);
+        }
+    }
+    
+    return ema;
+}
+
+// GRÁFICO DE MACHINE LEARNING
+function initMLChart() {
+    const chartContainer = document.getElementById('ml-performance-chart');
+    if (!chartContainer || !window.LightweightCharts) return;
+    
+    mlChart = LightweightCharts.createChart(chartContainer, {
+        height: 200,
+        layout: {
+            background: { type: 'solid', color: '#0b0b0b' },
+            textColor: '#d0d0d0'
+        },
+        grid: {
+            vertLines: { color: '#1a1a1a' },
+            horzLines: { color: '#1a1a1a' }
+        }
+    });
+    
+    const performanceSeries = mlChart.addLineSeries({
+        color: '#4caf50',
+        lineWidth: 2,
+        title: 'Performance ML'
+    });
+    
+    // Dados de exemplo
+    const performanceData = [
+        { time: Date.now() / 1000 - 3600, value: 0.85 },
+        { time: Date.now() / 1000 - 1800, value: 0.87 },
+        { time: Date.now() / 1000, value: 0.89 }
+    ];
+    
+    performanceSeries.setData(performanceData);
+}
+
+// GRÁFICO DE BACKTEST
+function initBacktestChart() {
+    const chartContainer = document.getElementById('backtest-chart');
+    if (!chartContainer || !window.LightweightCharts) return;
+    
+    backtestChart = LightweightCharts.createChart(chartContainer, {
+        height: 300,
+        layout: {
+            background: { type: 'solid', color: '#0b0b0b' },
+            textColor: '#d0d0d0'
+        },
+        grid: {
+            vertLines: { color: '#1a1a1a' },
+            horzLines: { color: '#1a1a1a' }
+        }
+    });
+    
+    const equitySeries = backtestChart.addLineSeries({
+        color: '#ff9800',
+        lineWidth: 2,
+        title: 'Equity Curve'
+    });
+    
+    // Dados de exemplo
+    const equityData = [
+        { time: Date.now() / 1000 - 3600, value: 10000 },
+        { time: Date.now() / 1000 - 1800, value: 10200 },
+        { time: Date.now() / 1000, value: 10500 }
+    ];
+    
+    equitySeries.setData(equityData);
+}
+
+function loadInitialData() {
+    updateChart();
+    loadDerivativesData();
+    loadMarketPanorama();
+    loadAdvancedIndicators();
+    loadProfessionalIndicators();
+}
+
 // Sistema de Status
 function checkSystemStatus() {
     fetch('/api/v1/system/status')
@@ -361,27 +595,71 @@ function resetCircuitBreaker() {
 
 // Derivativos
 function loadDerivativesData() {
-    // Implementar carregamento de dados CoinGlass
-    console.log('Carregando dados de derivativos...');
+    fetch('/api/v1/derivatives?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                // Atualizar dados de derivativos
+                console.log('Dados de derivativos carregados:', data.data);
+                updateDerivativesUI(data.data);
+            } else {
+                console.error('Erro ao carregar derivativos:', data.error);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar derivativos:', e));
 }
 
 function confirmOI() {
-    alert('✅ OI confirmado! Dados atualizados.');
+    fetch('/api/v1/derivatives?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                alert('✅ OI confirmado! Dados atualizados.');
+                loadDerivativesData();
+            }
+        })
+        .catch(e => console.error('Erro ao confirmar OI:', e));
 }
 
 function loadLiquidations() {
-    alert('💥 Carregando liquidações...');
+    fetch('/api/v1/derivatives?symbol=BTCUSDT')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                console.log('💥 Liquidações carregadas:', data.data.liquidations);
+                updateLiquidationsUI(data.data.liquidations);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar liquidações:', e));
 }
 
 // Panorama de Mercado
 function loadMarketPanorama() {
-    // Implementar carregamento de dados CMC
-    console.log('Carregando panorama de mercado...');
+    fetch('/api/v1/global-metrics')
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                console.log('Panorama de mercado carregado:', data.data);
+                updateMarketPanoramaUI(data.data);
+            } else {
+                console.error('Erro ao carregar panorama:', data.error);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar panorama:', e));
 }
 
 function loadListingsByTag(tag) {
-    // Implementar filtro por tag
-    console.log('Carregando listagens por tag:', tag);
+    fetch(`/api/v1/listings?tag=${tag}&limit=50`)
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                console.log(`Listagens por tag ${tag}:`, data.data);
+                updateListingsUI(data.data);
+            } else {
+                console.error('Erro ao carregar listagens:', data.error);
+            }
+        })
+        .catch(e => console.error('Erro ao carregar listagens:', e));
 }
 
 // Indicadores
@@ -404,6 +682,9 @@ function loadProfessionalIndicators() {
             if (data.success) {
                 // Atualizar indicadores profissionais
                 console.log('Indicadores profissionais carregados:', data.data);
+                updateProfessionalIndicatorsUI(data.data);
+            } else {
+                console.error('Erro ao carregar indicadores profissionais:', data.error);
             }
         })
         .catch(e => console.error('Erro ao carregar indicadores:', e));
@@ -451,7 +732,138 @@ function runBacktest() {
 }
 
 function optimizeStrategy() {
-    alert('⚙️ Otimizando estratégia...');
+    const symbol = 'BTCUSDT';
+    const data = {
+        symbol: symbol,
+        interval: '1h',
+        limit: 1000,
+        initial_capital: 10000,
+        strategy_type: 'ma_crossover',
+        param_ranges: {
+            'fast_period': [5, 10, 15, 20],
+            'slow_period': [20, 30, 40, 50]
+        }
+    };
+    
+    fetch('/api/v1/backtest/optimize', {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(data)
+    })
+        .then(r => r.json())
+        .then(data => {
+            if (data.success) {
+                const result = data.data;
+                alert(`Otimização Concluída:\n\nMelhores Parâmetros: ${JSON.stringify(result.best_params)}\nMelhor Retorno: ${result.best_return.toFixed(2)}%`);
+            } else {
+                alert('Erro na otimização: ' + data.error);
+            }
+        })
+        .catch(e => console.error('Erro na otimização:', e));
+}
+
+// Funções de atualização da UI
+function updateDerivativesUI(data) {
+    // Atualizar interface de derivativos
+    if (data.funding) {
+        document.getElementById('funding-rate').textContent = `${(data.funding * 100).toFixed(4)}%`;
+    }
+    if (data.open_interest) {
+        document.getElementById('open-interest').textContent = `$${data.open_interest.toLocaleString()}`;
+    }
+    if (data.long_short_ratio) {
+        document.getElementById('lsr').textContent = data.long_short_ratio.toFixed(2);
+    }
+}
+
+function updateLiquidationsUI(liquidations) {
+    // Atualizar interface de liquidações
+    if (liquidations && liquidations.length > 0) {
+        const total = liquidations.reduce((sum, liq) => sum + parseFloat(liq.amount || 0), 0);
+        document.getElementById('liquidations').textContent = `$${total.toLocaleString()}`;
+    }
+}
+
+function updateMarketPanoramaUI(data) {
+    // Atualizar interface do panorama de mercado
+    if (data.market_cap) {
+        document.getElementById('market-cap').textContent = `$${(data.market_cap / 1e12).toFixed(2)}T`;
+    }
+    if (data.btc_dominance) {
+        document.getElementById('btc-dominance').textContent = `${data.btc_dominance.toFixed(1)}%`;
+    }
+    if (data.eth_dominance) {
+        document.getElementById('eth-dominance').textContent = `${data.eth_dominance.toFixed(1)}%`;
+    }
+}
+
+function updateListingsUI(data) {
+    // Atualizar interface de listagens
+    console.log('Atualizando listagens:', data);
+}
+
+function updateAdvancedIndicatorsUI(data) {
+    // Atualizar interface de indicadores avançados
+    if (data.indicators) {
+        const indicators = data.indicators;
+        
+        // Bollinger Bands
+        if (indicators.bollinger_bands) {
+            document.getElementById('bb-upper').textContent = indicators.bollinger_bands.upper.toFixed(2);
+            document.getElementById('bb-middle').textContent = indicators.bollinger_bands.middle.toFixed(2);
+            document.getElementById('bb-lower').textContent = indicators.bollinger_bands.lower.toFixed(2);
+        }
+        
+        // Stochastic
+        if (indicators.stochastic) {
+            document.getElementById('stoch-k').textContent = indicators.stochastic.k.toFixed(2);
+            document.getElementById('stoch-d').textContent = indicators.stochastic.d.toFixed(2);
+        }
+        
+        // Williams %R
+        if (indicators.williams_r) {
+            document.getElementById('williams-r').textContent = indicators.williams_r.toFixed(2);
+        }
+        
+        // ATR
+        if (indicators.atr) {
+            document.getElementById('atr').textContent = indicators.atr.toFixed(2);
+        }
+    }
+}
+
+function updateProfessionalIndicatorsUI(data) {
+    // Atualizar interface de indicadores profissionais
+    if (data.indicators) {
+        const indicators = data.indicators;
+        
+        // Ichimoku
+        if (indicators.ichimoku) {
+            document.getElementById('ichimoku-tenkan').textContent = indicators.ichimoku.tenkan.toFixed(2);
+            document.getElementById('ichimoku-kijun').textContent = indicators.ichimoku.kijun.toFixed(2);
+            document.getElementById('ichimoku-senkou-a').textContent = indicators.ichimoku.senkou_a.toFixed(2);
+            document.getElementById('ichimoku-senkou-b').textContent = indicators.ichimoku.senkou_b.toFixed(2);
+        }
+        
+        // Fibonacci
+        if (indicators.fibonacci) {
+            document.getElementById('fib-236').textContent = indicators.fibonacci.level_236.toFixed(2);
+            document.getElementById('fib-382').textContent = indicators.fibonacci.level_382.toFixed(2);
+            document.getElementById('fib-500').textContent = indicators.fibonacci.level_500.toFixed(2);
+            document.getElementById('fib-618').textContent = indicators.fibonacci.level_618.toFixed(2);
+        }
+        
+        // Pivot Points
+        if (indicators.pivot_points) {
+            document.getElementById('pivot-r3').textContent = indicators.pivot_points.r3.toFixed(2);
+            document.getElementById('pivot-r2').textContent = indicators.pivot_points.r2.toFixed(2);
+            document.getElementById('pivot-r1').textContent = indicators.pivot_points.r1.toFixed(2);
+            document.getElementById('pivot-pp').textContent = indicators.pivot_points.pp.toFixed(2);
+            document.getElementById('pivot-s1').textContent = indicators.pivot_points.s1.toFixed(2);
+            document.getElementById('pivot-s2').textContent = indicators.pivot_points.s2.toFixed(2);
+            document.getElementById('pivot-s3').textContent = indicators.pivot_points.s3.toFixed(2);
+        }
+    }
 }
 
 // Alertas

@@ -1,0 +1,290 @@
+{% extends "base.html" %}
+{% block title %}Terminal SNE Radar - Dashboard Interativo{% endblock %}
+{% block content %}
+
+<style>
+.terminal-container {
+    background: #0a0a0a;
+    color: #00ff00;
+    font-family: 'Courier New', monospace;
+    padding: 20px;
+}
+
+.command-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+    gap: 15px;
+    margin: 20px 0;
+}
+
+.command-card {
+    background: #111;
+    border: 2px solid #0f0;
+    padding: 20px;
+    cursor: pointer;
+    transition: all 0.3s;
+    text-align: center;
+}
+
+.command-card:hover {
+    background: #0f0;
+    color: #000;
+    transform: translateY(-3px);
+    box-shadow: 0 0 20px #0f0;
+}
+
+.command-icon {
+    font-size: 48px;
+    margin-bottom: 10px;
+}
+
+.command-name {
+    font-size: 18px;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.command-desc {
+    font-size: 12px;
+    color: #888;
+}
+
+.output-panel {
+    background: #111;
+    border: 2px solid #0f0;
+    padding: 20px;
+    min-height: 400px;
+    max-height: 600px;
+    overflow-y: auto;
+    margin-top: 20px;
+}
+
+.loading {
+    color: #ff0;
+    animation: blink 1s infinite;
+}
+
+.success { color: #0f0; }
+.error { color: #f00; }
+.info { color: #0ff; }
+
+@keyframes blink {
+    0%, 50% { opacity: 1; }
+    51%, 100% { opacity: 0; }
+}
+
+@media (max-width: 768px) {
+    .command-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+</style>
+
+<div class="terminal-container">
+    <div style="text-align: center; margin-bottom: 30px;">
+        <h1 style="color: #0f0; font-size: 36px;">🚀 SNE RADAR</h1>
+        <p style="color: #888; font-size: 14px;">Sistema Neural Estratégico - Interface Web</p>
+        <div style="margin-top: 10px;">
+            <span style="background: #0f0; color: #000; padding: 5px 15px; border-radius: 15px;">● ONLINE</span>
+            <span style="margin-left: 10px; color: #00aa00;">USUÁRIO: {{ current_user.username }}</span>
+        </div>
+    </div>
+
+    <!-- GRADE DE COMANDOS -->
+    <div style="margin-bottom: 30px;">
+        <h2 style="color: #0f0; font-size: 20px; margin-bottom: 15px;">🔍 ANÁLISE TÉCNICA</h2>
+        <div class="command-grid">
+            <div class="command-card" onclick="executeCommand('R')">
+                <div class="command-icon">🔍</div>
+                <div class="command-name">Scanner Técnico</div>
+                <div class="command-desc">Análise Completa</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('CTX')">
+                <div class="command-icon">🌍</div>
+                <div class="command-name">Contexto Macro</div>
+                <div class="command-desc">Regime e Sentiment</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('MULT')">
+                <div class="command-icon">📊</div>
+                <div class="command-name">Multi-Pair</div>
+                <div class="command-desc">Comparação de Pares</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('CM')">
+                <div class="command-icon">🧲</div>
+                <div class="command-name">Campo Magnético</div>
+                <div class="command-desc">Visualização 3D</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('DOM')">
+                <div class="command-icon">🌊</div>
+                <div class="command-name">Análise DOM</div>
+                <div class="command-desc">Liquidez Profunda</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('MAG')">
+                <div class="command-icon">🧲</div>
+                <div class="command-name">Análise Magnética</div>
+                <div class="command-desc">Tradicional SNE</div>
+            </div>
+        </div>
+    </div>
+
+    <div style="margin-bottom: 30px;">
+        <h2 style="color: #0f0; font-size: 20px; margin-bottom: 15px;">📊 RELATÓRIOS</h2>
+        <div class="command-grid">
+            <div class="command-card" onclick="executeCommand('RT')">
+                <div class="command-icon">📄</div>
+                <div class="command-name">Relatório Técnico</div>
+                <div class="command-desc">Análise Completa</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('RH')">
+                <div class="command-icon">📈</div>
+                <div class="command-name">Relatório Horário</div>
+                <div class="command-desc">Análise Horária</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('RD')">
+                <div class="command-icon">📅</div>
+                <div class="command-name">Relatório Diário</div>
+                <div class="command-desc">Análise Diária</div>
+            </div>
+            
+            <div class="command-card" onclick="executeCommand('RS')">
+                <div class="command-icon">📅</div>
+                <div class="command-name">Relatório Semanal</div>
+                <div class="command-desc">Análise Semanal</div>
+            </div>
+        </div>
+    </div>
+
+    <!-- PAINEL DE OUTPUT -->
+    <div class="output-panel" id="output">
+        <div class="info" style="text-align: center; padding: 50px;">
+            <h3 style="color: #0ff; font-size: 24px;">TERMINAL SNE RADAR</h3>
+            <p style="color: #888; margin-top: 10px;">Clique em um comando acima para começar</p>
+            <p style="color: #0f0; margin-top: 20px; font-size: 14px;">
+                Disponível: R, CTX, MULT, CM, DOM, MAG, RT, RH, RD, RS
+            </p>
+        </div>
+    </div>
+
+    <!-- BARRA DE AÇÕES -->
+    <div style="text-align: center; margin-top: 20px;">
+        <button onclick="clearOutput()" style="background: #f00; color: white; padding: 10px 20px; border: none; cursor: pointer; margin-right: 10px;">
+            🗑️ Limpar
+        </button>
+        <button onclick="refreshData()" style="background: #0f0; color: black; padding: 10px 20px; border: none; cursor: pointer;">
+            🔄 Atualizar
+        </button>
+        <a href="{{ url_for('logout') }}" style="background: #666; color: white; padding: 10px 20px; text-decoration: none; display: inline-block;">
+            ❌ Sair
+        </a>
+    </div>
+</div>
+
+<script>
+let outputHistory = [];
+
+function executeCommand(cmd) {
+    console.log(`🔄 Executando comando: ${cmd}`);
+    
+    // Mostrar loading
+    const loading = `<div class="loading">🔄 Executando ${cmd}...</div>`;
+    addToOutput(loading, 'loading');
+    
+    // Buscar dados da Binance primeiro
+    const params = {};
+    
+    // Comandos que precisam de parâmetros
+    if (['R', 'CM'].includes(cmd)) {
+        const symbol = prompt('Símbolo (ex: BTCUSDT, ou Enter para padrão):');
+        const tf = prompt('Timeframe (1h, 4h, 1d, ou Enter para padrão):');
+        if (symbol) params.symbol = symbol;
+        if (tf) params.timeframe = tf;
+    }
+    
+    fetch(`/api/dashboard/execute/${cmd}`, {
+        method: 'POST',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(params)
+    })
+    .then(r => r.json())
+    .then(data => {
+        if (data.success) {
+            displayResult(cmd, data);
+        } else {
+            addToOutput(`❌ Erro: ${data.error}`, 'error');
+        }
+    })
+    .catch(e => {
+        addToOutput(`❌ Erro de conexão: ${e.message}`, 'error');
+    });
+}
+
+function displayResult(cmd, data) {
+    let html = '';
+    
+    if (data.type === 'analysis') {
+        const d = data.data;
+        html = `
+            <div class="success">
+                <h3 style="font-size: 18px; margin-bottom: 15px;">🔍 ANÁLISE: ${d.symbol}</h3>
+                <p>💰 <b>Preço:</b> $${d.price.toFixed(2)}</p>
+                <p>📊 <b>Confluência:</b> ${d.confluence}/10</p>
+                <p>💡 <b>Recomendação:</b> ${d.recommendation}</p>
+                ${d.entry ? `<p>📍 <b>Entry:</b> $${d.entry.toFixed(2)}</p>` : ''}
+                ${d.stop ? `<p>🛡️ <b>Stop:</b> $${d.stop.toFixed(2)}</p>` : ''}
+                ${d.tp1 ? `<p>🎯 <b>TP1:</b> $${d.tp1.toFixed(2)}</p>` : ''}
+                ${d.tp2 ? `<p>🎯 <b>TP2:</b> $${d.tp2.toFixed(2)}</p>` : ''}
+                ${d.tp3 ? `<p>🎯 <b>TP3:</b> $${d.tp3.toFixed(2)}</p>` : ''}
+            </div>
+        `;
+    } else if (data.type === 'context') {
+        html = `<div class="info"><pre>${JSON.stringify(data.data, null, 2)}</pre></div>`;
+    } else if (data.type === 'multi') {
+        html = `<div class="info"><pre>${JSON.stringify(data.data, null, 2)}</pre></div>`;
+    } else if (data.type === 'magnetic') {
+        if (data.image_url) {
+            html = `<div class="success">
+                <h3>🧲 CAMPO MAGNÉTICO GERADO</h3>
+                <img src="${data.image_url}" style="max-width: 100%; border: 2px solid #0f0; margin-top: 10px;">
+            </div>`;
+        }
+    } else {
+        html = `<div class="info"><pre>${JSON.stringify(data, null, 2)}</pre></div>`;
+    }
+    
+    addToOutput(html, 'success');
+}
+
+function addToOutput(html, type) {
+    const output = document.getElementById('output');
+    const div = document.createElement('div');
+    div.className = type;
+    div.innerHTML = html;
+    output.appendChild(div);
+    output.scrollTop = output.scrollHeight;
+}
+
+function clearOutput() {
+    document.getElementById('output').innerHTML = `
+        <div class="info" style="text-align: center; padding: 20px;">
+            <p>Output limpo. Pronto para novos comandos.</p>
+        </div>
+    `;
+}
+
+function refreshData() {
+    console.log('🔄 Refreshing data...');
+    location.reload();
+}
+</script>
+
+{% endblock %}
+
+
+

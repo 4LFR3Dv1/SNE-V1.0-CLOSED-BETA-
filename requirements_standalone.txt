@@ -1,0 +1,34 @@
+# Dependências para modo Standalone Desktop
+# Instale com: pip install -r requirements_standalone.txt
+
+# Interface Desktop Nativa
+pywebview>=4.4.1
+
+# Dependências já no requirements.txt principal
+# (manter sincronizado)
+requests==2.31.0
+pandas>=2.2.0
+numpy>=1.26.0
+matplotlib>=3.8.0
+mplfinance>=0.12.10b0
+pytz==2023.3
+flask==3.0.0
+flask-socketio==5.3.6
+flask-sqlalchemy==3.1.1
+flask-login==0.6.3
+bcrypt==4.1.2
+flask-limiter==3.5.0
+websocket-client==1.6.4
+python-telegram-bot==20.7
+psycopg2-binary==2.9.9
+alembic==1.13.2
+flask-wtf==1.2.1
+fpdf2==2.7.6
+scikit-learn>=1.4.0
+mnemonic==0.20
+cachetools==5.3.3
+
+# Build tool
+pyinstaller>=6.0.0
+
+

@@ -1,0 +1,195 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 19:07:52
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (9.8/10)
+Volatilidade: 0.04%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 LONG FORTE (1m) - Comprar em $107,105.24
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 19:07:56 - 17/10/2025 19:08:56
+   Restante: 06:59
+   OHLC: O:$107,306.50 H:$107,320.00 L:$107,306.49 C:$107,319.88
+   Range: $13.51 (0.01%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Lateral Neutra
+   Resumo: Marubozu - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 1.60, Margem $14.10 > capital $10.00
+   Avisos: Risco 0.5% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.4/10)
+Volatilidade: 0.14%
+Tendência: ALTA
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (5m) - Vender em $107,534.53
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 19:08:00 - 17/10/2025 19:13:00
+   Restante: 10:59
+   OHLC: O:$107,396.31 H:$107,396.31 L:$107,282.99 C:$107,319.89
+   Range: $113.32 (0.11%)
+   Tipo: Candle Forte - Queda forte
+   Tendência: Lateral Neutra
+   Resumo: Candle Forte - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 1.90, Margem $16.96 > capital $10.00
+   Avisos: Risco 0.8% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.2%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (15m) - Vender em $107,534.52
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 19:08:04 - 17/10/2025 19:23:04
+   Restante: 20:59
+   OHLC: O:$107,301.41 H:$107,415.73 L:$107,282.99 C:$107,319.88
+   Range: $132.74 (0.12%)
+   Tipo: Doji - Indecisão do mercado
+   Tendência: Lateral Neutra
+   Resumo: Doji - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.20, Margem $16.96 > capital $10.00
+   Avisos: Risco 1.0% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.31%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (30m) - Vender em $107,534.53
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 19:08:08 - 17/10/2025 19:38:08
+   Restante: 35:59
+   OHLC: O:$107,301.41 H:$107,415.73 L:$107,282.99 C:$107,319.89
+   Range: $132.74 (0.12%)
+   Tipo: Doji - Indecisão do mercado
+   Tendência: Lateral Neutra
+   Resumo: Doji - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.40, Margem $16.96 > capital $10.00
+   Avisos: Risco 1.2% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.4/10)
+Volatilidade: 0.48%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (1h) - Vender em $107,534.53
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 19:08:11 - 17/10/2025 20:08:11
+   Restante: 65:59
+   OHLC: O:$107,301.41 H:$107,415.73 L:$107,282.99 C:$107,319.89
+   Range: $132.74 (0.12%)
+   Tipo: Doji - Indecisão do mercado
+   Tendência: Lateral Neutra
+   Resumo: Doji - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.70, Margem $18.17 > capital $10.00
+   Avisos: Risco 1.5% próximo do máximo
+
+
+📈 ANÁLISE INTRADAY - 19:08 - 17/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO SIDEWAYS
+📊 TIPO DE ENTRADA: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,534.53 (risco maior)
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+
+💰 NÍVEIS OPERACIONAIS PRECISOS (DAY_TRADE):
+   Preço Atual:  $106,862.65
+   Entry:        $106,988.83 (S/R + Confirmação)
+   Stop Loss:    $107,619.71 (ATR 2.5x)
+   TP1:          $106,673.39 (S/R Próximo)
+   TP2:          $106,357.95 (S/R Distante)
+   TP3:          $106,042.51 (S/R Principal)
+   ATR:          $252.35 (0.24%)
+   R/R Atual:    1:0.5
+   Estratégia:   DAY_TRADE
+
+
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.00, Margem $16.96 > capital $10.00
+   Avisos: Risco 1.0% próximo do máximo
+
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $262.09 (0.24%)
+   Range Atual: $132.74 (0.12%)
+
+   📍 ZONA DE RANGE:
+      Superior: $107,581.97
+      Inferior: $107,057.79
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $107,319.88
+
+   🔴 RESISTÊNCIAS:
+      R1: $107,396.08 (+0.07%)
+      R2: $108,000.00 (+0.63%)
+      R3: $109,000.00 (+1.57%)
+
+   ⚪ PIVOT: $107,339.53
+
+   🟢 SUPORTES:
+      S1: $107,263.34 (-0.05%)
+      S2: $106,000.00 (-1.23%)
+      S3: $105,000.00 (-2.16%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

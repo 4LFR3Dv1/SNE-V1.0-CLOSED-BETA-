@@ -1,0 +1,44 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 03:19:59
+
+
+⏰ 1m - ⚠️ Erro
+
+⏰ 5m - ⚠️ Erro
+
+⏰ 15m - ⚠️ Erro
+
+⏰ 30m - ⚠️ Erro
+
+⏰ 1h - ⚠️ Erro
+
+
+📈 ANÁLISE INTRADAY - 03:19 - 14/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: INDEFINIDO
+📊 TIPO DE ENTRADA: AGUARDAR
+⚠️ RISCO: ALTO
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $0.00
+   Entry:        $0.00
+   Stop Loss:    $0.00
+   TP1 (0.5%):   $0.00
+   TP2 (1.0%):   $0.00
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

@@ -1,0 +1,112 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 14/10/2025 23:19:07
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (8.1/10)
+Volatilidade: 0.06%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1m) - Vender em $113,203.97 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (9.4/10)
+Volatilidade: 0.13%
+Tendência: BAIXA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (5m) - Vender em $113,206.87 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (9.2/10)
+Volatilidade: 0.19%
+Tendência: BAIXA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (15m) - Vender em $113,224.56 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (7.3/10)
+Volatilidade: 0.29%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (30m) - Vender em $113,224.56 (risco maior)
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (8.2/10)
+Volatilidade: 0.4%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1h) - Vender em $113,235.06 (risco maior)
+
+
+📈 ANÁLISE INTRADAY - 23:19 - 14/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO CONSOLIDATION
+📊 TIPO DE ENTRADA: 📊 SHORT ESPECULATIVO (15m) - Vender em $113,222.49 (risco maior)
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $112,996.50
+   Entry:        $113,222.49
+   Stop Loss:    $114,352.46
+   TP1:          $111,527.55
+   TP2:          $110,962.56
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $318.62 (0.28%)
+   Range Atual: $207.25 (0.18%)
+
+   📍 ZONA DE RANGE:
+      Superior: $113,325.23
+      Inferior: $112,687.99
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $113,006.61
+
+   🔴 RESISTÊNCIAS:
+      R1: $113,095.95 (+0.08%)
+      R2: $114,000.00 (+0.88%)
+      R3: $115,000.00 (+1.76%)
+
+   ⚪ PIVOT: $112,978.03
+
+   🟢 SUPORTES:
+      S1: $113,000.00 (-0.01%)
+      S2: $112,000.00 (-0.89%)
+      S3: $111,000.00 (-1.78%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

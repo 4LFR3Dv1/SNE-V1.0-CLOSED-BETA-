@@ -1,0 +1,170 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 18:14:36
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (7.5/10)
+Volatilidade: 0.05%
+Tendência: ALTA
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (1m) - Vender em $107,586.74
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:14:41 - 17/10/2025 18:15:41
+   Restante: 06:59
+   OHLC: O:$107,266.73 H:$107,372.00 L:$107,266.73 C:$107,372.00
+   Range: $105.27 (0.1%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Lateral Neutra
+   Resumo: Marubozu - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (4.2/10)
+Volatilidade: 0.15%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (5m) - Vender em $107,594.75
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:14:45 - 17/10/2025 18:19:45
+   Restante: 10:59
+   OHLC: O:$107,261.83 H:$107,402.93 L:$107,261.82 C:$107,379.99
+   Range: $141.11 (0.13%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Alta Moderada
+   Resumo: Marubozu - Alta Moderada | Volume Alto
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (1.6/10)
+Volatilidade: 0.22%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (15m) - Vender em $107,606.07
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:14:49 - 17/10/2025 18:29:49
+   Restante: 20:59
+   OHLC: O:$107,021.38 H:$107,402.93 L:$107,016.87 C:$107,391.29
+   Range: $386.06 (0.36%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Alta Moderada
+   Resumo: Marubozu - Alta Moderada
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (1.6/10)
+Volatilidade: 0.34%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (30m) - Vender em $107,607.80
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:14:53 - 17/10/2025 18:44:53
+   Restante: 35:59
+   OHLC: O:$107,021.38 H:$107,402.93 L:$107,016.87 C:$107,393.01
+   Range: $386.06 (0.36%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Alta Moderada
+   Resumo: Marubozu - Alta Moderada | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.6/10)
+Volatilidade: 0.51%
+Tendência: LATERAL
+Confluência: 7.3/10
+Recomendação: 🔥 SHORT FORTE (1h) - Vender em $107,607.79
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 18:14:57 - 17/10/2025 19:14:57
+   Restante: 65:59
+   OHLC: O:$107,021.38 H:$107,402.93 L:$107,016.87 C:$107,393.00
+   Range: $386.06 (0.36%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Alta Moderada
+   Resumo: Marubozu - Alta Moderada | Volume Baixo
+
+
+📈 ANÁLISE INTRADAY - 18:15 - 17/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: FORTE CONSOLIDATION
+📊 TIPO DE ENTRADA: 🔥 SHORT FORTE (15m) - Vender em $107,607.79
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+
+💰 NÍVEIS OPERACIONAIS PRECISOS (DAY_TRADE):
+   Preço Atual:  $106,935.45
+   Entry:        $107,061.72 (S/R + Confirmação)
+   Stop Loss:    $107,693.02 (ATR 2.5x)
+   TP1:          $107,377.37 (S/R Próximo)
+   TP2:          $107,693.02 (S/R Distante)
+   TP3:          $108,008.68 (S/R Principal)
+   ATR:          $252.52 (0.24%)
+   R/R Atual:    1:-0.5
+   Estratégia:   DAY_TRADE
+
+
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 0.50 < mínimo 2.00, Margem $16.96 > capital $10.00
+   Avisos: Risco 1.0% próximo do máximo
+
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $305.86 (0.28%)
+   Range Atual: $27.00 (0.03%)
+
+   📍 ZONA DE RANGE:
+      Superior: $107,725.85
+      Inferior: $107,114.13
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $107,419.99
+
+   🔴 RESISTÊNCIAS:
+      R1: $107,428.99 (+0.01%)
+      R2: $108,000.00 (+0.54%)
+      R3: $109,000.00 (+1.47%)
+
+   ⚪ PIVOT: $107,411.00
+
+   🟢 SUPORTES:
+      S1: $107,401.99 (-0.02%)
+      S2: $106,000.00 (-1.32%)
+      S3: $105,000.00 (-2.25%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

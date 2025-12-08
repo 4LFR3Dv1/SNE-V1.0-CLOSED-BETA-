@@ -1,0 +1,182 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 17:44:42
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (8.9/10)
+Volatilidade: 0.05%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1m) - Vender em $107,185.86 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:44:48 - 17/10/2025 17:45:48
+   Restante: 06:59
+   OHLC: O:$106,920.00 H:$106,971.92 L:$106,920.00 C:$106,971.92
+   Range: $51.92 (0.05%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Lateral Neutra
+   Resumo: Marubozu - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 1.40 < mínimo 1.60, Margem $10.02 > capital $10.00
+   Avisos: Risco 0.5% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.0/10)
+Volatilidade: 0.14%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (5m) - Vender em $107,185.86 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:44:51 - 17/10/2025 17:49:51
+   Restante: 10:59
+   OHLC: O:$107,050.51 H:$107,096.72 L:$106,920.00 C:$106,971.92
+   Range: $176.72 (0.17%)
+   Tipo: Candle Normal - Queda moderada
+   Tendência: Lateral Neutra
+   Resumo: Candle Normal - Lateral Neutra
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 1.43 < mínimo 1.90, Margem $11.45 > capital $10.00
+   Avisos: Risco 0.8% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.7/10)
+Volatilidade: 0.23%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,178.36 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:44:55 - 17/10/2025 17:59:55
+   Restante: 20:59
+   OHLC: O:$107,027.91 H:$107,120.24 L:$106,920.00 C:$106,964.43
+   Range: $200.24 (0.19%)
+   Tipo: Candle Fraco - Queda fraca
+   Tendência: Lateral Neutra
+   Resumo: Candle Fraco - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 1.50 < mínimo 2.20, Margem $10.02 > capital $10.00
+   Avisos: Risco 1.0% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.8/10)
+Volatilidade: 0.35%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (30m) - Vender em $107,190.68 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:44:58 - 17/10/2025 18:14:58
+   Restante: 35:59
+   OHLC: O:$107,027.91 H:$107,120.24 L:$106,920.00 C:$106,976.73
+   Range: $200.24 (0.19%)
+   Tipo: Candle Fraco - Queda fraca
+   Tendência: Lateral Neutra
+   Resumo: Candle Fraco - Lateral Neutra | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 1.43 < mínimo 2.40
+   Avisos: Risco 1.2% próximo do máximo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.53%
+Tendência: LATERAL
+Confluência: 4.3/10
+Recomendação: 📊 SHORT ESPECULATIVO (1h) - Vender em $107,201.50 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:45:02 - 17/10/2025 18:45:02
+   Restante: 65:59
+   OHLC: O:$106,457.24 H:$107,120.24 L:$106,342.47 C:$106,987.52
+   Range: $777.77 (0.73%)
+   Tipo: Candle Forte - Movimento forte
+   Tendência: Alta Moderada
+   Resumo: Candle Forte - Alta Moderada | Volume Baixo
+
+🛡️ GESTÃO DE RISCO PROFISSIONAL:
+   Status: ❌ REJEITADO
+   Motivos: R/R 1.50 < mínimo 2.70
+   Avisos: Risco 1.5% próximo do máximo
+
+
+📈 ANÁLISE INTRADAY - 17:45 - 17/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: FRACO - AGUARDAR
+📊 TIPO DE ENTRADA: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,185.23 (risco maior)
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $106,971.29
+   Entry:        $107,185.23
+   Stop Loss:    $108,254.95
+   TP1:          $105,580.66
+   TP2:          $105,045.81
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $327.81 (0.31%)
+   Range Atual: $16.23 (0.02%)
+
+   📍 ZONA DE RANGE:
+      Superior: $107,308.89
+      Inferior: $106,653.27
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $106,981.08
+
+   🔴 RESISTÊNCIAS:
+      R1: $106,988.64 (+0.01%)
+      R2: $108,000.00 (+0.95%)
+      R3: $109,000.00 (+1.89%)
+
+   ⚪ PIVOT: $106,979.96
+
+   🟢 SUPORTES:
+      S1: $106,972.41 (-0.01%)
+      S2: $106,000.00 (-0.92%)
+      S3: $105,000.00 (-1.85%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

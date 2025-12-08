@@ -1,0 +1,157 @@
+
+================================================================================
+📊 RELATÓRIO HORÁRIO MULTI-TIMEFRAME - BTCUSDT
+================================================================================
+🕐 17/10/2025 17:32:16
+
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.0/10)
+Volatilidade: 0.05%
+Tendência: ALTA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1m) - Vender em $107,300.41 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:32:21 - 17/10/2025 17:33:21
+   Restante: 06:59
+   OHLC: O:$107,067.53 H:$107,086.24 L:$107,036.00 C:$107,086.24
+   Range: $50.24 (0.05%)
+   Tipo: Candle Fraco - Movimento fraco
+   Tendência: Lateral Neutra
+   Resumo: Candle Fraco - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 5m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (6.4/10)
+Volatilidade: 0.15%
+Tendência: BAIXA
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (5m) - Vender em $107,300.40 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:32:24 - 17/10/2025 17:37:24
+   Restante: 10:59
+   OHLC: O:$107,027.91 H:$107,120.00 L:$107,014.29 C:$107,086.23
+   Range: $105.71 (0.1%)
+   Tipo: Candle Normal - Movimento moderado
+   Tendência: Lateral Neutra
+   Resumo: Candle Normal - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 15m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.3/10)
+Volatilidade: 0.23%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,300.40 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:32:28 - 17/10/2025 17:47:28
+   Restante: 20:59
+   OHLC: O:$107,027.91 H:$107,120.00 L:$107,014.29 C:$107,086.23
+   Range: $105.71 (0.1%)
+   Tipo: Candle Normal - Movimento moderado
+   Tendência: Lateral Neutra
+   Resumo: Candle Normal - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 30m
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: CONSOLIDATION (3.4/10)
+Volatilidade: 0.35%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (30m) - Vender em $107,300.40 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:32:31 - 17/10/2025 18:02:31
+   Restante: 35:59
+   OHLC: O:$107,027.91 H:$107,120.00 L:$107,014.29 C:$107,086.23
+   Range: $105.71 (0.1%)
+   Tipo: Candle Normal - Movimento moderado
+   Tendência: Lateral Neutra
+   Resumo: Candle Normal - Lateral Neutra | Volume Baixo
+
+────────────────────────────────────────────────────────────────────────────────
+⏰ 1h
+────────────────────────────────────────────────────────────────────────────────
+
+Regime: SIDEWAYS (5.0/10)
+Volatilidade: 0.54%
+Tendência: LATERAL
+Confluência: 5.8/10
+Recomendação: 📊 SHORT ESPECULATIVO (1h) - Vender em $107,300.40 (risco maior)
+
+CANDLE ATUAL:
+   Horário: 17/10/2025 17:32:35 - 17/10/2025 18:32:35
+   Restante: 65:59
+   OHLC: O:$106,457.24 H:$107,120.00 L:$106,342.47 C:$107,086.23
+   Range: $777.53 (0.73%)
+   Tipo: Marubozu - Movimento muito forte
+   Tendência: Alta Moderada
+   Resumo: Marubozu - Alta Moderada | Volume Baixo
+
+
+📈 ANÁLISE INTRADAY - 17:32 - 17/10/2025
+============================================================
+
+🎯 VIÉS DOMINANTE: MODERADO CONSOLIDATION
+📊 TIPO DE ENTRADA: 📊 SHORT ESPECULATIVO (15m) - Vender em $107,275.26 (risco maior)
+⚠️ RISCO: BAIXO - Pode aumentar posição
+
+💰 NÍVEIS OPERACIONAIS (Próximas horas):
+   Preço Atual:  $107,061.14
+   Entry:        $107,275.26
+   Stop Loss:    $108,345.87
+   TP1:          $105,669.35
+   TP2:          $105,134.04
+
+
+📏 ANÁLISE DE RANGE (ATR):
+   🟢 Volatilidade: BAIXA
+   ATR(14): $358.78 (0.34%)
+   Range Atual: $105.71 (0.10%)
+
+   📍 ZONA DE RANGE:
+      Superior: $107,419.91
+      Inferior: $106,702.35
+
+
+
+📊 SUPORTES E RESISTÊNCIAS:
+   Preço Atual: $107,061.13
+
+   🔴 RESISTÊNCIAS:
+      R1: $107,115.99 (+0.05%)
+      R2: $108,000.00 (+0.88%)
+      R3: $109,000.00 (+1.81%)
+
+   ⚪ PIVOT: $107,065.14
+
+   🟢 SUPORTES:
+      S1: $107,010.28 (-0.05%)
+      S2: $106,000.00 (-0.99%)
+      S3: $105,000.00 (-1.93%)
+
+
+💡 ESTRATÉGIA RECOMENDADA:
+   • Operar em pullbacks para EMA8/EMA21
+   • Usar TFs de 1m-5m para timing de entrada
+   • Stop curto (máx 0.5%)
+   • Alvos rápidos (0.3-1.0%)
+   • Máx 2-3 operações por sessão
+
+⏰ TIMEFRAMES ANALISADOS: 1m, 5m, 15m, 30m, 1h
+🔄 Próxima atualização: A cada hora
+============================================================
+
+================================================================================

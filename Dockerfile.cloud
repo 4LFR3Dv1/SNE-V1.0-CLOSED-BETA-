@@ -1,0 +1,61 @@
+# Dockerfile para Google Cloud Run
+# Backend Flask puro (API REST)
+
+FROM python:3.10-slim
+
+WORKDIR /app
+
+# Instalar dependências do sistema
+RUN apt-get update && apt-get install -y \
+    gcc \
+    g++ \
+    && rm -rf /var/lib/apt/lists/*
+
+# Copiar requirements
+COPY requirements.txt .
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Instalar gunicorn para produção
+RUN pip install gunicorn
+
+# Copiar código da aplicação
+COPY app/ ./app/
+COPY motor_renan.py .
+COPY contexto_global.py .
+COPY estrutura_mercado.py .
+COPY multi_timeframe.py .
+COPY confluencia.py .
+COPY fluxo_ativo.py .
+COPY catalogo_magnetico.py .
+COPY padroes_graficos.py .
+COPY indicadores.py .
+COPY indicadores_avancados.py .
+COPY analise_candles_detalhada.py .
+COPY gestao_risco_profissional.py .
+COPY relatorio_profissional.py .
+COPY calcular_suportes_resistencias.py .
+COPY niveis_operacionais.py .
+COPY database_config.py .
+COPY config.py .
+COPY alembic.ini .
+COPY alembic/ ./alembic/
+
+# Criar arquivo de entrada
+RUN echo 'from app import create_app; app = create_app(); app.run(host="0.0.0.0", port=8080)' > main.py
+
+# Variáveis de ambiente
+ENV FLASK_APP=main:app
+ENV FLASK_ENV=production
+ENV PYTHONUNBUFFERED=1
+
+# Expor porta (Cloud Run usa 8080)
+EXPOSE 8080
+
+# Health check
+HEALTHCHECK --interval=30s --timeout=3s --start-period=5s --retries=3 \
+  CMD python -c "import requests; requests.get('http://localhost:8080/api/v1/health')"
+
+# Comando para Cloud Run
+CMD exec gunicorn --bind :8080 --workers 2 --threads 4 --timeout 120 --access-logfile - --error-logfile - main:app
+
+
