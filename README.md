@@ -1,4 +1,13 @@
-# 🚀 SNE RADAR - Sistema Neural Estratégico
+# 🚀 SNE RADAR - Neural Trading Engine (Scroll Edition)
+
+> **A Primeira Engine Neural de Trading Híbrida: Inteligência Off-Chain (Python) + Validação On-Chain (Scroll L2).**
+
+![Scroll L2](https://img.shields.io/badge/Network-Scroll_Sepolia-FFA500?style=for-the-badge&logo=ethereum)
+![License](https://img.shields.io/badge/License-On--Chain_Staking-success?style=for-the-badge)
+![Status](https://img.shields.io/badge/Status-Distribution_Ready-blue?style=for-the-badge)
+
+Contract Address (Node Registry): `` 📜
+
 
 Sistema profissional completo de análise técnica e trading assistido para criptomoedas, com múltiplas interfaces (CLI, Web, Desktop) e arquitetura híbrida.
 
@@ -26,6 +35,15 @@ Sistema profissional completo de análise técnica e trading assistido para crip
 
 O **SNE RADAR** é uma plataforma profissional de análise técnica para trading de criptomoedas, integrando:
 
+
+1. Cérebro (Off-Chain): Microsserviços Python processam 20+ indicadores e Machine Learning em tempo real.
+2. Verdade (On-Chain): A rede Scroll é usada para validação de licenças (DRM Descentralizado) e registro imutável de atividade dos nós (Proof of Uptime).
+Destaques:
+
+• ✅ Tokenized Access: O software só inicia se a carteira conectada possuir o Stake da Licença na Scroll.
+• ✅ Relatórios Técnicos: Gere dossiês visuais de cada sinal, não apenas alertas de compra/venda.
+• ✅ DePIN Ready: Preparado para rodar na futura SNE Box (Hardware Proprietário).
+
 - ✅ **12+ camadas de análise técnica** multi-timeframe
 - ✅ **Interface web moderna** (Vue.js 3 + Vite)
 - ✅ **Aplicação desktop nativa** (macOS/Windows)
@@ -38,6 +56,11 @@ O **SNE RADAR** é uma plataforma profissional de análise técnica para trading
 
 ## ✨ Características
 
+
+🛡️ Integração Web3 (Scroll Layer 2)
+• Smart License Check: Sistema anti-pirataria onde a licença é um ativo líquido (NFT/Token) em Stake.
+• Healthcheck On-Chain: Cada inicialização do sistema grava um hash na blockchain, criando um histórico auditável de uptime.
+• Sovereign Wallet: Integração nativa para assinatura de transações de alta frequência.
 ### **Análise Técnica Avançada**
 - Análise multi-timeframe (1m, 5m, 15m, 1h, 4h, 1d)
 - 50+ indicadores técnicos (RSI, MACD, Bollinger, Ichimoku, Fibonacci, etc.)
@@ -361,14 +384,17 @@ Para questões e suporte:
 
 ---
 
-## 🎯 Roadmap
-
-- [ ] Suporte para mais exchanges
-- [ ] Interface mobile
-- [ ] Mais estratégias de trading
-- [ ] Dashboard analytics avançado
-- [ ] API pública
-
+🗺️ Roadmap & Visão DePIN
+• Fase 1: Distribution (Atual)
+• [x] MVP da Engine Python (10 Meses de Dev).
+• [x] Integração com Scroll Testnet (Sepolia).
+• [ ] Lançamento das primeiras 100 Licenças Vitalícias (Stake).
+• Fase 2: The SNE Box (Q1 2026)
+• [ ] Desenvolvimento de Hardware Proprietário (Raspberry Pi Custom).
+• [ ] Integração com Starlink para trading incensurável.
+• [ ] Mineração de Tokens via "Proof of Stake".
+• Fase 3: The Sovereign Network
+• [ ] Rede Mesh de dados financeiros descentralizados.
 ---
 
 **SNE RADAR** - Sistema Neural Estratégico para Trading de Criptomoedas 🚀
