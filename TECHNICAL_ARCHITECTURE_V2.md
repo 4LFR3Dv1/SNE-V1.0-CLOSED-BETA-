@@ -99,45 +99,106 @@ O **Smart License Check** é um sistema de gerenciamento de direitos digitais (D
 - **Descentralização**: Não depende de servidor centralizado
 - **Transparência**: Código do contrato auditável publicamente
 
-### 💻 Implementação Esperada
+### 💻 Implementação (MVP - Atual)
 
 ```python
-# Exemplo de implementação (baseado na arquitetura)
+# Implementação atual do MVP - Scroll Sepolia
+from web3 import Web3
+import json
 
 class LicenseChecker:
-    def __init__(self, scroll_rpc_url, contract_address, abi):
-        self.w3 = Web3(Web3.HTTPProvider(scroll_rpc_url))
+    def __init__(self, scroll_rpc_url=None, contract_address=None):
+        # Configuração padrão para Scroll Sepolia (MVP)
+        self.scroll_rpc_url = scroll_rpc_url or "https://sepolia-rpc.scroll.io"
+        self.contract_address = contract_address or "0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7"
+        
+        # Conecta à Scroll Sepolia
+        self.w3 = Web3(Web3.HTTPProvider(self.scroll_rpc_url))
+        
+        # Carrega ABI (pode ser carregado de arquivo ou hardcoded)
+        # O ABI completo está disponível em deploy_info.json
+        with open('deploy_info.json', 'r') as f:
+            deploy_info = json.load(f)
+            abi = deploy_info['abi']
+        
+        # Instancia o contrato
         self.contract = self.w3.eth.contract(
-            address=contract_address,
+            address=self.contract_address,
             abi=abi
         )
     
     def check_license(self, wallet_address):
         """Verifica se a carteira possui licença válida"""
-        # Verifica se há tokens em stake
-        stake_amount = self.contract.functions.getStakeAmount(
-            wallet_address
-        ).call()
-        
-        # Verifica se a licença está ativa
-        is_active = self.contract.functions.isLicenseActive(
-            wallet_address
-        ).call()
-        
-        return {
-            'valid': stake_amount > 0 and is_active,
-            'stake_amount': stake_amount,
-            'expires_at': self.contract.functions.getExpiration(
+        try:
+            # Chama a função checkAccess do contrato
+            is_valid = self.contract.functions.checkAccess(
                 wallet_address
             ).call()
-        }
+            
+            # Obtém informações detalhadas
+            license_info = self.contract.functions.getLicenseInfo(
+                wallet_address
+            ).call()
+            
+            return {
+                'valid': is_valid,
+                'has_access': license_info[0],
+                'is_lifetime': license_info[1],
+                'expiry_timestamp': license_info[2]
+            }
+        except Exception as e:
+            print(f"Erro ao verificar licença: {e}")
+            return {
+                'valid': False,
+                'error': str(e)
+            }
     
+    def get_stats(self):
+        """Retorna estatísticas do contrato"""
+        try:
+            stats = self.contract.functions.getStats().call()
+            return {
+                'total_granted': stats[0],
+                'active_count': stats[1]
+            }
+        except Exception as e:
+            print(f"Erro ao obter estatísticas: {e}")
+            return None
+
+# Exemplo de uso
+if __name__ == "__main__":
+    checker = LicenseChecker()
+    
+    # Verificar licença de um endereço
+    wallet = "0x285df7643e6BD727527Fa3BA4Ff39dA729511bde"  # Owner
+    result = checker.check_license(wallet)
+    
+    if result['valid']:
+        print("✅ Licença válida!")
+        if result['is_lifetime']:
+            print("   Tipo: Licença Vitalícia")
+    else:
+        print("❌ Licença inválida ou não encontrada")
+    
+    # Obter estatísticas
+    stats = checker.get_stats()
+    if stats:
+        print(f"\n📊 Estatísticas:")
+        print(f"   Total de licenças concedidas: {stats['total_granted']}")
+        print(f"   Licenças ativas: {stats['active_count']}")
+```
+
+### 🔮 Implementação Futura (V2 - Produção)
+
+```python
+# Implementação futura com Healthcheck On-Chain
+class LicenseCheckerV2(LicenseChecker):
     def register_healthcheck(self, wallet_address, node_id, timestamp):
-        """Registra healthcheck on-chain"""
+        """Registra healthcheck on-chain (V2)"""
         # Gera hash do healthcheck
         healthcheck_hash = self._generate_hash(node_id, timestamp)
         
-        # Registra na blockchain
+        # Registra na blockchain (função a ser implementada no contrato V2)
         tx_hash = self.contract.functions.recordHealthcheck(
             wallet_address,
             healthcheck_hash,
@@ -444,15 +505,32 @@ class TokenizedAccess:
 ### 📡 Configuração da Rede
 
 ```python
-# Configuração Scroll Sepolia (Testnet)
+# Configuração Scroll Sepolia (Testnet) - MVP ATUAL
 SCROLL_RPC_URL = "https://sepolia-rpc.scroll.io"
 SCROLL_CHAIN_ID = 534351
-CONTRACT_ADDRESS = "0x..."  # LicenseRegistry contract
+CONTRACT_ADDRESS = "0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7"  # SNELicenseRegistry deployado
 
-# Configuração Scroll Mainnet (Produção)
+# Configuração Scroll Mainnet (Produção) - V2
 SCROLL_MAINNET_RPC = "https://rpc.scroll.io"
 SCROLL_MAINNET_CHAIN_ID = 534352
+CONTRACT_ADDRESS_MAINNET = "0x..."  # A ser deployado na V2
 ```
+
+### 🚀 Contrato Deployado (MVP - Scroll Sepolia)
+
+**Status**: ✅ **DEPLOYADO E OPERACIONAL**
+
+- **Endereço do Contrato**: `0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7`
+- **Rede**: Scroll Sepolia Testnet
+- **Chain ID**: 534351
+- **Block Number**: 15460541
+- **Transaction Hash**: `9d3f023a84c498402eb8ccdf5926628c2d2f42de8734edf301f89ec681cab61d`
+- **Gas Used**: 672,612
+- **Explorer**: https://sepolia-blockscout.scroll.io/address/0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7
+
+**Owner Atual**: `0x285df7643e6BD727527Fa3BA4Ff39dA729511bde`
+
+> ⚠️ **Nota**: Este é o contrato de teste na Scroll Sepolia. Para produção (V2), será necessário fazer novo deploy na Scroll Mainnet.
 
 ### 🔄 Fluxo Completo de Integração
 
@@ -526,10 +604,12 @@ SCROLL_MAINNET_CHAIN_ID = 534352
 
 ## 🚀 Roadmap e Evolução
 
-### Fase 1: Distribution (Atual)
+### Fase 1: Distribution (Atual) - MVP
 - ✅ Integração Scroll Testnet (Sepolia)
-- ✅ Smart License Check básico
+- ✅ Smart License Check básico - **CONTRATO DEPLOYADO**
+- ✅ Contrato SNELicenseRegistry operacional: `0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7`
 - ⏳ Lançamento 100 Licenças Vitalícias
+- ⏳ Integração com cliente Python do SNE Radar
 
 ### Fase 2: The SNE Box (Q1 2026)
 - ⏳ Hardware proprietário (Raspberry Pi Custom)
