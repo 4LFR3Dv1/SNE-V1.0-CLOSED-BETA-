@@ -6,8 +6,7 @@
 ![License](https://img.shields.io/badge/License-On--Chain_Staking-success?style=for-the-badge)
 ![Status](https://img.shields.io/badge/Status-Distribution_Ready-blue?style=for-the-badge)
 
-Contract Address (Node Registry): `` 📜
-
+**Contract Address (Node Registry)**: [`0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7`](https://sepolia-blockscout.scroll.io/address/0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7) 📜
 
 Sistema profissional completo de análise técnica e trading assistido para criptomoedas, com múltiplas interfaces (CLI, Web, Desktop) e arquitetura híbrida.
 
@@ -23,6 +22,7 @@ Sistema profissional completo de análise técnica e trading assistido para crip
 - [Visão Geral](#-visão-geral)
 - [Características](#-características)
 - [Arquitetura](#-arquitetura)
+- [Smart Contract (Web3)](#-smart-contract-web3)
 - [Instalação](#-instalação)
 - [Build](#-build)
 - [Uso](#-uso)
@@ -35,14 +35,14 @@ Sistema profissional completo de análise técnica e trading assistido para crip
 
 O **SNE RADAR** é uma plataforma profissional de análise técnica para trading de criptomoedas, integrando:
 
+1. **Cérebro (Off-Chain)**: Microsserviços Python processam 20+ indicadores e Machine Learning em tempo real.
+2. **Verdade (On-Chain)**: A rede Scroll é usada para validação de licenças (DRM Descentralizado) e registro imutável de atividade dos nós (Proof of Uptime).
 
-1. Cérebro (Off-Chain): Microsserviços Python processam 20+ indicadores e Machine Learning em tempo real.
-2. Verdade (On-Chain): A rede Scroll é usada para validação de licenças (DRM Descentralizado) e registro imutável de atividade dos nós (Proof of Uptime).
-Destaques:
+**Destaques:**
 
-• ✅ Tokenized Access: O software só inicia se a carteira conectada possuir o Stake da Licença na Scroll.
-• ✅ Relatórios Técnicos: Gere dossiês visuais de cada sinal, não apenas alertas de compra/venda.
-• ✅ DePIN Ready: Preparado para rodar na futura SNE Box (Hardware Proprietário).
+• ✅ **Tokenized Access**: O software só inicia se a carteira conectada possuir o Stake da Licença na Scroll.  
+• ✅ **Relatórios Técnicos**: Gere dossiês visuais de cada sinal, não apenas alertas de compra/venda.  
+• ✅ **DePIN Ready**: Preparado para rodar na futura SNE Box (Hardware Proprietário).
 
 - ✅ **12+ camadas de análise técnica** multi-timeframe
 - ✅ **Interface web moderna** (Vue.js 3 + Vite)
@@ -56,12 +56,14 @@ Destaques:
 
 ## ✨ Características
 
+### 🛡️ Integração Web3 (Scroll Layer 2)
 
-🛡️ Integração Web3 (Scroll Layer 2)
-• Smart License Check: Sistema anti-pirataria onde a licença é um ativo líquido (NFT/Token) em Stake.
-• Healthcheck On-Chain: Cada inicialização do sistema grava um hash na blockchain, criando um histórico auditável de uptime.
-• Sovereign Wallet: Integração nativa para assinatura de transações de alta frequência.
+• **Smart License Check**: Sistema anti-pirataria onde a licença é um ativo líquido (NFT/Token) em Stake.  
+• **Healthcheck On-Chain**: Cada inicialização do sistema grava um hash na blockchain, criando um histórico auditável de uptime.  
+• **Sovereign Wallet**: Integração nativa para assinatura de transações de alta frequência.
+
 ### **Análise Técnica Avançada**
+
 - Análise multi-timeframe (1m, 5m, 15m, 1h, 4h, 1d)
 - 50+ indicadores técnicos (RSI, MACD, Bollinger, Ichimoku, Fibonacci, etc.)
 - Detecção de padrões gráficos (triângulos, wedges, etc.)
@@ -71,6 +73,7 @@ Destaques:
 - Machine Learning para previsão de preços
 
 ### **Trading Automatizado**
+
 - Execução automática de ordens (Bybit)
 - Gestão de risco profissional
 - Múltiplas estratégias configuráveis
@@ -79,6 +82,7 @@ Destaques:
 - Reconciliação automática
 
 ### **Monitoramento**
+
 - Radar de oportunidades em tempo real
 - Scanner de volume
 - Scanner de pavios (wick radar)
@@ -86,6 +90,7 @@ Destaques:
 - Dashboard operacional
 
 ### **Backtesting**
+
 - Backtest multi-estratégia
 - Otimização de parâmetros
 - Métricas profissionais (Sharpe, Sortino, etc.)
@@ -134,6 +139,55 @@ Destaques:
 
 ---
 
+## 🔐 Smart Contract (Web3)
+
+### ✅ SNELicenseRegistry - DEPLOYADO
+
+O contrato **SNELicenseRegistry** está **operacional** na Scroll Sepolia Testnet e implementa o sistema de DRM descentralizado do SNE Radar.
+
+**Informações do Contrato:**
+
+- **Endereço**: [`0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7`](https://sepolia-blockscout.scroll.io/address/0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7)
+- **Rede**: Scroll Sepolia Testnet
+- **Chain ID**: 534351
+- **Status**: ✅ Operacional
+- **Explorer**: [Ver no Blockscout](https://sepolia-blockscout.scroll.io/address/0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7)
+
+**Funcionalidades:**
+
+- ✅ Verificação de licenças on-chain (`checkAccess`)
+- ✅ Concessão de licenças vitalícias (`grantLifetimeLicense`)
+- ✅ Revogação de licenças (`revokeLicense`)
+- ✅ Distribuição em batch (até 100 licenças)
+- ✅ Auditoria completa via eventos on-chain
+
+**Documentação Completa:**
+
+- 📄 [Arquitetura Técnica V2](TECHNICAL_ARCHITECTURE_V2.md) - Arquitetura alvo completa
+- 📄 [Informações de Deploy](CONTRACT_DEPLOYMENT_INFO.md) - Detalhes do contrato deployado
+- 📄 [Contrato Solidity](contracts/SNELicenseRegistry.sol) - Código-fonte do contrato
+
+**Integração Python:**
+
+```python
+from web3 import Web3
+
+# Conectar à Scroll Sepolia
+w3 = Web3(Web3.HTTPProvider("https://sepolia-rpc.scroll.io"))
+contract_address = "0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7"
+
+# Carregar ABI e verificar licença
+contract = w3.eth.contract(address=contract_address, abi=abi)
+is_valid = contract.functions.checkAccess(wallet_address).call()
+
+if is_valid:
+    print("✅ Licença válida - Iniciando SNE Radar...")
+else:
+    print("❌ Acesso negado - Licença inválida")
+```
+
+---
+
 ## 🚀 Instalação
 
 ### **Pré-requisitos**
@@ -145,8 +199,8 @@ Destaques:
 ### **1. Clonar Repositório**
 
 ```bash
-git clone https://github.com/seu-usuario/SNE_RADAR.git
-cd SNE_RADAR
+git clone https://github.com/4LFR3Dv1/SNE-V1.0-CLOSED-BETA-.git
+cd SNE-V1.0-CLOSED-BETA-
 ```
 
 ### **2. Configurar Ambiente Python**
@@ -264,6 +318,8 @@ python main.py
 
 Documentação completa disponível em `docs/`:
 
+- [Arquitetura Técnica V2](TECHNICAL_ARCHITECTURE_V2.md) - Arquitetura alvo Web3/Scroll L2
+- [Informações de Deploy](CONTRACT_DEPLOYMENT_INFO.md) - Detalhes do contrato deployado
 - [Guia de Build Windows](docs/BUILD_WINDOWS_COMPLETO.md)
 - [Guia de Deploy](docs/DEPLOYMENT_GUIDE.md)
 - [Trading Automatizado](docs/COMO_FUNCIONA_TRADING_AUTOMATIZADO.md)
@@ -282,6 +338,9 @@ SNE_RADAR/
 ├── monitors/               # Monitores de mercado
 ├── scanners/               # Scanners de oportunidades
 ├── notifications/          # Sistema de notificações
+├── contracts/              # Smart Contracts (Solidity)
+│   ├── SNELicenseRegistry.sol
+│   └── deploy_info.json
 ├── alembic/                # Migrações de banco
 ├── assets/                 # Assets (ícones, logos)
 ├── docs/                   # Documentação
@@ -304,6 +363,11 @@ SECRET_KEY=your_secret_key
 
 # Database
 DATABASE_URL=sqlite:///data/sne_radar.db
+
+# Web3 (Scroll L2)
+SCROLL_RPC_URL=https://sepolia-rpc.scroll.io
+SCROLL_CHAIN_ID=534351
+LICENSE_CONTRACT_ADDRESS=0x2577879dE5bC7bc87db820C79f7d65bFfE2d9fb7
 
 # APIs (Opcional)
 BINANCE_API_KEY=your_key
@@ -379,22 +443,32 @@ Este projeto é proprietário. Todos os direitos reservados.
 ## 📞 Suporte
 
 Para questões e suporte:
-- Abra uma [Issue](https://github.com/seu-usuario/SNE_RADAR/issues)
+
+- Abra uma [Issue](https://github.com/4LFR3Dv1/SNE-V1.0-CLOSED-BETA-/issues)
 - Consulte a [Documentação](docs/)
 
 ---
 
-🗺️ Roadmap & Visão DePIN
-• Fase 1: Distribution (Atual)
-• [x] MVP da Engine Python (10 Meses de Dev).
-• [x] Integração com Scroll Testnet (Sepolia).
-• [ ] Lançamento das primeiras 100 Licenças Vitalícias (Stake).
-• Fase 2: The SNE Box (Q1 2026)
-• [ ] Desenvolvimento de Hardware Proprietário (Raspberry Pi Custom).
-• [ ] Integração com Starlink para trading incensurável.
-• [ ] Mineração de Tokens via "Proof of Stake".
-• Fase 3: The Sovereign Network
-• [ ] Rede Mesh de dados financeiros descentralizados.
+## 🗺️ Roadmap & Visão DePIN
+
+### **Fase 1: Distribution (Atual)**
+- [x] MVP da Engine Python (10 Meses de Dev)
+- [x] Integração com Scroll Testnet (Sepolia)
+- [x] **Smart Contract SNELicenseRegistry deployado** ✅
+- [ ] Lançamento das primeiras 100 Licenças Vitalícias (Stake)
+- [ ] Integração completa com cliente Python
+
+### **Fase 2: The SNE Box (Q1 2026)**
+- [ ] Desenvolvimento de Hardware Proprietário (Raspberry Pi Custom)
+- [ ] Integração com Starlink para trading incensurável
+- [ ] Mineração de Tokens via "Proof of Stake"
+
+### **Fase 3: The Sovereign Network**
+- [ ] Rede Mesh de dados financeiros descentralizados
+- [ ] Governança descentralizada
+- [ ] Healthcheck On-Chain completo (Proof of Uptime)
+
 ---
 
 **SNE RADAR** - Sistema Neural Estratégico para Trading de Criptomoedas 🚀
+
